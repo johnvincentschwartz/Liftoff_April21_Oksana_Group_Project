@@ -1,12 +1,19 @@
 plugins {
-	id 'org.springframework.boot' version '2.4.4'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
 }
 
-group = 'launchcode'
+group = 'org.launchcode'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '13'
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
 
 repositories {
 	mavenCentral()
@@ -15,8 +22,15 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.security:spring-security-crypto'
+//	implementation 'android.arch.persistence.room:runtime:1.1.1'
+//	annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	compile 'mysql:mysql-connector-java'
 }
 
 test {
