@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-    <head>
-        <meta charset="UTF-8" />
-        <title></title>
-    </head>
-    <body>
-    
-    </body>
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<head>
+    <link th:href="@{/alltrails.css}" rel="stylesheet" />
+</head>
+
+All trails
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm section-container">
+            <div class="section-content">
+                <h2>Filter</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 section-container">
+            <div class="results section-content">
+                <h2>Results</h2>
+                <ol>
+                    <li th:each="trail : ${allTrails}">
+                        <th:block>
+                            <h4 th:text="${trail.name}"></h4>
+                            <ul>
+                                <li th:text="${trail.length} + ' mi, Level ' + ${trail.difficulty}"></li>
+                                <li th:text="${trail.city} +', ' + ${trail.state}"></li>
+                                <li>X miles away</li>
+                            </ul>
+                        </th:block>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="col-sm-8 section-container">
+            <div class="map section-content">
+                <h2>Map</h2>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 </html>

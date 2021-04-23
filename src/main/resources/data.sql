@@ -1,3 +1,13 @@
+DROP TABLE IF EXISTS trail;
+CREATE TABLE trail (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    city VARCHAR(50),
+    state VARCHAR(2),
+    length FLOAT,
+    difficulty INTEGER
+);
+
 INSERT INTO trail(name,city,state,length,difficulty) VALUES ('Chubb Trail','Eureka','MO',6.7,3);
 INSERT INTO trail(name,city,state,length,difficulty) VALUES ('Lime Kiln Loop Trail','Wildwood','MO',2.8,2);
 INSERT INTO trail(name,city,state,length,difficulty) VALUES ('DeClue Trail','Eureka','MO',8.4,4);
