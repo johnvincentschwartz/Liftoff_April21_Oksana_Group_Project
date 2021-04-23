@@ -14,53 +14,56 @@ All trails
         <div class="col-sm section-container">
             <div class="section-content container">
                 <h2>Filter</h2>
-                <form class="form-inline">
+                <form class="form-inline" th:action="@{/alltrails/results}" method="post">
                     <div class="row">
                         <div class="form-group col-sm">
                             <label>
                                 Search location:
-                                <input type="text" class="form-control" id="searchLocation" placeholder="Enter city or zipcode"/>
+                                <input disabled type="text" class="form-control" id="searchLocation" placeholder="Enter city or zipcode"/>
                             </label>
                         </div>
                         <div class="form-group col-sm">
                             <label>
                                 Max Distance (mi):
-                                <input type="number" class="form-control" id="maxdistance" placeholder="None" />
+                                <input disabled type="number" class="form-control" id="maxdistance" placeholder="None" />
                             </label>
                         </div>
                         <div class="form-group col-sm">
                             <label>
                                 Min. length (mi):
-                                <input type="number" class="form-control" id="minlength" placeholder="0" />
+                                <input type="number" class="form-control" name="minLength" id="minLength" placeholder="0" />
                             </label>
                         </div>
                         <div class="form-group col-sm">
                             <label>
                                 Max. Length (mi):
-                                <input type="number" class="form-control" id="maxlength" placeholder="None" />
+                                <input type="number" class="form-control" name="maxLength" id="maxLength" placeholder="1000" />
                             </label>
                         </div>
                         <div class="form-group col-sm">
-                            <label>
-                                Min Rating:
-                                <input type="checkBox" class="form-control" id="rating1" />
-                                <input type="checkBox" class="form-control" id="rating2" />
-                                <input type="checkBox" class="form-control" id="rating3" />
-                                <input type="checkBox" class="form-control" id="rating4" />
-                                <input type="checkBox" class="form-control" id="rating5" />
-                            </label>
-                            (Include unchecked
-                            <input type="checkbox" class="form-control" id="includeunchecked" />)
+                            <label for="stars">Min. rating:</label>
+                            <div class="rating" id="stars" style="display: flex; justify-content: space-around">
+                                <input disabled type="radio" name="rating" value="5" id="5">
+                                <label for="5">☆</label>
+                                <input disabled type="radio" name="rating" value="4" id="4">
+                                <label for="4">☆</label>
+                                <input disabled type="radio" name="rating" value="3" id="3">
+                                <label for="3">☆</label>
+                                <input disabled type="radio" name="rating" value="2" id="2">
+                                <label for="2">☆</label>
+                                <input disabled type="radio" name="rating" value="1" id="1">
+                                <label for="1">☆</label>
+                            </div>
                         </div>
                         <div class="form-group col-sm">
-                            <label>
-                                Difficulty:
-                                <input type="checkBox" class="form-control" id="difficulty1" />
-                                <input type="checkBox" class="form-control" id="difficulty2" />
-                                <input type="checkBox" class="form-control" id="difficulty3" />
-                                <input type="checkBox" class="form-control" id="difficulty4" />
-                                <input type="checkBox" class="form-control" id="difficulty5" />
-                            </label>
+                            <label>Difficulty:</label><br/>
+                            <div style="display:flex; width: auto">
+                                <label for="difficulty1" style="display: flex; margin: 0 1rem; flex-direction:column">1<input type="checkBox" id="difficulty1" /></label>
+                                <label for="difficulty2" style="display: flex; margin: 0 1rem; flex-direction:column">2<input type="checkBox" id="difficulty2" /></label>
+                                <label for="difficulty3" style="display: flex; margin: 0 1rem; flex-direction:column">3<input type="checkBox" id="difficulty3" /></label>
+                                <label for="difficulty4" style="display: flex; margin: 0 1rem; flex-direction:column">4<input type="checkBox" id="difficulty4" /></label>
+                                <label for="difficulty5" style="display: flex; margin: 0 1rem; flex-direction:column">5<input type="checkBox" id="difficulty5" /></label>
+                            </div>
                         </div>
                         <div class="form-group col-sm">
                             <label>
@@ -75,6 +78,8 @@ All trails
                                 </select>
                             </label>
                         </div>
+                        <input class="btn btn-primary" type="submit"/>
+                        <button class="btn btn-danger" disabled>Clear all</button>
                     </div>
                 </form>
             </div>
@@ -85,7 +90,7 @@ All trails
             <div class="results section-content">
                 <h2>Results</h2>
                 <ol>
-                    <li th:each="trail : ${allTrails}">
+                    <li th:each="trail : ${trails}">
                         <th:block>
                             <h4 th:text="${trail.name}"></h4>
                             <ul>
