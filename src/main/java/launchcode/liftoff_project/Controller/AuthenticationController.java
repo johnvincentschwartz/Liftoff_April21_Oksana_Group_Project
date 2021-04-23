@@ -65,7 +65,7 @@ public class AuthenticationController {
         User existingUser = userRepository.findByEmail(registerFormDTO.getEmail());
 
         if (existingUser != null) {
-            errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists");
+            errors.rejectValue("email", "email.alreadyexists", "A user with that email already exists");
             model.addAttribute("title", "Register");
             return "register";
         }
