@@ -1,0 +1,27 @@
+.section-container {
+    border: 3px solid black;
+}
+
+.section-content {
+    margin: 1rem;
+}
+
+.results li {
+    margin-left: 2rem;
+}
+
+#map {
+    height:500px
+}
+
+.form-group {
+    margin: 2rem;
+}
+
+input[type="number"]{
+    width: 8rem !important;
+}
+
+form {
+    text-align: center
+}

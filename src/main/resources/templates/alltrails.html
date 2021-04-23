@@ -4,7 +4,7 @@
 <body>
 <header th:replace="fragments :: header"></header>
 <head>
-    <link th:href="@{/alltrails.css}" rel="stylesheet" />
+    <link th:href="@{/css/alltrails.css}" rel="stylesheet" />
 </head>
 
 All trails
@@ -12,8 +12,71 @@ All trails
 <div class="container">
     <div class="row">
         <div class="col-sm section-container">
-            <div class="section-content">
+            <div class="section-content container">
                 <h2>Filter</h2>
+                <form class="form-inline">
+                    <div class="row">
+                        <div class="form-group col-sm">
+                            <label>
+                                Search location:
+                                <input type="text" class="form-control" id="searchLocation" placeholder="Enter city or zipcode"/>
+                            </label>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>
+                                Max Distance (mi):
+                                <input type="number" class="form-control" id="maxdistance" placeholder="None" />
+                            </label>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>
+                                Min. length (mi):
+                                <input type="number" class="form-control" id="minlength" placeholder="0" />
+                            </label>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>
+                                Max. Length (mi):
+                                <input type="number" class="form-control" id="maxlength" placeholder="None" />
+                            </label>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>
+                                Min Rating:
+                                <input type="checkBox" class="form-control" id="rating1" />
+                                <input type="checkBox" class="form-control" id="rating2" />
+                                <input type="checkBox" class="form-control" id="rating3" />
+                                <input type="checkBox" class="form-control" id="rating4" />
+                                <input type="checkBox" class="form-control" id="rating5" />
+                            </label>
+                            (Include unchecked
+                            <input type="checkbox" class="form-control" id="includeunchecked" />)
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>
+                                Difficulty:
+                                <input type="checkBox" class="form-control" id="difficulty1" />
+                                <input type="checkBox" class="form-control" id="difficulty2" />
+                                <input type="checkBox" class="form-control" id="difficulty3" />
+                                <input type="checkBox" class="form-control" id="difficulty4" />
+                                <input type="checkBox" class="form-control" id="difficulty5" />
+                            </label>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>
+                                Sort By:
+                                <select class="custom-select" id="sort">
+                                    <option value="distance">Distance</option>
+                                    <option value="length-asc">Length (Ascending)</option>
+                                    <option value="length-desc">Length (Descending)</option>
+                                    <option value="rating">Rating</option>
+                                    <option value="difficulty-asc">Difficulty (Ascending)</option>
+                                    <option value="difficulty-desc">Difficulty (Descending)</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -36,11 +99,14 @@ All trails
             </div>
         </div>
         <div class="col-sm-8 section-container">
-            <div class="map section-content">
+            <div class="map-view section-content">
                 <h2>Map</h2>
+                <div id="map"></div>
             </div>
         </div>
     </div>
 </div>
+<script th:src="@{/js/filterMap.js}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?callback=createMap&map_ids=47842a62fef6acbf&libraries=places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
 </body>
 </html>
