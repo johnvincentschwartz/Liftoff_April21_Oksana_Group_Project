@@ -1,13 +1,40 @@
 .section-container {
     border: 3px solid black;
+    padding: 2rem
 }
 
-.section-content {
-    margin: 1rem;
+h2 {
+    margin-top: 0
 }
 
-.results li {
-    margin-left: 2rem;
+ol {
+    margin-bottom: 0
+}
+
+#results-column {
+    padding-right: 0
+}
+
+#results-list {
+    overflow-y: scroll;
+    height: 500px;
+    padding-left: 3rem;
+    background-color: rgb(225, 230, 225);
+}
+
+.trail-result-block {
+    background-color: gray;
+    color: white;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.trail-result-block::marker {
+    color: black
+}
+
+.trail-result-details {
+    padding-left: 2rem;
 }
 
 #map {
@@ -26,8 +53,20 @@ form {
     text-align: center
 }
 
-.star {
-    display: none;
+#difficulty-inputs {
+    display:flex;
+    width: auto;
+}
+
+#min-rating {
+    display: flex;
+    justify-content: space-around;
+}
+
+.difficulty-label {
+    display: flex;
+    margin: 0 1rem;
+    flex-direction: column;
 }
 
 /* from https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
@@ -66,3 +105,4 @@ form {
 .rating:hover>input:checked~label:before {
     opacity: 0.4
 }
+
