@@ -75,7 +75,7 @@
     <div id="results-map-row" class="row">
         <div id="results-column" class="col-sm-4 section-container">
             <h2 th:text="'Results (' + ${trails.size()} + ')'"></h2>
-            <ol id="results-list">
+            <ol id="results-list" class="mb-0">
                 <li class="trail-result-block" th:each="trail : ${trails}" th:block>
                     <h4 class="trail-result-name" th:text="${trail.name}"></h4>
                     <ul class="trail-result-details">

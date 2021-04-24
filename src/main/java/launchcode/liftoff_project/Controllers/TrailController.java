@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("alltrails")
@@ -36,7 +35,6 @@ public class TrailController {
                                        @RequestParam List<Integer> difficulty, @RequestParam String sort){
         Iterable<Trail> allTrails = trailRepository.findAll();
         Iterable<Trail> results = filterTrails(minLength, maxLength, difficulty, sort, allTrails);
-        System.out.println(difficulty);
 
         model.addAttribute("trails", results);
 

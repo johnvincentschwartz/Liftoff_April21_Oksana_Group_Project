@@ -9,9 +9,10 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-public class Trail {
+public class Trail implements Comparable<Trail>{
 
     @Id
     @GeneratedValue
@@ -79,6 +80,29 @@ public class Trail {
 
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Trail trail = (Trail) o;
+        return id == trail.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return name + "(" + city + ", " + state + ")";
+    }
+
+    public int compareTo(Trail t) {
+        int lastCmp = name.compareTo(t.name);
+        return (lastCmp != 0 ? lastCmp : city.compareTo(t.city));
     }
 
 
