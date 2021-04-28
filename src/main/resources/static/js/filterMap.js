@@ -1,13 +1,23 @@
 //https://www.youtube.com/watch?v=oVr6unKZbg4
-//https://developers.google.com/maps/documentation/javascript/markers
+//https://developers.google.com/maps/documentation/javascript/markers - "Make a Marker Accessible"
 
+let selectedZoom = 9;
+let selectedCenter = {lat: 38.6287, lng: -90.3196};
 
+function setZoom(id) {
+    let selectedTrail = trails.find(trail => trail.id === id)
+    let currentLat = selectedTrail.lat;
+    let currentLng = selectedTrail.lng;
+    selectedCenter = {lat: currentLat, lng: currentLng}
+    selectedZoom = 14
+    initMap()
+}
 
 function initMap() {
 
   const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 9,
-    center: {lat: 38.6287, lng: -90.3196},
+    zoom: selectedZoom,
+    center: selectedCenter,
   });
 
     let testArray = [];
