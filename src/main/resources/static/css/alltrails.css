@@ -1,0 +1,108 @@
+.section-container {
+    border: 3px solid black;
+    padding: 2rem
+}
+
+h2 {
+    margin-top: 0
+}
+
+ol {
+    margin-bottom: 0
+}
+
+#results-column {
+    padding-right: 0
+}
+
+#results-list {
+    overflow-y: scroll;
+    height: 500px;
+    padding-left: 3rem;
+    background-color: rgb(225, 230, 225);
+}
+
+.trail-result-block {
+    background-color: gray;
+    color: white;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.trail-result-block::marker {
+    color: black
+}
+
+.trail-result-details {
+    padding-left: 2rem;
+}
+
+#map {
+    height:500px
+}
+
+.form-group {
+    margin: 2rem;
+}
+
+input[type="number"]{
+    width: 8rem !important;
+}
+
+form {
+    text-align: center
+}
+
+#difficulty-inputs {
+    display:flex;
+    width: auto;
+}
+
+#min-rating {
+    display: flex;
+    justify-content: space-around;
+}
+
+.difficulty-label {
+    display: flex;
+    margin: 0 1rem;
+    flex-direction: column;
+}
+
+/* from https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.rating>input {
+    display: none
+}
+
+.rating>label {
+    position: relative;
+    font-size: 2em;
+    color: #ffffff;
+    cursor: not-allowed
+}
+
+.rating>label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0
+}
+
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+    opacity: 1 !important
+}
+
+.rating>input:checked~label:before {
+    opacity: 1
+}
+
+.rating:hover>input:checked~label:before {
+    opacity: 0.4
+}
+
