@@ -1,8 +1,9 @@
 //https://www.youtube.com/watch?v=oVr6unKZbg4
 //https://developers.google.com/maps/documentation/javascript/markers - "Make a Marker Accessible"
+//https://developers.google.com/maps/documentation/javascript/infowindows
 
-let selectedZoom = 9;
-let selectedCenter = {lat: 38.6287, lng: -90.3196};
+let selectedZoom = 10;
+let selectedCenter = {lat: 38.6009, lng: -90.4329};
 
 function setZoom(id) {
     let selectedTrail = trails.find(trail => trail.id === id)
