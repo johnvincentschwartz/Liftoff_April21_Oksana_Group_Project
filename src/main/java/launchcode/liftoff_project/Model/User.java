@@ -13,6 +13,7 @@ public class User {
     @GeneratedValue
     private int id;
 
+
     @NotNull
     private String email;
 
