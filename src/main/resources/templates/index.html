@@ -10,34 +10,7 @@
     <title>Trial Tracker</title>
 </head>
 <body>
-<header>
-    <nav>
-        <div class="header">
-            <img th:src="@{/images/rocks-1837129.jpg}" width="1536px" height="400px">
-        </div>
-        <div class="navbar">
-            <div class="logo">
-                <a class="navbar-brand" th:href="@{/}">Trail Tracker</a>
-            </div>
-            <ul class="nav_links">
-                <li><a th:href="@{/alltrails}">All Trails</a></li>
-                <li><a th:href="@{/myAccount}">Account</a></li>
-                <li><a th:href="@{/meetUps}">MeetUps</a></li>
-                <li><a th:href="@{/help}">Help</a></li>
-            </ul>
-            <div class="search-container">
-                <form action="/action_page.php">
-                    <input type="text" placeholder="Search.." name="search" />
-                    <button type="submit">Search<i class="fas fa-search"></i></button>
-                </form>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a th:href="@{/userLogIn}"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
-                <li><a th:href="@{/userRegister}"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-            </ul>
-        </div>
-    </nav>
-</header>
+<header th:replace="fragments :: header"></header>
     <h1 class="first_head">Featured Trails</h1>
 <div class="trail_gallery">
     <div class="gallery">

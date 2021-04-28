@@ -72,7 +72,6 @@ INSERT INTO trail (name, city, state, length, difficulty, google_id, google_name
 ('Bluff Creek Trail','Sunset Hills','MO',1,2,'ChIJPTo7yz_O2IcRKNxAv63pEh8','Emmenegger Nature Park',38.546135,-90.433681),
 ('Newman Trail','Valmeyer','IL',1.7,2,'ChIJWU-ZcbDq2IcRe8gAEsZQpFE','Salt Lick Point Land And Water Reserve',38.302514,-90.308779),
 ('Stemler Cave Woods Nature Preserve Trail','Millstadt','IL',2.1,2,'ChIJM3RL-MW62IcR-D4u8zrK69A','Stemler Cave Woods Nature Preserve',38.46538,-90.154274),
-('Woodbine Trail','Wildwood','MO',1.5,2,'ChIJL3ejrZMs2YcR
 ('Castlewood Loop Trail','Valley Park','MO',2.8,2,'ChIJNfGTBezW2IcRb3K02JcqbCk','Castlewood Loop',38.540283,-90.54949),
 ('Memorial Park','Brentwood','MO',0.5,2,'ChIJp1nd6BrL2IcRYo26XYTxX3M','Memorial Park',38.622652,-90.344539),
 ('Hogsback Trail','Gray Summit','MO',1.4,2,'ChIJtbMaxkU12YcRvoW3faDwq4U','Hogsback Trail Head',38.583248,-90.833323),
