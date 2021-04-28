@@ -37,6 +37,14 @@ ol {
     padding-left: 2rem;
 }
 
+.trail-result-name {
+    cursor: pointer
+}
+
+.trail-result-name:hover {
+    text-decoration: underline;
+}
+
 #map {
     height:500px
 }

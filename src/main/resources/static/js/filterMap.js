@@ -1,58 +1,48 @@
 //https://www.youtube.com/watch?v=oVr6unKZbg4
+//https://developers.google.com/maps/documentation/javascript/markers - "Make a Marker Accessible"
+//https://developers.google.com/maps/documentation/javascript/infowindows
 
-let map, infoWindow;
+let selectedZoom = 10;
+let selectedCenter = {lat: 38.6009, lng: -90.4329};
 
-function createMap(){
-    let mapLat = 38.6212;
-    let mapLng = -90.2526;
+function setZoom(id) {
+    let selectedTrail = trails.find(trail => trail.id === id)
+    let currentLat = selectedTrail.lat;
+    let currentLng = selectedTrail.lng;
+    selectedCenter = {lat: currentLat, lng: currentLng}
+    selectedZoom = 14
+    initMap()
+}
 
-    var options = {
-        center: {lat: mapLat, lng: mapLng},
-        zoom: 10,
-        mapId: '47842a62fef6acbf'
-    };
+function initMap() {
 
-    map = new google.maps.Map(document.getElementById('map'), options);
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: selectedZoom,
+    center: selectedCenter,
+  });
 
-    let input = document.getElementById('search');
-        let searchBox = new google.maps.places.SearchBox(input);
+    let testArray = [];
 
-        map.addListener('bounds_changed', function() {
-            searchBox.setBounds(map.getBounds());
-        });
+    for (let i = 0; i < trails.length; i++){
+        const googlable = [{lat: trails[i].lat, lng: trails[i].lng}, trails[i].name]
+        testArray.push(googlable)
+    }
 
-        var markers = [];
+  const infoWindow = new google.maps.InfoWindow();
 
-        searchBox.addListener('places_changed', function() {
-            var places = searchBox.getPlaces();
+  testArray.forEach(([position, title], i) => {
+    const marker = new google.maps.Marker({
+      position,
+      map,
+      title: `${i + 1}. ${title}`,
+      label: `${i + 1}`,
+      optimized: false,
+    });
 
-            if (places.length === 0){
-                return;
-            }
-
-            markers.forEach(function(m) {
-                m.setMap(null);
-            })
-            markers = [];
-
-            let bounds = new google.maps.LatLngBounds();
-
-            places.forEach(function (p) {
-                if (!p.geometry){
-                    return
-                }
-
-                markers.push(new google.maps.Marker({
-                    map: map,
-                    title: p.name,
-                    position: p.geometry.location
-                }));
-                if (p.geometry.viewport){
-                    bounds.union(p.geometry.viewport);
-                } else {
-                    bounds.extend(p.geometry.location);
-                }
-            });
-            map.fitBounds(bounds)
-        });
+    marker.addListener("click", () => {
+      infoWindow.close();
+      infoWindow.setContent(marker.getTitle());
+      infoWindow.open(marker.getMap(), marker);
+    });
+  });
 }

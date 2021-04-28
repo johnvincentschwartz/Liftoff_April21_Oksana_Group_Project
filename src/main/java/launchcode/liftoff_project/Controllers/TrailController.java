@@ -78,10 +78,6 @@ public class TrailController {
         }
 
 
-
-
-
-
         return results;
     }
 
