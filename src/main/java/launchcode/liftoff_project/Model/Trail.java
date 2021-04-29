@@ -28,12 +28,24 @@ public class Trail implements Comparable<Trail>{
 
     private int difficulty;
 
+    private String google_id;
+
+    private String google_name;
+
+    private Float lat;
+
+    private Float lng;
+
     public Trail(String name, String city, String state, Float length, int difficulty) {
         this.name = name;
         this.city = city;
         this.state = state;
         this.length = length;
         this.difficulty = difficulty;
+        this.google_id = null;
+        this.google_name = null;
+        this.lat = null;
+        this.lng = null;
     }
 
     public Trail(){}
@@ -80,6 +92,38 @@ public class Trail implements Comparable<Trail>{
 
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public String getGoogleId() {
+        return google_id;
+    }
+
+    public void setGoogleId(String google_id) {
+        this.google_id = google_id;
+    }
+
+    public String getGoogleName() {
+        return google_name;
+    }
+
+    public void setGoogleName(String google_name) {
+        this.google_name = google_name;
+    }
+
+    public Float getLat() {
+        return lat;
+    }
+
+    public void setLat(Float lat) {
+        this.lat = lat;
+    }
+
+    public Float getLng() {
+        return lng;
+    }
+
+    public void setLng(Float lng) {
+        this.lng = lng;
     }
 
     @Override

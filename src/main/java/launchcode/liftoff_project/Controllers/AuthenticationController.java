@@ -1,4 +1,4 @@
-package launchcode.liftoff_project.Controller;
+package launchcode.liftoff_project.Controllers;
 
 
 import launchcode.liftoff_project.Model.User;
