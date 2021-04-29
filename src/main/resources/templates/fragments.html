@@ -31,15 +31,15 @@
                     <button type="submit">Search<i class="fas fa-search"></i></button>
                 </form>
             </div>
-<<<<<<< HEAD
-            <ul th:if = "${!theUser.isEmailValidated()}" class="nav navbar-nav navbar-right">
-                <li><a th:href="@{/userLogIn}"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
-                <li><a th:href="@{/userRegister}"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-            </ul>
+              <ul th:unless = "${theUser}" class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+                <li><a th:href="@{/register}"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+              </ul>
             </div>
             <div>
-                <ul th:unless = "${theUser.isEmailValidated()}" class="nav navbar-nav navbar-right">
-                    <li><a th:href="@{/index}">Welcome User</a></li>
+                <ul th:if = "${theUser}" class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/index}"><span class="glyphicon glyphicon-user"></span>Welcome User</a></li>
+                    <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-user"></span> Log Out</a></li>
                 </ul>
             </div>
         </div>
