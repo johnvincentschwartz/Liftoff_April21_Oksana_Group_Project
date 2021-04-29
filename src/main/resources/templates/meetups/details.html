@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: meetup-page-header"></header>
+
+<table class="table table-stripped">
+    <tr>
+        <th>Meetup ID</th>
+        <td th:text="${meetup.id}"></td>
+    </tr>
+    <tr>
+        <th>Meetup Description</th>
+        <td th:text="${meetup.meetupDetails.meetupDescription}"></td>
+    </tr>
+    <tr>
+        <th>Meetup Contact Email</th>
+        <td th:text="${meetup.meetupDetails.meetupContactEmail}"></td>
+    </tr>
+    <tr>
+        <th>Meetup Category</th>
+        <td th:text="${meetup.meetupCategory}"></td>
+    </tr>
+</table>
+</body>
+</html>

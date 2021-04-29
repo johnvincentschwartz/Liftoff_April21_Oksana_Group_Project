@@ -3,6 +3,7 @@
 
 <head th:fragment="head">
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -38,6 +39,21 @@
         </div>
     </nav>
 </header>
+
+
+<header class="meetup-page-header" th:fragment="meetup-page-header">
+    <h1 th:text="${title}">TrailTracker</h1>
+    <ul class="nav" style="float:right;">
+        <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
+    </ul>
+    <ul class="nav">
+        <li class="nav-item"><a class="nav-link" href="/meetups">All Meetups</a></li>
+        <li class="nav-item"><a class="nav-link" href="/meetups/create">Create a Meetup</a></li>
+        <li class="nav-item"><a class="nav-link" href="/meetups/delete">Delete a Meetup</a></li>
+        <li class="nav-item"><a class="nav-link" href="/meetupCategories">Meetup Categories</a></li>
+    </ul>
+</header>
+
 
 </body>
 </html>

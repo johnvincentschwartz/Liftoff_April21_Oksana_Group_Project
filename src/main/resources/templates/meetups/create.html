@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: meetup-page-header"></header>
+
+<form method="post">
+    <div class="form-group">
+        <label>Meetup Name
+            <input th:field="${meetup.meetupName}" class="form-control">
+        </label>
+        <p class="error" th:errors="${meetup.meetupName}"></p>
+    </div>
+    <div class="form-group">
+        <label>Meetup Description:
+            <input th:field="${meetup.meetupDetails.meetupDescription}" class="form-control">
+        </label>
+        <p class="error" th:errors="${meetup.meetupDetails.meetupDescription}"></p>
+    </div>
+    <div class="form-group">
+        <label>Meetup Contact Email:
+            <input th:field="${meetup.meetupDetails.meetupContactEmail}" class="form-control">
+        </label>
+        <p class="error" th:errors="${meetup.meetupDetails.meetupContactEmail}"></p>
+    </div>
+    <div class="form-group">
+        <label>Meetup Category:
+            <select th:field="${meetup.meetupCategory}">
+                <option th:each="meetupCategory : ${categories}"
+                        th:value="${meetupCategory.id}"
+                        th:text="${meetupCategory.meetupCategoryName}">
+                </option>
+            </select>
+            <p class="error" th:errors="${meetup.meetupCategory}"></p>
+        </label>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create Meetup" class="btn btn-success">
+    </div>
+</form>
+
+</body>
+</html>
