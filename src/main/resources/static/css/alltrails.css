@@ -16,23 +16,17 @@ ol {
 }
 
 #results-list {
+    color: white;
     overflow-y: scroll;
     height: 500px;
     padding-left: 3rem;
-    background-color: rgb(225, 230, 225);
+    background-color: #091E05;
 }
 
 .trail-result-block {
-    background-color: gray;
-    color: white;
     padding: 1rem;
     margin: 1rem 0;
 }
-
-.trail-result-block::marker {
-    color: black
-}
-
 .trail-result-details {
     padding-left: 2rem;
 }
@@ -114,3 +108,23 @@ form {
     opacity: 0.4
 }
 
+/* infoWindow */
+.gm-style .gm-style-iw-c {
+    padding: 0;
+    background-color: #091E05 !important;
+    border: 10px solid black;
+    margin: 0;
+}
+
+.gm-style-iw-d {
+    padding: 0;
+    overflow: hidden !important;
+
+}
+
+.gm-ui-hover-effect {
+    background-color: rgb(171, 196, 173) !important;
+    /*width: 50px !important;
+    height: 50px !important;*/
+    margin: 10px 10px 0 0;
+}
