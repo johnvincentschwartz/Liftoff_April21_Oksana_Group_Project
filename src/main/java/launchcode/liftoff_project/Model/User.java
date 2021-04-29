@@ -8,11 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class User {
-    @Id
-    @GeneratedValue
-    private int id;
-
+public class User extends AbstractEntity {
 
     @NotNull
     private String email;
@@ -27,10 +23,6 @@ public class User {
     public User(String email, String password) {
         this.email = email;
         this.pwHash = encoder.encode(password);
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getEmail() {
