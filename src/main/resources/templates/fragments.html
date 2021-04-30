@@ -32,10 +32,17 @@
                     <button type="submit">Search<i class="fas fa-search"></i></button>
                 </form>
             </div>
-            <ul class="nav navbar-nav navbar-right">
+              <ul th:unless = "${theUser}" class="nav navbar-nav navbar-right">
                 <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
                 <li><a th:href="@{/register}"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-            </ul>
+              </ul>
+            </div>
+            <div>
+                <ul th:if = "${theUser}" class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/index}"><span class="glyphicon glyphicon-user"></span>Welcome User</a></li>
+                    <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-user"></span> Log Out</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 </header>
