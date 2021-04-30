@@ -1,6 +1,6 @@
 package launchcode.liftoff_project.Model;
 
-import org.dom4j.tree.AbstractEntity;
+//import org.dom4j.tree.AbstractEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
