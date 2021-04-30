@@ -16,6 +16,10 @@
 <body>
 <header th:fragment="header">
     <nav>
+        <div class="header">
+            <img th:src="@{/images/rocks-1837129.jpg}" width="1536px" height="400px">
+            <div class="centered">Welcome to Trail Tracker</div>
+        </div>
         <div class="navbar">
             <div class="logo">
                 <a class="navbar-brand" th:href="@{/}">Trail Tracker</a>
@@ -41,7 +45,7 @@
 </header>
 
 
-<header class="meetup-page-header" th:fragment="meetup-page-header">
+<nav class="meetup-page-header" th:fragment="meetup-page-header">
     <h1 th:text="${title}">TrailTracker</h1>
     <ul class="nav" style="float:right;">
         <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
@@ -52,7 +56,8 @@
         <li class="nav-item"><a class="nav-link" href="/meetups/delete">Delete a Meetup</a></li>
         <li class="nav-item"><a class="nav-link" href="/meetupCategories">Meetup Categories</a></li>
     </ul>
-</header>
+</nav>
+
 
 
 </body>
