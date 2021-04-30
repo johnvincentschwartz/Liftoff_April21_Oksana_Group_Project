@@ -23,7 +23,7 @@
             <ul class="nav_links">
                 <li><a th:href="@{/alltrails}">All Trails</a></li>
                 <li><a th:href="@{/myAccount}">Account</a></li>
-                <li><a th:href="@{/meetUps}">MeetUps</a></li>
+                <li><a th:href="@{/meetups}">Meetups</a></li>
                 <li><a th:href="@{/help}">Help</a></li>
             </ul>
             <div class="search-container">
@@ -32,28 +32,20 @@
                     <button type="submit">Search<i class="fas fa-search"></i></button>
                 </form>
             </div>
-            <ul class="nav navbar-nav navbar-right">
+              <ul th:unless = "${theUser}" class="nav navbar-nav navbar-right">
                 <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
                 <li><a th:href="@{/register}"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-            </ul>
+              </ul>
+            </div>
+            <div>
+                <ul th:if = "${theUser}" class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/index}"><span class="glyphicon glyphicon-user"></span>Welcome User</a></li>
+                    <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-user"></span> Log Out</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 </header>
-
-
-<header class="meetup-page-header" th:fragment="meetup-page-header">
-    <h1 th:text="${title}">TrailTracker</h1>
-    <ul class="nav" style="float:right;">
-        <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
-    </ul>
-    <ul class="nav">
-        <li class="nav-item"><a class="nav-link" href="/meetups">All Meetups</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetups/create">Create a Meetup</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetups/delete">Delete a Meetup</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetupCategories">Meetup Categories</a></li>
-    </ul>
-</header>
-
 
 </body>
 </html>
