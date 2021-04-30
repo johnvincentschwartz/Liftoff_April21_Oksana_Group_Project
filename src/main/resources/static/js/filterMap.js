@@ -2,6 +2,7 @@
 //https://developers.google.com/maps/documentation/javascript/markers - "Make a Marker Accessible"
 //https://developers.google.com/maps/documentation/javascript/infowindows
 //https://developers.google.com/maps/documentation/javascript/events - "Listening to DOM Events"
+//https://developers.google.com/maps/documentation/javascript/geolocation
 
 //defaults map zoom and center when map is first loaded. selectedId defaults to the first item in the initial results.
 let selectedZoom = 10;
@@ -33,6 +34,22 @@ function initMap() {
         mapId: '59da3fe57cf0042e',
         mapTypeControl: false
     });
+
+    if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+              map.setCenter(pos);
+              console.log(position)
+            },
+            () => {
+              handleLocationError(true, infoWindow, map.getCenter());
+            }
+          );
+        }
 
     //Initialize array that will still the marker location and info window information for every trail in the left column
     let allResults = [];
