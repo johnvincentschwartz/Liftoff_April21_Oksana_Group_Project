@@ -38,3 +38,5 @@ public class MeetupDetails extends AbstractEntity {
         this.meetupContactEmail = meetupContactEmail;
     }
 }
+
+
