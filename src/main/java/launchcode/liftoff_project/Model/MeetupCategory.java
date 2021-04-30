@@ -1,7 +1,5 @@
 package launchcode.liftoff_project.Model;
 
-import org.dom4j.tree.AbstractEntity;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,10 +10,6 @@ import java.util.List;
 
 @Entity
 public class MeetupCategory extends AbstractEntity {
-
-    @Id
-    @GeneratedValue
-    public int id;
 
     @Size(min = 2, message = "Meetup category name must be at least 2 characters long!")
     private String meetupCategoryName;
