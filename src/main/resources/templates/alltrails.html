@@ -79,9 +79,9 @@
                 <li class="trail-result-block" th:each="trail : ${trails}" th:block>
                     <h4 class="trail-result-name" th:text="${trail.name}" th:attr="onclick='setZoom(' + ${trail.id} + ')'"></h4>
                     <ul class="trail-result-details">
-                        <li th:text="${trail.length} + ' mi, Level ' + ${trail.difficulty}"></li>
+                        <li th:text="${trail.length} + ' mi long, Level ' + ${trail.difficulty}"></li>
                         <li th:text="${trail.city} +', ' + ${trail.state}"></li>
-                        <li>Search location to see distance</li>
+                        <li th:id="'distance-from-' + ${trail.id}"></li>
                     </ul>
                 </li>
             </ol>

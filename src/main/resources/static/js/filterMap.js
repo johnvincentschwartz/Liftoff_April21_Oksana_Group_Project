@@ -6,56 +6,91 @@
 
 //defaults map zoom and center when map is first loaded. selectedId defaults to the first item in the initial results.
 let selectedZoom = 10;
-let selectedCenter = {lat: 38.6009, lng: -90.4329};
+let selectedLocation = {lat: 38.6009, lng: -90.4330};
+let userLocation = {lat: 38.6009, lng: -90.4329};
+console.log("SET DEFAULT LOC")
 let selectedId = 1;
-
 let initialLoad = true;
 
-//called with onclick on HTML element for filter result title.
+function getUserLocation(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                //position = GeolocationPosition object {coords, timestamp}
+                const pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                //pos = LatLng obj
+                userLocation = pos;
+                calculateDistance(trails);
+                initMap();
+            },
+            () => {
+              handleLocationError(true, infoWindow, map.getCenter());
+            }
+        )
+    }
+}
+
+getUserLocation()
+
 function setZoom(id) {
     let selectedTrail = trails.find(trail => trail.id === id)
     let currentLat = selectedTrail.lat;
     let currentLng = selectedTrail.lng;
-    selectedCenter = {lat: currentLat, lng: currentLng}
+
+    selectedLocation = {lat: currentLat, lng: currentLng}
     selectedZoom = 13;
     selectedId = id;
     initialLoad = false;
     initMap();
-    console.log(selectedId)
 }
 
-//sets up map to put in div #map
+function calculateDistance(trails){
+    const service = new google.maps.DistanceMatrixService();
+
+    for (let i = 0; i < trails.length; i++){
+        if (i === 0){
+            console.log("USER LOC WHEN DISTANCE MATRIX IS RUN: ", userLocation)
+        }
+
+        service.getDistanceMatrix({
+            origins: [userLocation],
+            destinations: [{lat: trails[i].lat, lng: trails[i].lng}],
+            travelMode: 'DRIVING',
+            unitSystem: google.maps.UnitSystem.IMPERIAL
+        }, callback)
+
+        const distanceAwayLi = document.getElementById(`distance-from-${trails[i].id}`)
+
+        function callback(response, status) {
+            let origin = response.originAddresses[0];
+            console.log("ORIGIN", origin)
+            let destination = response.destinationAddresses[0]
+            console.log("DESTINATION", destination)
+            let element = response.rows[0].elements[0]
+            console.log("ELEMENT", element)
+            let distance = element.distance.text
+            let duration = element.duration.text
+            distanceAwayLi.innerHTML = `${distance} away (${duration} drive)`;
+        }
+    };
+}
+
 function initMap() {
 
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: selectedZoom,
-        center: selectedCenter,
+        center: userLocation,
         mapTypeId: 'hybrid',
         mapId: '59da3fe57cf0042e',
         mapTypeControl: false
     });
 
-    if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              };
-              map.setCenter(pos);
-              console.log(position)
-            },
-            () => {
-              handleLocationError(true, infoWindow, map.getCenter());
-            }
-          );
-        }
-
-    //Initialize array that will still the marker location and info window information for every trail in the left column
     let allResults = [];
 
     for (let i = 0; i < trails.length; i++){
-        //In a string, store the div that will appear as the info window for a given trail.
         const infoWindowContent =
             `<div style="background-color: #091E05; color: white; padding: 3rem; margin: 0; width: auto; height: auto">
                 <h3>${trails[i].name}</h3>
@@ -87,32 +122,26 @@ function initMap() {
         allResults.push({markerPosition, title, infoWindowContent, id: trails[i].id})
     }
 
-    //Initialize the pop-up box for a given array that appears on the map.
     const infoWindow = new google.maps.InfoWindow();
 
-    //Iterate through the completed allResults array to create a marker for each.
     allResults.forEach((result, i) => {
-        console.log(i)
         const marker = new google.maps.Marker({
             position: result.markerPosition,
             map,
             title: `${i + 1}. ${result.title}`,
             label: `${i + 1}`,
-            optimized: false,
+            optimized: false
         });
 
-        //InfoWindow will automatically open if the marker's ID matches the selectedId, the id that has just been clicked on the left
         if (!initialLoad && selectedId === result.id){
             infoWindow.setContent(result.infoWindowContent);
             infoWindow.open(marker.getMap(), marker);
         }
 
-        //Also allow info window to open if marker is clicked on
         marker.addListener("click", () => {
-          infoWindow.close();
-          infoWindow.setContent(result.infoWindowContent);
-          infoWindow.open(marker.getMap(), marker);
+            infoWindow.close();
+            infoWindow.setContent(result.infoWindowContent);
+            infoWindow.open(marker.getMap(), marker);
         });
-
     });
 }
