@@ -14,7 +14,7 @@
                 <div id="form-row" class="row">
                     <div id="search-location-container" class="form-group col-sm">
                         <label for="search-location">Search location:</label>
-                        <input id="search-location" disabled type="text" class="form-control" placeholder="Enter city or zipcode"/>
+                        <input id="search-location" name="searchLocation" type="text" class="form-control" placeholder="Enter city or zipcode"/>
                     </div>
                     <div id="max-distance-container" class="form-group col-sm">
                         <label for="max-distance">Max Distance (mi):</label>
@@ -95,7 +95,9 @@
 <script th:src="@{/js/filterMap.js}"></script>
 <script th:inline="javascript">
     let trails = /*[[${trails}]]*/
+    let searchLocation = /*[[${searchLocation}]]*/
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=&v=weekly&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
+<script th:if="${searchLocation == null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initDefaultMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
+<script th:if="${searchLocation != null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initSearchMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
 </body>
 </html>

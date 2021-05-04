@@ -4,36 +4,31 @@
 //https://developers.google.com/maps/documentation/javascript/events - "Listening to DOM Events"
 //https://developers.google.com/maps/documentation/javascript/geolocation
 
-//defaults map zoom and center when map is first loaded. selectedId defaults to the first item in the initial results.
+const locationSearchInput = document.getElementById("search-location")
+
 let selectedZoom = 10;
 let selectedLocation = {lat: 38.6009, lng: -90.4330};
-let userLocation = {lat: 38.6009, lng: -90.4329};
-console.log("SET DEFAULT LOC")
 let selectedId = 1;
 let initialLoad = true;
 
-function getUserLocation(){
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                //position = GeolocationPosition object {coords, timestamp}
-                const pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
-                //pos = LatLng obj
-                userLocation = pos;
-                calculateDistance(trails);
-                initMap();
-            },
-            () => {
-              handleLocationError(true, infoWindow, map.getCenter());
-            }
-        )
-    }
-}
-
-getUserLocation()
+//function getUserLocation(){
+//    if (navigator.geolocation) {
+//        navigator.geolocation.getCurrentPosition(
+//            (position) => {
+//                //position = GeolocationPosition object {coords, timestamp}
+//                const pos = {
+//                    lat: position.coords.latitude,
+//                    lng: position.coords.longitude,
+//                };
+//                //pos = LatLng obj
+//                userLocation = pos;
+//                console.log("End of getUserLocation()", userLocation)
+//                calculateDistance(trails);
+//                initMap();
+//            }
+//        )
+//    }
+//}
 
 function setZoom(id) {
     let selectedTrail = trails.find(trail => trail.id === id)
@@ -47,7 +42,7 @@ function setZoom(id) {
     initMap();
 }
 
-function calculateDistance(trails){
+function calculateDistance(trails, userLocation){
     const service = new google.maps.DistanceMatrixService();
 
     for (let i = 0; i < trails.length; i++){
@@ -78,17 +73,53 @@ function calculateDistance(trails){
     };
 }
 
-function initMap() {
+function initSearchMap() {
+    const geocoder = new google.maps.Geocoder();
+    console.log(searchLocation)
+    geocoder.geocode({ address: searchLocation }, (results, status) => {
+        if (status === "OK") {
+              const {lat, lng} = results[0].geometry.location;
+              userLocation = {lat: lat(), lng: lng()}
+        } else {
+            alert(status)
+        }
+         map = new google.maps.Map(document.getElementById("map"), {
+            zoom: selectedZoom,
+            center: userLocation,
+            mapTypeId: 'hybrid',
+            mapId: '59da3fe57cf0042e',
+            mapTypeControl: false
+        });
+        processResults(trails,map)
+    })
+}
 
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: selectedZoom,
-        center: userLocation,
-        mapTypeId: 'hybrid',
-        mapId: '59da3fe57cf0042e',
-        mapTypeControl: false
-    });
+let map;
+let userLocation;
+
+function initDefaultMap() {
+    userLocation = new Object();
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+        userLocation.lat = position.coords.latitude,
+        userLocation.lng = position.coords.longitude,
+
+        map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 10,
+            center: userLocation,
+            mapTypeId: 'hybrid',
+            mapId: '59da3fe57cf0042e',
+            mapTypeControl: false
+        });
+        processResults(trails, map)
+    })
+}
+
+function processResults(trails, map){
 
     let allResults = [];
+
+    calculateDistance(trails, userLocation)
 
     for (let i = 0; i < trails.length; i++){
         const infoWindowContent =
@@ -116,7 +147,6 @@ function initMap() {
                 <button class="btn btn-primary" style="width: 100%; margin: 0.5rem 0">Plan a Meetup</button>
             </div>`
 
-        //prepare data that will be needed to establish markers, including the trail object's ID so marker will recognize if trail's ID matches selected ID
         const markerPosition = {lat: trails[i].lat, lng: trails[i].lng}
         const title = trails[i].name
         allResults.push({markerPosition, title, infoWindowContent, id: trails[i].id})

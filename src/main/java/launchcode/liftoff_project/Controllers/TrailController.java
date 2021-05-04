@@ -32,17 +32,19 @@ public class TrailController {
 
     @PostMapping("results")
     public String displayFilterResults(Model model, @RequestParam Double minLength, @RequestParam Double maxLength,
-                                       @RequestParam List<Integer> difficulty, @RequestParam String sort){
+                                       @RequestParam List<Integer> difficulty, @RequestParam String searchLocation, @RequestParam String sort){
         Iterable<Trail> allTrails = trailRepository.findAll();
-        Iterable<Trail> results = filterTrails(minLength, maxLength, difficulty, sort, allTrails);
+        Iterable<Trail> results = filterTrails(minLength, maxLength, difficulty, sort, searchLocation, allTrails);
+        System.out.println(searchLocation);
 
+        model.addAttribute("searchLocation", searchLocation);
         model.addAttribute("trails", results);
 
         return "alltrails";
 
     }
 
-    public static ArrayList<Trail> filterTrails(Double minLength, Double maxLength, List<Integer> difficulty, String sort, Iterable<Trail> allTrails){
+    public static ArrayList<Trail> filterTrails(Double minLength, Double maxLength, List<Integer> difficulty, String sort, String searchLocation, Iterable<Trail> allTrails){
         ArrayList<Trail> results = new ArrayList<>();
 
         if (minLength == null){ minLength = 0.0; }
@@ -56,9 +58,6 @@ public class TrailController {
             difficulty.add(5);
         }
 
-
-        System.out.println(difficulty);
-
         for (Trail trail : allTrails){
             if (
                 trail.getLength() > minLength && trail.getLength() < maxLength
@@ -66,17 +65,6 @@ public class TrailController {
                 results.add(trail);
             }
         }
-
-        if (sort.equals("length-asc")){
-
-        } else if (sort.equals("length-desc")){
-
-        } else if (sort.equals("difficulty-asc")) {
-
-        } else if (sort.equals("difficulty-desc")){
-
-        }
-
 
         return results;
     }
