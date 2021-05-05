@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface TrailRepository extends JpaRepository<Trail, Integer> {
-//    Iterable<Trail> findAllOrderByLength();
-//    Iterable<Trail> findAllOrderByDifficulty();
+
 }

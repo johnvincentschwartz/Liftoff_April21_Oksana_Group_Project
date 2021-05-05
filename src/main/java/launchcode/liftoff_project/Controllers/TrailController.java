@@ -26,23 +26,34 @@ public class TrailController {
     @GetMapping
     public String index(Model model){
 
+        List<Integer> difficulty = new ArrayList<>();
+        difficulty.add(1);
+        difficulty.add(2);
+        difficulty.add(3);
+        difficulty.add(4);
+        difficulty.add(5);
+
         model.addAttribute("trails", trailRepository.findAll());
+        model.addAttribute("difficulty", difficulty);
 
         return "alltrails";
     }
 
     @PostMapping()
     public String displayFilterResults(Model model, @RequestParam Double minLength, @RequestParam Double maxLength,
-                                       @RequestParam List<Integer> difficulty, @RequestParam String searchLocation, @RequestParam Double maxDistance, @RequestParam String sort){
+                                       @RequestParam List<Integer> difficulty, @RequestParam String searchLocation,
+                                       @RequestParam Double maxDistance, @RequestParam String sort){
 
         Iterable<Trail> allTrailsSorted = trailRepository.findAll(Sort.by(Sort.Direction.ASC, sort));
         Collection<Trail> results = filterTrails(minLength, maxLength, difficulty, allTrailsSorted);
 
+        model.addAttribute("minLength", minLength);
+        model.addAttribute("maxLength", maxLength);
+        model.addAttribute("difficulty", difficulty);
         model.addAttribute("maxDistance", maxDistance);
         model.addAttribute("searchLocation", searchLocation);
         model.addAttribute("sort", sort);
         model.addAttribute("trails", results);
-
 
         return "alltrails";
 
