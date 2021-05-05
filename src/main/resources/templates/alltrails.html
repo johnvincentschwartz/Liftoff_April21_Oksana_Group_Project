@@ -10,7 +10,7 @@
     <div id="filter-row" class="row">
         <div id="filter-column" class="col-sm section-container container">
             <h2>Filter</h2>
-            <form id="filter-form" class="form-inline" th:action="@{/alltrails/results}" method="post">
+            <form id="filter-form" class="form-inline" th:action="@{/alltrails/}" method="post">
                 <div id="form-row" class="row">
                     <div id="search-location-container" class="form-group col-sm">
                         <label for="search-location">Search location:</label>
@@ -18,7 +18,7 @@
                     </div>
                     <div id="max-distance-container" class="form-group col-sm">
                         <label for="max-distance">Max Distance (mi):</label>
-                        <input id="max-distance" disabled type="number" class="form-control" placeholder="None" />
+                        <input id="max-distance" name="maxDistance" type="number" class="form-control" placeholder="None" />
                     </div>
                     <div id="min-length-container" class="form-group col-sm">
                         <label for="min-length">Min. length (mi):</label>
@@ -57,11 +57,9 @@
                         <label for="sort">Sort By:</label>
                         <select id="sort" name="sort" class="custom-select" >
                             <option th:value="distance">Distance</option>
-                            <option th:value="length-asc" selected>Length (Ascending)</option>
-                            <option th:value="length-desc">Length (Descending)</option>
+                            <option th:value="length" selected>Length</option>
                             <option th:value="rating">Rating</option>
-                            <option th:value="difficulty-asc">Difficulty (Ascending)</option>
-                            <option th:value="difficulty-desc">Difficulty (Descending)</option>
+                            <option th:value="difficulty">Difficulty</option>
                         </select>
                     </div>
                     <div id="button-container" class="form-group col-sm">
@@ -96,6 +94,7 @@
 <script th:inline="javascript">
     let trails = /*[[${trails}]]*/
     let searchLocation = /*[[${searchLocation}]]*/
+    let sort = /*[[${sort}]]*/
 </script>
 <script th:if="${searchLocation == null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initDefaultMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
 <script th:if="${searchLocation != null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initSearchMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>

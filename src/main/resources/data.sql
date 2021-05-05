@@ -10,7 +10,8 @@ difficulty INT,
 google_id VARCHAR(255),
 google_name VARCHAR(255),
 lat FLOAT NULL,
-lng FLOAT NULL
+lng FLOAT NULL,
+distance DOUBLE
 );
 
 INSERT INTO trail (name, city, state, length, difficulty, google_id, google_name, lat, lng) VALUES

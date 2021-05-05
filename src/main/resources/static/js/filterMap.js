@@ -4,51 +4,31 @@
 //https://developers.google.com/maps/documentation/javascript/events - "Listening to DOM Events"
 //https://developers.google.com/maps/documentation/javascript/geolocation
 
-const locationSearchInput = document.getElementById("search-location")
-
 let selectedZoom = 10;
 let selectedLocation = {lat: 38.6009, lng: -90.4330};
-let selectedId = 1;
+let selectedId;
 let initialLoad = true;
-
-//function getUserLocation(){
-//    if (navigator.geolocation) {
-//        navigator.geolocation.getCurrentPosition(
-//            (position) => {
-//                //position = GeolocationPosition object {coords, timestamp}
-//                const pos = {
-//                    lat: position.coords.latitude,
-//                    lng: position.coords.longitude,
-//                };
-//                //pos = LatLng obj
-//                userLocation = pos;
-//                console.log("End of getUserLocation()", userLocation)
-//                calculateDistance(trails);
-//                initMap();
-//            }
-//        )
-//    }
-//}
+let map;
+let userLocation;
+const searchLocationInput = document.getElementById('search-location');
 
 function setZoom(id) {
     let selectedTrail = trails.find(trail => trail.id === id)
-    let currentLat = selectedTrail.lat;
-    let currentLng = selectedTrail.lng;
 
-    selectedLocation = {lat: currentLat, lng: currentLng}
     selectedZoom = 13;
+    lastSelectedId = selectedId;
     selectedId = id;
+
     initialLoad = false;
-    initMap();
+
+    initDefaultMap()
+
 }
 
 function calculateDistance(trails, userLocation){
     const service = new google.maps.DistanceMatrixService();
 
     for (let i = 0; i < trails.length; i++){
-        if (i === 0){
-            console.log("USER LOC WHEN DISTANCE MATRIX IS RUN: ", userLocation)
-        }
 
         service.getDistanceMatrix({
             origins: [userLocation],
@@ -61,13 +41,11 @@ function calculateDistance(trails, userLocation){
 
         function callback(response, status) {
             let origin = response.originAddresses[0];
-            console.log("ORIGIN", origin)
             let destination = response.destinationAddresses[0]
-            console.log("DESTINATION", destination)
             let element = response.rows[0].elements[0]
-            console.log("ELEMENT", element)
             let distance = element.distance.text
             let duration = element.duration.text
+
             distanceAwayLi.innerHTML = `${distance} away (${duration} drive)`;
         }
     };
@@ -75,7 +53,7 @@ function calculateDistance(trails, userLocation){
 
 function initSearchMap() {
     const geocoder = new google.maps.Geocoder();
-    console.log(searchLocation)
+
     geocoder.geocode({ address: searchLocation }, (results, status) => {
         if (status === "OK") {
               const {lat, lng} = results[0].geometry.location;
@@ -94,15 +72,22 @@ function initSearchMap() {
     })
 }
 
-let map;
-let userLocation;
-
 function initDefaultMap() {
     userLocation = new Object();
+    const geocoder = new google.maps.Geocoder();
 
     navigator.geolocation.getCurrentPosition(function(position) {
         userLocation.lat = position.coords.latitude,
         userLocation.lng = position.coords.longitude,
+
+        geocoder.geocode({ location: userLocation }, (results, status) => {
+                if (status === "OK") {
+                      const zip = results[0].address_components[6].long_name;
+                      searchLocationInput.value = zip;
+                } else {
+                    alert(status)
+                }
+            })
 
         map = new google.maps.Map(document.getElementById("map"), {
             zoom: 10,
@@ -117,15 +102,25 @@ function initDefaultMap() {
 
 function processResults(trails, map){
 
+    const marker = new google.maps.Marker({
+        position: userLocation,
+        map,
+        title: `You are here`,
+        icon: {url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"},
+        optimized: false
+    });
+
     let allResults = [];
 
     calculateDistance(trails, userLocation)
 
-    for (let i = 0; i < trails.length; i++){
+    const infoWindow = new google.maps.InfoWindow();
+
+    for (let trail of trails){
         const infoWindowContent =
             `<div style="background-color: #091E05; color: white; padding: 3rem; margin: 0; width: auto; height: auto">
-                <h3>${trails[i].name}</h3>
-                <h4>${trails[i].length} mi, Level ${trails[i].difficulty}</h4>
+                <h3>${trail.name}</h3>
+                <h4>${trail.length} mi, Level ${trail.difficulty}</h4>
                 <strong>Features:</strong>
                 <ul>
                     <li>A feature</li>
@@ -147,12 +142,10 @@ function processResults(trails, map){
                 <button class="btn btn-primary" style="width: 100%; margin: 0.5rem 0">Plan a Meetup</button>
             </div>`
 
-        const markerPosition = {lat: trails[i].lat, lng: trails[i].lng}
-        const title = trails[i].name
-        allResults.push({markerPosition, title, infoWindowContent, id: trails[i].id})
+        const markerPosition = {lat: trail.lat, lng: trail.lng}
+        const title = trail.name
+        allResults.push({markerPosition, title, infoWindowContent, id: trail.id})
     }
-
-    const infoWindow = new google.maps.InfoWindow();
 
     allResults.forEach((result, i) => {
         const marker = new google.maps.Marker({
@@ -173,5 +166,6 @@ function processResults(trails, map){
             infoWindow.setContent(result.infoWindowContent);
             infoWindow.open(marker.getMap(), marker);
         });
+
     });
 }

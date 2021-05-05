@@ -4,6 +4,7 @@ import launchcode.liftoff_project.Model.Trail;
 import launchcode.liftoff_project.Model.data.TrailRepository;
 import org.hibernate.annotations.SQLInsert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
@@ -30,21 +31,24 @@ public class TrailController {
         return "alltrails";
     }
 
-    @PostMapping("results")
+    @PostMapping()
     public String displayFilterResults(Model model, @RequestParam Double minLength, @RequestParam Double maxLength,
-                                       @RequestParam List<Integer> difficulty, @RequestParam String searchLocation, @RequestParam String sort){
-        Iterable<Trail> allTrails = trailRepository.findAll();
-        Iterable<Trail> results = filterTrails(minLength, maxLength, difficulty, sort, searchLocation, allTrails);
-        System.out.println(searchLocation);
+                                       @RequestParam List<Integer> difficulty, @RequestParam String searchLocation, @RequestParam Double maxDistance, @RequestParam String sort){
 
+        Iterable<Trail> allTrailsSorted = trailRepository.findAll(Sort.by(Sort.Direction.ASC, sort));
+        Collection<Trail> results = filterTrails(minLength, maxLength, difficulty, allTrailsSorted);
+
+        model.addAttribute("maxDistance", maxDistance);
         model.addAttribute("searchLocation", searchLocation);
+        model.addAttribute("sort", sort);
         model.addAttribute("trails", results);
+
 
         return "alltrails";
 
     }
 
-    public static ArrayList<Trail> filterTrails(Double minLength, Double maxLength, List<Integer> difficulty, String sort, String searchLocation, Iterable<Trail> allTrails){
+    public static ArrayList<Trail> filterTrails(Double minLength, Double maxLength, List<Integer> difficulty, Iterable<Trail> allTrails){
         ArrayList<Trail> results = new ArrayList<>();
 
         if (minLength == null){ minLength = 0.0; }
@@ -59,6 +63,7 @@ public class TrailController {
         }
 
         for (Trail trail : allTrails){
+
             if (
                 trail.getLength() > minLength && trail.getLength() < maxLength
                 && difficulty.contains(trail.getDifficulty())) {
