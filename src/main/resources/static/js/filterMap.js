@@ -2,52 +2,130 @@
 //https://developers.google.com/maps/documentation/javascript/markers - "Make a Marker Accessible"
 //https://developers.google.com/maps/documentation/javascript/infowindows
 //https://developers.google.com/maps/documentation/javascript/events - "Listening to DOM Events"
+//https://developers.google.com/maps/documentation/javascript/geolocation
 
-//defaults map zoom and center when map is first loaded. selectedId defaults to the first item in the initial results.
 let selectedZoom = 10;
-let selectedCenter = {lat: 38.6009, lng: -90.4329};
-let selectedId = 1;
-
+let selectedLocation = {lat: 38.6009, lng: -90.4330};
+let selectedId;
 let initialLoad = true;
+let map;
+let userLocation;
+const searchLocationInput = document.getElementById('search-location');
 
-//called with onclick on HTML element for filter result title.
 function setZoom(id) {
     let selectedTrail = trails.find(trail => trail.id === id)
-    let currentLat = selectedTrail.lat;
-    let currentLng = selectedTrail.lng;
-    selectedCenter = {lat: currentLat, lng: currentLng}
+
     selectedZoom = 13;
+    lastSelectedId = selectedId;
     selectedId = id;
+
     initialLoad = false;
-    initMap();
-    console.log(selectedId)
+
+    //If search location has been changed, recalculate with search map so distances don't recalculated to default/userLoc when you click on a trail result
+    if (searchLocation){
+        initSearchMap()
+    } else {
+        initDefaultMap()
+    }
+
 }
 
-//sets up map to put in div #map
-function initMap() {
-
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: selectedZoom,
-        center: selectedCenter,
-        mapTypeId: 'hybrid',
-        mapId: '59da3fe57cf0042e',
-        mapTypeControl: false
-    });
-
-    //Initialize array that will still the marker location and info window information for every trail in the left column
-    let allResults = [];
+function calculateDistance(trails, userLocation){
+    const service = new google.maps.DistanceMatrixService();
 
     for (let i = 0; i < trails.length; i++){
-        //In a string, store the div that will appear as the info window for a given trail.
+
+        service.getDistanceMatrix({
+            origins: [userLocation],
+            destinations: [{lat: trails[i].lat, lng: trails[i].lng}],
+            travelMode: 'DRIVING',
+            unitSystem: google.maps.UnitSystem.IMPERIAL
+        }, callback)
+
+        const distanceAwayLi = document.getElementById(`distance-from-${trails[i].id}`)
+
+        function callback(response, status) {
+            let origin = response.originAddresses[0];
+            let destination = response.destinationAddresses[0]
+            let element = response.rows[0].elements[0]
+            let distance = element.distance.text
+            let duration = element.duration.text
+
+            distanceAwayLi.innerHTML = `${distance} away (${duration} drive)`;
+        }
+    };
+}
+
+function initSearchMap() {
+    const geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({ address: searchLocation }, (results, status) => {
+        if (status === "OK") {
+              const {lat, lng} = results[0].geometry.location;
+              userLocation = {lat: lat(), lng: lng()}
+        } else {
+            alert(status)
+        }
+         map = new google.maps.Map(document.getElementById("map"), {
+            zoom: selectedZoom,
+            center: userLocation,
+            mapTypeId: 'hybrid',
+            mapId: '59da3fe57cf0042e',
+            mapTypeControl: false
+        });
+        processResults(trails,map)
+    })
+}
+
+function initDefaultMap() {
+    userLocation = new Object();
+    const geocoder = new google.maps.Geocoder();
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+        userLocation.lat = position.coords.latitude,
+        userLocation.lng = position.coords.longitude,
+
+        geocoder.geocode({ location: userLocation }, (results, status) => {
+                if (status === "OK") {
+                      const zip = results[0].address_components[6].long_name;
+                      searchLocationInput.value = zip;
+                } else {
+                    alert(status)
+                }
+            })
+
+        map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 10,
+            center: userLocation,
+            mapTypeId: 'hybrid',
+            mapId: '59da3fe57cf0042e',
+            mapTypeControl: false
+        });
+        processResults(trails, map)
+    })
+}
+
+function processResults(trails, map){
+
+    const marker = new google.maps.Marker({
+        position: userLocation,
+        map,
+        title: `You are here`,
+        icon: {url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"},
+        optimized: false
+    });
+
+    let allResults = [];
+
+    calculateDistance(trails, userLocation)
+
+    const infoWindow = new google.maps.InfoWindow();
+
+    for (let trail of trails){
         const infoWindowContent =
             `<div style="background-color: #091E05; color: white; padding: 3rem; margin: 0; width: auto; height: auto">
-                <h3>${trails[i].name}</h3>
-                <h4>${trails[i].length} mi, Level ${trails[i].difficulty}</h4>
-                <strong>Features:</strong>
-                <ul>
-                    <li>A feature</li>
-                    <li>A feature</li>
-                </ul>
+                <h3>${trail.name}</h3>
+                <h4>${trail.length} mi, Level ${trail.difficulty}</h4>
                 <div id="min-rating" class="rating" style="margin:0 auto;overflow:hidden">
                     <input disabled type="radio" name="rating" value="5" id="5">
                     <label for="5">☆</label>
@@ -64,37 +142,29 @@ function initMap() {
                 <button class="btn btn-primary" style="width: 100%; margin: 0.5rem 0">Plan a Meetup</button>
             </div>`
 
-        //prepare data that will be needed to establish markers, including the trail object's ID so marker will recognize if trail's ID matches selected ID
-        const markerPosition = {lat: trails[i].lat, lng: trails[i].lng}
-        const title = trails[i].name
-        allResults.push({markerPosition, title, infoWindowContent, id: trails[i].id})
+        const markerPosition = {lat: trail.lat, lng: trail.lng}
+        const title = trail.name
+        allResults.push({markerPosition, title, infoWindowContent, id: trail.id})
     }
 
-    //Initialize the pop-up box for a given array that appears on the map.
-    const infoWindow = new google.maps.InfoWindow();
-
-    //Iterate through the completed allResults array to create a marker for each.
     allResults.forEach((result, i) => {
-        console.log(i)
         const marker = new google.maps.Marker({
             position: result.markerPosition,
             map,
             title: `${i + 1}. ${result.title}`,
             label: `${i + 1}`,
-            optimized: false,
+            optimized: false
         });
 
-        //InfoWindow will automatically open if the marker's ID matches the selectedId, the id that has just been clicked on the left
         if (!initialLoad && selectedId === result.id){
             infoWindow.setContent(result.infoWindowContent);
             infoWindow.open(marker.getMap(), marker);
         }
 
-        //Also allow info window to open if marker is clicked on
         marker.addListener("click", () => {
-          infoWindow.close();
-          infoWindow.setContent(result.infoWindowContent);
-          infoWindow.open(marker.getMap(), marker);
+            infoWindow.close();
+            infoWindow.setContent(result.infoWindowContent);
+            infoWindow.open(marker.getMap(), marker);
         });
 
     });
