@@ -126,11 +126,6 @@ function processResults(trails, map){
             `<div style="background-color: #091E05; color: white; padding: 3rem; margin: 0; width: auto; height: auto">
                 <h3>${trail.name}</h3>
                 <h4>${trail.length} mi, Level ${trail.difficulty}</h4>
-                <strong>Features:</strong>
-                <ul>
-                    <li>A feature</li>
-                    <li>A feature</li>
-                </ul>
                 <div id="min-rating" class="rating" style="margin:0 auto;overflow:hidden">
                     <input disabled type="radio" name="rating" value="5" id="5">
                     <label for="5">☆</label>

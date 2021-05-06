@@ -1,22 +1,20 @@
 package launchcode.liftoff_project.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 
 @Entity
 public class Trail implements Comparable<Trail>{
 
-    private enum Water {
+    public enum Water {
         lake,
         river,
         creek,
         pond
     }
 
-    private enum Type {
+    public enum Type {
         natural,
         paved,
         gravel,
@@ -53,8 +51,10 @@ public class Trail implements Comparable<Trail>{
 
     private Boolean woods;
 
+    @Enumerated(EnumType.STRING)
     private Water water;
 
+    @Enumerated(EnumType.STRING)
     private Type type;
 
     public Trail(String name, String city, String state, Float length, int difficulty) {
@@ -67,12 +67,12 @@ public class Trail implements Comparable<Trail>{
         this.google_name = null;
         this.lat = null;
         this.lng = null;
+        this.type = null;
+        this.water = null;
+        this.woods = null;
         this.dogs = null;
         this.family = null;
         this.bikes = null;
-        this.woods = null;
-        this.water = null;
-        this.type = null;
     }
 
     public Trail(){}

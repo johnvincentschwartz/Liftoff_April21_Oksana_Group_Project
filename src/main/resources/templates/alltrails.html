@@ -3,6 +3,7 @@
 <head th:replace="fragments :: head"></head>
 <head>
     <link th:href="@{/css/alltrails.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
 </head>
 <body>
 <header th:replace="fragments :: nav"></header>
@@ -80,6 +81,14 @@
                         <li th:text="${trail.length} + ' mi long, Level ' + ${trail.difficulty}"></li>
                         <li th:text="${trail.city} +', ' + ${trail.state}"></li>
                         <li th:id="'distance-from-' + ${trail.id}"></li>
+                        <li>
+                            <i th:if="${trail.dogs}" class="fas fa-dog"></i>
+                            <i th:if="${trail.woods}" class="fas fa-tree"></i>
+                            <i th:if="${trail.type} != 'natural'" class="fas fa-road"></i>
+                            <i th:if="${trail.bikes}" class="fas fa-biking"></i>
+                            <i th:if="${trail.family}" class="fas fa-baby-carriage"></i>
+                            <i th:if=${trail.water} class="fas fa-water"></i>
+                        </li>
                     </ul>
                 </li>
             </ol>
@@ -102,6 +111,8 @@
         document.getElementById('max-length').value = null;
         document.querySelectorAll('[type="checkbox"]').forEach(item => item.checked = true);
     }
+
+    console.log(trails)
 </script>
 <script th:if="${searchLocation == null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initDefaultMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
 <script th:if="${searchLocation != null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initSearchMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
