@@ -21,7 +21,12 @@ function setZoom(id) {
 
     initialLoad = false;
 
-    initDefaultMap()
+    //If search location has been changed, recalculate with search map so distances don't recalculated to default/userLoc when you click on a trail result
+    if (searchLocation){
+        initSearchMap()
+    } else {
+        initDefaultMap()
+    }
 
 }
 
