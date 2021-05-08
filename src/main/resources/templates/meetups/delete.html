@@ -4,21 +4,19 @@
 <head>
     <link th:href="@{/css/meetups.css}" rel="stylesheet" />
 </head>
-<body class="container">
+<body>
 <header th:replace="fragments :: header"></header>
-
-<header class="meetup-page-header">
-    <h1 th:text="${title}">TrailTracker</h1>
-    <ul class="nav" style="float:right;">
-        <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
-    </ul>
-    <ul class="nav">
-        <li class="nav-item"><a class="nav-link" href="/meetups">All Meetups</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetups/create">Create a Meetup</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetups/delete">Delete a Meetup</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetupCategories">Meetup Categories</a></li>
-    </ul>
-</header>
+<div class="navbar">
+    <div class="container">
+        <nav>
+            <ul class="meetup-nav">
+                <li><a href="/meetups" class="all-cta">All Meetups</a>
+                    <a href="/meetups/create" class="primary-cta">Create a Meetup</a>
+                    <a href="/meetups/delete" class="secondary-cta">Delete a Meetup</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
 
 
 <form method="post">

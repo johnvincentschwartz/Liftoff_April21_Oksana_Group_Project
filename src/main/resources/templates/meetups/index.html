@@ -4,39 +4,36 @@
 <head>
     <link th:href="@{/css/meetups.css}" rel="stylesheet" />
 </head>
-<body class="container">
+<body>
 <header th:replace="fragments :: header"></header>
+    <div class="navbar">
+        <div class="container">
+            <nav>
+                <ul class="meetup-nav">
+                    <li><a href="/meetups/create" class="primary-cta">Create a Meetup</a>
+                        <a href="/meetups/delete" class="secondary-cta">Delete a Meetup</a></li>
+                    <!--li class="nav-item"><a class="nav-link" href="/meetupCategories">Meetup Categories</a></li-->
+                </ul>
+            </nav>
+        </div>
+    </div>
 
-<div class="meetup -page-header">
-    <h1 th:text="${title}">TrailTracker</h1>
-    <ul class="nav" style="float:right;">
-        <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
-    </ul>
-    <ul class="nav">
-        <li class="nav-item"><a class="nav-link" href="/meetups">All Meetups</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetups/create">Create a Meetup</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetups/delete">Delete a Meetup</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetupCategories">Meetup Categories</a></li>
-    </ul>
-</div>
-
-<table th:each="meetup: ${meetups}" class="table table-stripped">
-    <tr>
-        <th>Meetup ID</th>
-        <td th:text="${meetup.id}"></td>
-    </tr>
-    <tr>
-        <th>Meetup Description</th>
-        <td th:text="${meetup.meetupDetails.meetupDescription}"></td>
-    </tr>
-    <tr>
-        <th>Meetup Contact Email</th>
-        <td th:text="${meetup.meetupDetails.meetupContactEmail}"></td>
-    </tr>
-    <tr>
-        <th>Meetup Category</th>
-        <td th:text="${meetup.meetupCategory}"></td>
-    </tr>
-</table>
+    <section class="meetup-details-section">
+        <h1>All Meetups</h1>
+        <div class="wrapper">
+            <div th:each="meetup: ${meetups}">
+                <ul class="meetup-details">
+                    <li><a th:href="'/meetups/details?meetupId=' + ${meetup.id}" th:text="${meetup.meetupName}" class="meetup-name"></a></li>
+                    <div class="meetup-info">
+                        <li th:text="'Contact Email: ' + ${meetup.meetupDetails.meetupContactEmail}" class="meetup-email"></li>
+                        <li th:text="'Date & Time: ' + ${meetup.meetupDate}" class="meetup-date"></li>
+                        <li th:text="'Location: '" class="meetup-location"></li>
+                    </div>
+                    <!--li th:text="'Details: ' + ${meetup.meetupDetails.meetupDescription}" class="meetup-description"></li-->
+                    <li><a th:href="'/meetups/details?meetupId=' + ${meetup.id}" class="meetup-more-details-cta">More Details</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

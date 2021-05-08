@@ -4,39 +4,31 @@
 <head>
     <link th:href="@{/css/meetups.css}" rel="stylesheet" />
 </head>
-<body class="container">
+<body>
 <header th:replace="fragments :: header"></header>
-
-<header class="meetup-page-header">
-    <h1 th:text="${title}">TrailTracker</h1>
-    <ul class="nav" style="float:right;">
-        <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
-    </ul>
-    <ul class="nav">
-        <li class="nav-item"><a class="nav-link" href="/meetups">All Meetups</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetups/create">Create a Meetup</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetups/delete">Delete a Meetup</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetupCategories">Meetup Categories</a></li>
-    </ul>
-</header>
-
-<table class="table table-stripped">
-    <tr>
-        <th>Meetup ID</th>
-        <td th:text="${meetup.id}"></td>
-    </tr>
-    <tr>
-        <th>Meetup Description</th>
-        <td th:text="${meetup.meetupDetails.meetupDescription}"></td>
-    </tr>
-    <tr>
-        <th>Meetup Contact Email</th>
-        <td th:text="${meetup.meetupDetails.meetupContactEmail}"></td>
-    </tr>
-    <tr>
+<div class="navbar">
+    <div class="container">
+        <nav>
+            <ul class="meetup-nav">
+                <li><a href="/meetups" class="all-cta">All Meetups</a>
+                    <a href="/meetups/create" class="primary-cta">Create a Meetup</a>
+                    <a href="/meetups/delete" class="secondary-cta">Delete a Meetup</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<section>
+    <div>
+        <h1 th:text="${meetup.meetupName}"></h1>
+        <ul>
+            <li th:text="'Meetup Description: ' + ${meetup.meetupDetails.meetupDescription}"></li>
+            <li th:text="${meetup.meetupDetails.meetupContactEmail}"></li>
+        </ul>
+    <!--tr>
         <th>Meetup Category</th>
         <td th:text="${meetup.meetupCategory}"></td>
-    </tr>
-</table>
+    </tr-->
+    </div>
+</section>
 </body>
 </html>

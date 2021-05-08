@@ -1,9 +1,9 @@
 package launchcode.liftoff_project.Controllers;
 
-import launchcode.liftoff_project.Model.data.MeetupCategoryRepository;
+//import launchcode.liftoff_project.Model.data.MeetupCategoryRepository;
 import launchcode.liftoff_project.Model.data.MeetupRepository;
 import launchcode.liftoff_project.Model.Meetup;
-import launchcode.liftoff_project.Model.MeetupCategory;
+//import launchcode.liftoff_project.Model.MeetupCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,32 +19,39 @@ public class MeetupController {
     @Autowired
     private MeetupRepository meetupRepository;
 
-    @Autowired
-    private MeetupCategoryRepository meetupCategoryRepository;
-
     @GetMapping
-    public String displayMeetups(@RequestParam(required = false) Integer categoryId, Model model) {
-        if(categoryId == null) {
-            model.addAttribute("title", "Trail Meetups");
-            model.addAttribute("meetups", meetupRepository.findAll());
-        } else {
-            Optional<MeetupCategory> result = meetupCategoryRepository.findById(categoryId);
-            if (result.isEmpty()) {
-                model.addAttribute("title", "Invalid: A Meetup With a Category ID of " + categoryId + " Does Not Exist.");
-            }else{
-                MeetupCategory category = result.get();
-                model.addAttribute("title", "Results For Meetups in Category" + category.getMeetupCategoryName());
-                model.addAttribute("meetups", category.getMeetups());
-            }
-        }
+    public String displayMeetups(Model model) {
+        model.addAttribute("title", "Trail Meetups");
+        model.addAttribute("meetups", meetupRepository.findAll());
         return "meetups/index";
     }
+
+//    @Autowired
+//    private MeetupCategoryRepository meetupCategoryRepository;
+
+//    @GetMapping
+//    public String displayMeetups(@RequestParam(required = false) Integer categoryId, Model model) {
+//        if(categoryId == null) {
+//            //model.addAttribute("title", "Trail Meetups");
+//            model.addAttribute("meetups", meetupRepository.findAll());
+//        } else {
+//            Optional<MeetupCategory> result = meetupCategoryRepository.findById(categoryId);
+//            if (result.isEmpty()) {
+//                model.addAttribute("title", "Invalid: A Meetup With a Category ID of " + categoryId + " Does Not Exist.");
+//            }else{
+//                MeetupCategory category = result.get();
+//                model.addAttribute("title", "Results For Meetups in Category" + category.getMeetupCategoryName());
+//                model.addAttribute("meetups", category.getMeetups());
+//            }
+//        }
+//        return "meetups/index";
+//    }
 
     @GetMapping("create")
     public String displayCreateMeetupsForm(Model model) {
         model.addAttribute("title", "Create A New Meetup");
         model.addAttribute(new Meetup());
-        model.addAttribute("categories", meetupCategoryRepository.findAll());
+        //model.addAttribute("categories", meetupCategoryRepository.findAll());
         return "meetups/create";
     }
 
