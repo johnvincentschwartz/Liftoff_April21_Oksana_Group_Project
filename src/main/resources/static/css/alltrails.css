@@ -25,7 +25,8 @@ ol {
 
 .trail-result-block {
     padding: 1rem;
-    margin: 1rem 0;
+    margin: 1rem 2rem 1rem 0;
+    background-color: rgba(255,255,255,0.2);
 }
 .trail-result-details {
     padding-left: 2rem;
@@ -148,7 +149,7 @@ form {
     margin: 10px 10px 0 0;
 }
 
-i {
+i, .icon {
     font-size: 2rem;
     margin-right: 1rem;
 }

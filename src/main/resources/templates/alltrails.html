@@ -57,17 +57,31 @@
                     </div>
                     <div id="environment-options-container" class="form-group col-sm">
                         <label>Environment</label>
-                        <div class="row"><div class="col"><label><input type="checkbox"/> River</label></div>
-                        <div class="col"><label><input type="checkbox"/> Lake</label></div></div>
-                        <div class="row" style="white-space: nowrap"><div class="col"><label><input type="checkbox"/> Creek</label></div>
-                        <div class="col"><label><input type="checkbox"/> Woods</label></div></div>
+                        <div class="row"><div class="col"><label>
+                            <input name="requireWater" th:checked="${requireWater}" th:value="true" type="checkbox"/> By Water
+                        </label></div>
+                        <div class="col"><label>
+                            <input name="requireWoods" th:checked="${requireWoods}" th:value="true" type="checkbox"/> Wooded Area
+                        </label></div></div>
                     </div>
                     <div id="surface-options-container" class="form-group col-sm">
                         <label>Trail surface</label>
-                        <div class="row"><div class="col"><label><input type="checkbox"/> Paved</label></div>
-                        <div class="col"><label><input type="checkbox"/> Natural</label></div></div>
-                        <div class="row"><div class="col"><label><input type="checkbox"/> Gravel</label></div>
-                        <div class="col"><label><input type="checkbox"/> Mixed</label></div></div>
+                        <div class="row">
+                            <div class="col"><label>
+                                <input type="checkbox" name="trailSurface" th:checked="${trailSurface.contains('paved')}" th:value="paved" /> Paved
+                            </label></div>
+                            <div class="col"><label>
+                                <input type="checkbox" name="trailSurface" th:checked="${trailSurface.contains('natural')}" th:value="natural"/> Natural
+                            </label></div>
+                        </div>
+                        <div class="row">
+                            <div class="col"><label>
+                                <input type="checkbox" name="trailSurface" th:checked="${trailSurface.contains('gravel')}" th:value="gravel"/> Gravel
+                            </label></div>
+                            <div class="col"><label>
+                                <input type="checkbox" name="trailSurface" th:checked="${trailSurface.contains('partial_paved')}" th:value="partial_paved"/> Mixed
+                            </label></div>
+                        </div>
                     </div>
                     <div id="sort-container" class="form-group col-sm">
                         <div class="col"><label><input type="radio" name="sort" th:value="length" checked/> Sort by Length</label></div>
@@ -106,12 +120,18 @@
                         <li th:text="${trail.city} +', ' + ${trail.state}"></li>
                         <li th:id="'distance-from-' + ${trail.id}"></li>
                         <li>
+                            <img class="fas fa icon" th:if="${trail.getType().toString().equals('partial_paved')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/mixed_white.svg}" />
+                            <img class="fas fa icon" th:if="${trail.getType().toString().equals('gravel')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/gravel_white.svg}" />
+                            <img class="fas fa icon" th:if="${trail.getType().toString().equals('natural')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/natural_white.svg}" />
+                            <img class="fas fa icon" th:if="${trail.getType().toString().equals('paved')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/paved_white.svg}" />
+                            <img class="fas fa icon" th:if="${trail.getWater().toString().equals('creek')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/creek_white.svg}" />
+                            <img class="fas fa icon" th:if="${trail.getWater().toString().equals('lake')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/lake_white.svg}" />
+                            <img class="fas fa icon" th:if="${trail.getWater().toString().equals('river')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/river_white.svg}" />
                             <i th:if="${trail.dogs}" class="fas fa-dog"></i>
                             <i th:if="${trail.woods}" class="fas fa-tree"></i>
-                            <i th:if="${trail.type} != 'natural'" class="fas fa-road"></i>
                             <i th:if="${trail.bikes}" class="fas fa-biking"></i>
                             <i th:if="${trail.family}" class="fas fa-baby-carriage"></i>
-                            <i th:if=${trail.water} class="fas fa-water"></i>
+
                         </li>
                     </ul>
                 </li>

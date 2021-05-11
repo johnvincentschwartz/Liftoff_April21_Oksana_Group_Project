@@ -33,12 +33,21 @@ public class TrailController {
         difficulty.add(4);
         difficulty.add(5);
 
+        List<String> trailSurface = new ArrayList<>();
+        trailSurface.add("natural");
+        trailSurface.add("paved");
+        trailSurface.add("partial_paved");
+        trailSurface.add("gravel");
+
 
         model.addAttribute("trails", trailRepository.findAll());
         model.addAttribute("difficulty", difficulty);
         model.addAttribute("requireDogs", false);
         model.addAttribute("requireKids", false);
         model.addAttribute("requireBikes", false);
+        model.addAttribute("requireWater", false);
+        model.addAttribute("requireWoods", false);
+        model.addAttribute("trailSurface",trailSurface);
 
         return "alltrails";
     }
@@ -46,25 +55,35 @@ public class TrailController {
     @PostMapping()
     public String displayFilterResults(Model model, @RequestParam Double minLength, @RequestParam Double maxLength,
                                        @RequestParam List<Integer> difficulty, @RequestParam String searchLocation,
+                                       @RequestParam List<String> trailSurface,
                                        @RequestParam(name="requireDogs", required=false) Boolean requireDogs,
                                        @RequestParam(name="requireKids", required=false) Boolean requireKids,
-                                       @RequestParam(name="requireBikes", required=false) Boolean requireBikes, @RequestParam String sort){
+                                       @RequestParam(name="requireBikes", required=false) Boolean requireBikes,
+                                       @RequestParam(name="requireWater", required=false) Boolean requireWater,
+                                       @RequestParam(name="requireWoods", required=false) Boolean requireWoods,
+                                       @RequestParam String sort){
 
         Iterable<Trail> allTrailsSorted = trailRepository.findAll(Sort.by(Sort.Direction.ASC, sort));
 
         if (requireDogs == null){requireDogs = false;}
         if (requireKids == null){requireKids = false;}
         if (requireBikes == null){requireBikes = false;}
+        if (requireWater == null){requireWater = false;}
+        if (requireWoods == null){requireWoods =false;}
 
-        Collection<Trail> results = filterTrails(minLength, maxLength, difficulty, allTrailsSorted, requireDogs, requireKids, requireBikes);
+        Collection<Trail> results = filterTrails(minLength, maxLength, difficulty, allTrailsSorted, trailSurface, requireDogs, requireKids,
+                                                requireBikes, requireWater, requireWoods);
 
         model.addAttribute("minLength", minLength);
         model.addAttribute("maxLength", maxLength);
         model.addAttribute("difficulty", difficulty);
+        model.addAttribute("trailSurface", trailSurface);
         model.addAttribute("searchLocation", searchLocation);
         model.addAttribute("requireDogs", requireDogs);
         model.addAttribute("requireKids", requireKids);
         model.addAttribute("requireBikes", requireBikes);
+        model.addAttribute("requireWater", requireWater);
+        model.addAttribute("requireWoods", requireWoods);
         model.addAttribute("sort", sort);
         model.addAttribute("trails", results);
 
@@ -72,8 +91,10 @@ public class TrailController {
 
     }
 
-    public static ArrayList<Trail> filterTrails(Double minLength, Double maxLength, List<Integer> difficulty, Iterable<Trail> allTrails,
-                                                Boolean requireDogs, Boolean requireKids, Boolean requireBikes){
+    public static ArrayList<Trail> filterTrails(Double minLength, Double maxLength, List<Integer> difficulty,
+                                                Iterable<Trail> allTrails, List<String> trailSurface,
+                                                Boolean requireDogs, Boolean requireKids, Boolean requireBikes,
+                                                Boolean requireWater, boolean requireWoods){
 
         ArrayList<Trail> results = new ArrayList<>();
 
@@ -90,15 +111,19 @@ public class TrailController {
 
         for (Trail trail : allTrails){
             if (
-                (requireDogs && !trail.getDogs()) ||
-                (requireKids && !trail.getFamily()) ||
-                (requireBikes && !trail.getBikes())
+                (requireDogs && !trail.getDogs())
+                || (requireKids && !trail.getFamily())
+                || (requireBikes && !trail.getBikes())
+                || (requireWater && trail.getWater().toString().equals("none"))
+                || (requireWoods && !trail.getWoods())
             ) {continue;}
 
             if (
                 trail.getLength() > minLength
                 && trail.getLength() < maxLength
-                && difficulty.contains(trail.getDifficulty())) {
+                && difficulty.contains(trail.getDifficulty())
+                && trailSurface.contains(trail.getType().toString())
+            ) {
                 results.add(trail);
             }
         }
