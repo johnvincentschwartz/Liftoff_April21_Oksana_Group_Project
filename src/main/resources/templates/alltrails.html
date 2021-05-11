@@ -51,9 +51,9 @@
                         </div>
                     </div>
                     <div id="friendly-options-container" class="form-group col-sm">
-                        <label style="white-space: nowrap"><input type="checkbox"/> Dog-Friendly</label>
-                        <label style="white-space: nowrap"><input type="checkbox"/> Kid-Friendly</label>
-                        <label style="white-space: nowrap"><input type="checkbox"/> Bike-Friendly</label>
+                        <label style="white-space: nowrap"><input id="requireDogs" name="requireDogs" th:checked="${requireDogs}" type="checkBox" th:value="true" /> Dog-Friendly</label>
+                        <label style="white-space: nowrap"><input type="checkbox" name="requireKids" th:checked="${requireKids}" th:value="true"/> Kid-Friendly</label>
+                        <label style="white-space: nowrap"><input type="checkbox" name="requireBikes" th:checked="${requireBikes}" th:value="true"/> Bike-Friendly</label>
                     </div>
                     <div id="environment-options-container" class="form-group col-sm">
                         <label>Environment</label>
