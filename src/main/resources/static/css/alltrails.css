@@ -43,8 +43,27 @@ ol {
     height:500px
 }
 
+.form-group{
+    background-color: rgba(255,255,255,0.3);
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.form-control{
+    display: inline-block
+}
+
+label {
+    white-space: nowrap;
+}
+
 .form-group {
+/*    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin: 2rem;
+    padding: 1rem;
+    background-color: rgba(255,255,255,0.5) */
 }
 
 input[type="number"]{

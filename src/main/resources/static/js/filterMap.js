@@ -11,6 +11,7 @@ let initialLoad = true;
 let map;
 let userLocation;
 const searchLocationInput = document.getElementById('search-location');
+const testDiv = document.getElementById('test-div')
 
 function setZoom(id) {
     let selectedTrail = trails.find(trail => trail.id === id)
@@ -168,4 +169,5 @@ function processResults(trails, map){
         });
 
     });
+    console.log(trails)
 }

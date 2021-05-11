@@ -7,27 +7,33 @@
 </head>
 <body>
 <header th:replace="fragments :: nav"></header>
-<div id="master-container" class="container">
+<div id="master-container" class="container col-xs">
     <div id="filter-row" class="row">
         <div id="filter-column" class="col-sm section-container container">
             <h2>Filter</h2>
             <form id="filter-form" class="form-inline" th:action="@{/alltrails/}" method="post">
                 <div id="form-row" class="row justify-content-*-center" style="text-align: center">
-                    <div id="search-location-container" class="form-group col-sm">
+                    <div id="search-location-container" class="form-el form-group col-sm">
                         <label for="search-location">Search location:</label>
                         <input id="search-location" th:value="${searchLocation}" name="searchLocation" type="text" class="form-control" placeholder="Enter city or zipcode"/>
                     </div>
-                    <div id="max-distance-container" class="form-group col-sm">
-                        <label for="max-distance">Max Distance (mi):</label>
-                        <input id="max-distance" th:value="${maxDistance}" name="maxDistance" type="number" class="form-control" placeholder="None" />
+                    <div id="min-length-container" class="form-el form-group col-sm">
+                        <label for="min-length-input"l>Min length:</label>
+                        <input id="min-length-input" class="form-control" th:value="${minLength}" type="number" step="0.1"/>
                     </div>
-                    <div id="min-length-container" class="form-group col-sm">
-                        <label for="min-length">Min. length (mi):</label>
-                        <input id="min-length" th:value="${minLength}" type="number" step="0.1" class="form-control" name="minLength" placeholder="0" />
+                    <div id="max-length-container" class="form-el form-group col-sm">
+                        <label for="max-length-input">Max length:</label>
+                        <input id="max-length-input" class="form-control" th:value="${maxLength}" type="number" step="0.1"/>
                     </div>
-                    <div id="max-length-container" class="form-group col-sm">
-                        <label for="max-length">Max. Length (mi):</label>
-                        <input id="max-length" th:value="${maxLength}" type="number" step="0.1" class="form-control" name="maxLength" placeholder="1000" />
+                    <div id="difficulty-container" class="form-group col-sm">
+                        <label>Difficulty:</label><br/>
+                        <div id="difficulty-inputs">
+                            <label for="difficulty1" class="difficulty-label">1<input id="difficulty1" th:checked="${difficulty.contains(1)}" type="checkBox" name="difficulty" th:value="1" /></label>
+                            <label for="difficulty2" class="difficulty-label">2<input id="difficulty2" th:checked="${difficulty.contains(2)}" type="checkBox" name="difficulty" th:value="2" /></label>
+                            <label for="difficulty3" class="difficulty-label">3<input id="difficulty3" th:checked="${difficulty.contains(3)}" type="checkBox" name="difficulty" th:value="3" /></label>
+                            <label for="difficulty4" class="difficulty-label">4<input id="difficulty4" th:checked="${difficulty.contains(4)}" type="checkBox" name="difficulty" th:value="4" /></label>
+                            <label for="difficulty5" class="difficulty-label">5<input id="difficulty5" th:checked="${difficulty.contains(5)}" type="checkBox" name="difficulty" th:value="5" /></label>
+                        </div>
                     </div>
                     <div id="min-rating-container" class="form-group col-sm">
                         <label for="min-rating">Min. rating:</label>
@@ -44,28 +50,46 @@
                             <label for="1">☆</label>
                         </div>
                     </div>
-                    <div id="difficulty-container" class="form-group col-sm">
-                        <label>Difficulty:</label><br/>
-                        <div id="difficulty-inputs">
-                            <label for="difficulty1" class="difficulty-label">1<input id="difficulty1" th:checked="${difficulty.contains(1)}" type="checkBox" name="difficulty" th:value="1" /></label>
-                            <label for="difficulty2" class="difficulty-label">2<input id="difficulty2" th:checked="${difficulty.contains(2)}" type="checkBox" name="difficulty" th:value="2" /></label>
-                            <label for="difficulty3" class="difficulty-label">3<input id="difficulty3" th:checked="${difficulty.contains(3)}" type="checkBox" name="difficulty" th:value="3" /></label>
-                            <label for="difficulty4" class="difficulty-label">4<input id="difficulty4" th:checked="${difficulty.contains(4)}" type="checkBox" name="difficulty" th:value="4" /></label>
-                            <label for="difficulty5" class="difficulty-label">5<input id="difficulty5" th:checked="${difficulty.contains(5)}" type="checkBox" name="difficulty" th:value="5" /></label>
-                        </div>
+                    <div id="friendly-options-container" class="form-group col-sm">
+                        <label style="white-space: nowrap"><input type="checkbox"/> Dog-Friendly</label>
+                        <label style="white-space: nowrap"><input type="checkbox"/> Kid-Friendly</label>
+                        <label style="white-space: nowrap"><input type="checkbox"/> Bike-Friendly</label>
+                    </div>
+                    <div id="environment-options-container" class="form-group col-sm">
+                        <label>Environment</label>
+                        <div class="row"><div class="col"><label><input type="checkbox"/> River</label></div>
+                        <div class="col"><label><input type="checkbox"/> Lake</label></div></div>
+                        <div class="row" style="white-space: nowrap"><div class="col"><label><input type="checkbox"/> Creek</label></div>
+                        <div class="col"><label><input type="checkbox"/> Woods</label></div></div>
+                    </div>
+                    <div id="surface-options-container" class="form-group col-sm">
+                        <label>Trail surface</label>
+                        <div class="row"><div class="col"><label><input type="checkbox"/> Paved</label></div>
+                        <div class="col"><label><input type="checkbox"/> Natural</label></div></div>
+                        <div class="row"><div class="col"><label><input type="checkbox"/> Gravel</label></div>
+                        <div class="col"><label><input type="checkbox"/> Mixed</label></div></div>
                     </div>
                     <div id="sort-container" class="form-group col-sm">
-                        <label for="sort">Sort By:</label>
-                        <select id="sort" name="sort" class="custom-select">
-                            <option th:value="distance" disabled>Distance</option>
-                            <option th:value="length">Length</option>
-                            <option th:value="rating" disabled>Rating</option>
-                            <option th:value="difficulty">Difficulty</option>
-                        </select>
+                        <div class="col"><label><input type="radio"/> Sort by Length</label></div>
+                        <div class="col"><label><input type="radio"/> Sort by Difficulty</label></div>
+                        <div class="col"><label><input type="radio"/> Sort by Rating</label></div>
                     </div>
-                    <div id="button-container" class="form-group col-sm">
-                        <input id="submit-button" class="btn btn-primary" type="submit" />
-                        <button id="clear-button" class="btn btn-danger" onclick="clearAll()">Clear all</button>
+                    <div id="submit-clear-container" class="form-group col-sm">
+                        <div class="row">
+                            <input
+                                    id="submit-button"
+                                    class="form-el btn btn-primary col-sm"
+                                    type="submit"
+                            />
+                        </div>
+                        <div class="row">
+                            <button
+                                    id="clear-button"
+                                    type="button"
+                                    class="form-el btn btn-danger col-sm"
+                                    onclick="clearAll()"
+                            >Clear All</button>
+                        </div>
                     </div>
                 </div>
             </form>
