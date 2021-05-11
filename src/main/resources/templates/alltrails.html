@@ -19,20 +19,20 @@
                     </div>
                     <div id="min-length-container" class="form-el form-group col-sm">
                         <label for="min-length-input"l>Min length:</label>
-                        <input id="min-length-input" class="form-control" th:value="${minLength}" type="number" step="0.1"/>
+                        <input id="min-length-input" class="form-control" th:value="${minLength}" name="minLength" type="number" step="0.1"/>
                     </div>
                     <div id="max-length-container" class="form-el form-group col-sm">
                         <label for="max-length-input">Max length:</label>
-                        <input id="max-length-input" class="form-control" th:value="${maxLength}" type="number" step="0.1"/>
+                        <input id="max-length-input" class="form-control" th:value="${maxLength}" name="maxLength" type="number" step="0.1"/>
                     </div>
                     <div id="difficulty-container" class="form-group col-sm">
                         <label>Difficulty:</label><br/>
                         <div id="difficulty-inputs">
-                            <label for="difficulty1" class="difficulty-label">1<input id="difficulty1" th:checked="${difficulty.contains(1)}" type="checkBox" name="difficulty" th:value="1" /></label>
-                            <label for="difficulty2" class="difficulty-label">2<input id="difficulty2" th:checked="${difficulty.contains(2)}" type="checkBox" name="difficulty" th:value="2" /></label>
-                            <label for="difficulty3" class="difficulty-label">3<input id="difficulty3" th:checked="${difficulty.contains(3)}" type="checkBox" name="difficulty" th:value="3" /></label>
-                            <label for="difficulty4" class="difficulty-label">4<input id="difficulty4" th:checked="${difficulty.contains(4)}" type="checkBox" name="difficulty" th:value="4" /></label>
-                            <label for="difficulty5" class="difficulty-label">5<input id="difficulty5" th:checked="${difficulty.contains(5)}" type="checkBox" name="difficulty" th:value="5" /></label>
+                            <label for="difficulty1" class="difficulty-label">1<input id="difficulty1" name="difficulty" th:checked="${difficulty.contains(1)}" type="checkBox" th:value="1" /></label>
+                            <label for="difficulty2" class="difficulty-label">2<input id="difficulty2" name="difficulty" th:checked="${difficulty.contains(2)}" type="checkBox" th:value="2" /></label>
+                            <label for="difficulty3" class="difficulty-label">3<input id="difficulty3" name="difficulty" th:checked="${difficulty.contains(3)}" type="checkBox" th:value="3" /></label>
+                            <label for="difficulty4" class="difficulty-label">4<input id="difficulty4" name="difficulty" th:checked="${difficulty.contains(4)}" type="checkBox" th:value="4" /></label>
+                            <label for="difficulty5" class="difficulty-label">5<input id="difficulty5" name="difficulty" th:checked="${difficulty.contains(5)}" type="checkBox" th:value="5" /></label>
                         </div>
                     </div>
                     <div id="min-rating-container" class="form-group col-sm">
@@ -70,9 +70,9 @@
                         <div class="col"><label><input type="checkbox"/> Mixed</label></div></div>
                     </div>
                     <div id="sort-container" class="form-group col-sm">
-                        <div class="col"><label><input type="radio"/> Sort by Length</label></div>
-                        <div class="col"><label><input type="radio"/> Sort by Difficulty</label></div>
-                        <div class="col"><label><input type="radio"/> Sort by Rating</label></div>
+                        <div class="col"><label><input type="radio" name="sort" th:value="length" checked/> Sort by Length</label></div>
+                        <div class="col"><label><input type="radio" name="sort" th:value="difficulty"/> Sort by Difficulty</label></div>
+                        <div class="col"><label><input type="radio" name="sort" th:value="rating"/> Sort by Rating</label></div>
                     </div>
                     <div id="submit-clear-container" class="form-group col-sm">
                         <div class="row">
