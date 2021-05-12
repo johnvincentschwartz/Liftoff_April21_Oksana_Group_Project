@@ -1,3 +1,7 @@
+#master-container {
+    margin: 3rem auto;
+}
+
 .section-container {
     border: 3px solid black;
     padding: 2rem
@@ -152,4 +156,24 @@ form {
 i, .icon {
     font-size: 2rem;
     margin-right: 1rem;
+}
+
+.result-icon-set {
+    display: flex;
+    margin: 0.5rem;
+    margin-left: 0
+}
+
+.accordion-item {
+    background-color: inherit
+}
+
+.accordion-button {
+    color: inherit;
+    background-color: rgba(255,255,255,0.4)
+}
+
+.accordion-button:not(.collapsed) {
+    color: inherit;
+    background-color: rgba(0,0,0,0.2)
 }
