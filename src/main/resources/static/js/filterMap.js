@@ -1,4 +1,3 @@
-//https://www.youtube.com/watch?v=oVr6unKZbg4
 //https://developers.google.com/maps/documentation/javascript/markers - "Make a Marker Accessible"
 //https://developers.google.com/maps/documentation/javascript/infowindows
 //https://developers.google.com/maps/documentation/javascript/events - "Listening to DOM Events"
