@@ -19,7 +19,7 @@
 </div>
 <section>
     <div>
-        <h1 th:text="${meetup.meetupName}"></h1>
+        <h1 class="details-name" th:text="${meetup.meetupName}"></h1>
         <ul>
             <li th:text="'Meetup Description: ' + ${meetup.meetupDetails.meetupDescription}"></li>
             <li th:text="${meetup.meetupDetails.meetupContactEmail}"></li>

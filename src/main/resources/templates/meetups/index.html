@@ -25,9 +25,13 @@
                 <ul class="meetup-details">
                     <li><a th:href="'/meetups/details?meetupId=' + ${meetup.id}" th:text="${meetup.meetupName}" class="meetup-name"></a></li>
                     <div class="meetup-info">
-                        <li th:text="'Contact Email: ' + ${meetup.meetupDetails.meetupContactEmail}" class="meetup-email"></li>
-                        <li th:text="'Date & Time: ' + ${meetup.meetupDate}" class="meetup-date"></li>
-                        <li th:text="'Location: '" class="meetup-location"></li>
+                        <h5><span>Contact Email: </span></h5>
+                        <li th:text="${meetup.meetupDetails.meetupContactEmail}" class="meetup-email"></li>
+                        <h5><span>Date & Time: </span></h5>
+                        <li th:text="${meetup.meetupDate}" class="meetup-date"></li>
+                        <!--li th:text="'Location: ' + ${trails.name}" class="meetup-location"></li-->
+                        <h5><span>Location: </span></h5>
+                        <li th:text="${meetup.trail}" class="meetup-location"></li>
                     </div>
                     <!--li th:text="'Details: ' + ${meetup.meetupDetails.meetupDescription}" class="meetup-description"></li-->
                     <li><a th:href="'/meetups/details?meetupId=' + ${meetup.id}" class="meetup-more-details-cta">More Details</a></li>

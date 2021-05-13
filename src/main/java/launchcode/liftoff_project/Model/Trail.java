@@ -1,8 +1,6 @@
 package launchcode.liftoff_project.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -36,7 +34,13 @@ public class Trail implements Comparable<Trail>{
 
     private Float lng;
 
-    public Trail(String name, String city, String state, Float length, int difficulty) {
+    @OneToMany(mappedBy = "trail")
+    private List<Meetup> meetups = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "trail", cascade = CascadeType.ALL)
+//    private List<Meetup> meetups = new ArrayList<Meetup>();
+
+    public Trail(String name, String city, String state, Float length, int difficulty, List<Meetup> meetups) {
         this.name = name;
         this.city = city;
         this.state = state;
@@ -46,6 +50,7 @@ public class Trail implements Comparable<Trail>{
         this.google_name = null;
         this.lat = null;
         this.lng = null;
+        this.meetups = meetups;
     }
 
     public Trail(){}
@@ -124,6 +129,14 @@ public class Trail implements Comparable<Trail>{
 
     public void setLng(Float lng) {
         this.lng = lng;
+    }
+
+    public List<Meetup> getMeetups() {
+        return meetups;
+    }
+
+    public void setMeetups(List<Meetup> meetups) {
+        this.meetups = meetups;
     }
 
     @Override

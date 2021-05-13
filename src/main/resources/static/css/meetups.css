@@ -35,6 +35,7 @@
     display: inline-block;
 }
 
+
 .meetup-details-section > h1 {
     margin: 0;
     padding: .5em;
@@ -81,22 +82,18 @@ font-size: 15px;
 }
 
 .meetup-email {
-    margin-top: 1em;
-    font-weight: bold;
-    font-size: 18px;
-    color: #404040;
+    color: #4a684d;
+    font-size: 15px;
 }
 
 .meetup-date {
-    font-weight: bold;
-    color: #404040;
-    font-size: 18px;
+    color: #4a684d;
+    font-size: 15px;
 }
 
 .meetup-location {
-    font-weight: bold;
-    color: #404040;
-    font-size: 18px;
+    color: #4a684d;
+    font-size: 15px;
 }
 
 .meetup-description {
@@ -135,13 +132,43 @@ font-size: 15px;
 }
 
 .form-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 2em;
-    font-size: 30px;
+   display: grid;
+   padding: 1em;
+   grid-template-columns: 1fr;
+   grid-gap: 1em;
+}
+
+.form-name {
+    font-size: 20px;
     font-weight: bold;
     color: white;
 }
+
+.form-date {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.form-email {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.form-description {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.form-trail {
+   font-size: 20px;
+   font-weight: bold;
+   color: white;
+}
+
+
 
 input[type=submit] {
     margin: 0 0 1em 4em;
@@ -156,4 +183,9 @@ input[type=submit] {
     font-size: 30px;
     font-weight: bold;
     color:white;
+}
+
+span {
+    font-weight: bold;
+    color: #303030
 }
