@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<head>
+    <link th:href="@{/css/meetups.css}" rel="stylesheet" />
+</head>
+<body class="container">
+<header th:replace="fragments :: header"></header>
+
+<header class="meetup-page-header">
+    <h1 th:text="${title}">TrailTracker</h1>
+    <ul class="nav" style="float:right;">
+        <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
+    </ul>
+    <ul class="nav">
+        <li class="nav-item"><a class="nav-link" href="/meetups">All Meetups</a></li>
+        <li class="nav-item"><a class="nav-link" href="/meetups/create">Create a Meetup</a></li>
+        <li class="nav-item"><a class="nav-link" href="/meetups/delete">Delete a Meetup</a></li>
+        <li class="nav-item"><a class="nav-link" href="/meetupCategories">Meetup Categories</a></li>
+    </ul>
+</header>
+
+<table class="table table-stripped">
+    <thead>
+    <tr>
+        <th>Meetup Category Name</th>
+    </tr>
+    </thead>
+    <tr th:each="category : ${categories}">
+        <td><a th:text="${category.meetupCategoryName}" th:href="'/meetups?meetupId=' + ${category.id}"></a></td>
+    </tr>
+</table>
+<a href="/meetupCategories/create" class="btn btn-primary">Create Meetup Category</a>
+<a href="/meetupCategories/delete" class="btn btn-danger">Delete Meetup Category</a>
+
+</body>
+</html>

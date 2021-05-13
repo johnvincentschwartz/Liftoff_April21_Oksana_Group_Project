@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<head>
+    <link th:href="@{/css/meetups.css}" rel="stylesheet" />
+</head>
+<body class="container">
+<header th:replace="fragments :: header"></header>
+
+<header class="meetup-page-header">
+    <h1 th:text="${title}">TrailTracker</h1>
+    <ul class="nav" style="float:right;">
+        <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
+    </ul>
+    <ul class="nav">
+        <li class="nav-item"><a class="nav-link" href="/meetups">All Meetups</a></li>
+        <li class="nav-item"><a class="nav-link" href="/meetups/create">Create a Meetup</a></li>
+        <li class="nav-item"><a class="nav-link" href="/meetups/delete">Delete a Meetup</a></li>
+        <li class="nav-item"><a class="nav-link" href="/meetupCategories">Meetup Categories</a></li>
+    </ul>
+</header>
+
+<table class="table table-stripped">
+    <tr>
+        <th>Meetup ID</th>
+        <td th:text="${meetup.id}"></td>
+    </tr>
+    <tr>
+        <th>Meetup Description</th>
+        <td th:text="${meetup.meetupDetails.meetupDescription}"></td>
+    </tr>
+    <tr>
+        <th>Meetup Contact Email</th>
+        <td th:text="${meetup.meetupDetails.meetupContactEmail}"></td>
+    </tr>
+    <tr>
+        <th>Meetup Category</th>
+        <td th:text="${meetup.meetupCategory}"></td>
+    </tr>
+</table>
+</body>
+</html>

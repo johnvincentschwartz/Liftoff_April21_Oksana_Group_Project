@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments :: head"></head>
+<head>
+    <link th:href="@{/css/alltrails.css}" rel="stylesheet" />
+</head>
+<body>
+<header th:replace="fragments :: nav"></header>
+<div id="master-container" class="container">
+    <div id="filter-row" class="row">
+        <div id="filter-column" class="col-sm section-container container">
+            <h2>Filter</h2>
+            <form id="filter-form" class="form-inline" th:action="@{/alltrails/results}" method="post">
+                <div id="form-row" class="row">
+                    <div id="search-location-container" class="form-group col-sm">
+                        <label for="search-location">Search location:</label>
+                        <input id="search-location" disabled type="text" class="form-control" placeholder="Enter city or zipcode"/>
+                    </div>
+                    <div id="max-distance-container" class="form-group col-sm">
+                        <label for="max-distance">Max Distance (mi):</label>
+                        <input id="max-distance" disabled type="number" class="form-control" placeholder="None" />
+                    </div>
+                    <div id="min-length-container" class="form-group col-sm">
+                        <label for="min-length">Min. length (mi):</label>
+                        <input id="min-length" type="number" class="form-control" name="minLength" placeholder="0" />
+                    </div>
+                    <div id="max-length-container" class="form-group col-sm">
+                        <label for="max-length">Max. Length (mi):</label>
+                        <input id="max-length" type="number" class="form-control" name="maxLength" placeholder="1000" />
+                    </div>
+                    <div id="min-rating-container" class="form-group col-sm">
+                        <label for="min-rating">Min. rating:</label>
+                        <div id="min-rating" class="rating">
+                            <input disabled type="radio" name="rating" value="5" id="5">
+                            <label for="5">☆</label>
+                            <input disabled type="radio" name="rating" value="4" id="4">
+                            <label for="4">☆</label>
+                            <input disabled type="radio" name="rating" value="3" id="3">
+                            <label for="3">☆</label>
+                            <input disabled type="radio" name="rating" value="2" id="2">
+                            <label for="2">☆</label>
+                            <input disabled type="radio" name="rating" value="1" id="1">
+                            <label for="1">☆</label>
+                        </div>
+                    </div>
+                    <div id="difficulty-container" class="form-group col-sm">
+                        <label>Difficulty:</label><br/>
+                        <div id="difficulty-inputs">
+                            <label for="difficulty1" class="difficulty-label">1<input id="difficulty1" checked type="checkBox" name="difficulty" th:value="1"  /></label>
+                            <label for="difficulty2" class="difficulty-label">2<input id="difficulty2" checked type="checkBox" name="difficulty" th:value="2" /></label>
+                            <label for="difficulty3" class="difficulty-label">3<input id="difficulty3" checked type="checkBox" name="difficulty" th:value="3" /></label>
+                            <label for="difficulty4" class="difficulty-label">4<input id="difficulty4" checked type="checkBox" name="difficulty" th:value="4" /></label>
+                            <label for="difficulty5" class="difficulty-label">5<input id="difficulty5" checked type="checkBox" name="difficulty" th:value="5" /></label>
+                        </div>
+                    </div>
+                    <div id="sort-container" class="form-group col-sm">
+                        <label for="sort">Sort By:</label>
+                        <select id="sort" name="sort" class="custom-select" >
+                            <option th:value="distance">Distance</option>
+                            <option th:value="length-asc" selected>Length (Ascending)</option>
+                            <option th:value="length-desc">Length (Descending)</option>
+                            <option th:value="rating">Rating</option>
+                            <option th:value="difficulty-asc">Difficulty (Ascending)</option>
+                            <option th:value="difficulty-desc">Difficulty (Descending)</option>
+                        </select>
+                    </div>
+                    <div id="button-container" class="form-group col-sm">
+                        <input id="submit-button" class="btn btn-primary" type="submit" />
+                        <button id="clear-button" class="btn btn-danger" disabled>Clear all</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="results-map-row" class="row">
+        <div id="results-column" class="col-sm-4 section-container">
+            <h2 th:text="'Results (' + ${trails.size()} + ')'"></h2>
+            <ol id="results-list" class="mb-0">
+                <li class="trail-result-block" th:each="trail : ${trails}" th:block>
+                    <h4 class="trail-result-name" th:text="${trail.name}" th:attr="onclick='setZoom(' + ${trail.id} + ')'"></h4>
+                    <ul class="trail-result-details">
+                        <li th:text="${trail.length} + ' mi, Level ' + ${trail.difficulty}"></li>
+                        <li th:text="${trail.city} +', ' + ${trail.state}"></li>
+                        <li>Search location to see distance</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        <div id="map-column" class="col-sm-8 section-container">
+            <h2>Map</h2>
+            <div id="map"></div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/filterMap.js}"></script>
+<script th:inline="javascript">
+    let trails = /*[[${trails}]]*/
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=&v=weekly&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
+</body>
+</html>

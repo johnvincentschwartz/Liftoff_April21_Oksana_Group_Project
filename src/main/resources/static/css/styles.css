@@ -1,0 +1,159 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgb(171, 196, 173);
+}
+
+/* NavBar */
+.navbar {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      min-height: 10vh;
+      background-color: rgb(225, 230, 225);
+      margin: auto;
+      overflow: auto;
+      border-radius: 0px;
+      width: 100%;
+}
+
+.logo{
+    cursor: pointer;
+}
+
+.nav_links{
+    list-style: none;
+}
+.nav_links li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+.nav_links li a {
+    transition: all 0.3s ease 0s;
+    color: rgb(25, 26, 25);
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 750;
+    font-size: 16px;
+
+}
+.nav_links li a:hover {
+    color: rgb(115, 151, 209);
+}
+
+.navbar-brand {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: bold;
+    color: rgb(25, 26, 25);
+    font-size: 19px;
+}
+
+.navbar-text {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 750;
+    font-size: 17px;
+    padding-right: 5px;
+}
+
+.form-control {
+    width: 230px;
+}
+
+.search-container {
+   font-family: 'Roboto Condensed', sans-serif;
+
+}
+
+.header{
+    display: flex;
+    width: 100%;
+    height: 400;
+    margin: auto;
+}
+
+.first_head {
+    text-align: center;
+}
+
+.centered {
+  font-weight: bold;
+  color: white;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+}
+
+/* Main info */
+div.gallery {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 180px;
+}
+
+/*
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+
+}
+
+div.desc {
+  padding: 15px;
+  text-align: center;
+}
+
+.trail_gallery{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 55%;
+}
+*/
+
+.row {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+     display: flex;
+      flex-wrap: wrap;
+}
+.col-md-4 {
+      flex: 1 0 21%; /* explanation below */
+      margin: 5px;
+      height: 100px;
+}
+
+.thumbnail {
+     width: 85%;
+     height: auto;
+
+}
+/* Star Ratings */
+.checked {
+  color: orange;
+}
+/* End Of Star */
+
+.trail_name {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: bold;
+}
+
+.trail_info {
+    font-weight: 350;
+}
+
+.first_head {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-weight: bold;
+}
