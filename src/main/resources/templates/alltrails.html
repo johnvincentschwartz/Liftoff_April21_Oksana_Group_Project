@@ -131,30 +131,30 @@
                         <li th:id="'distance-from-' + ${trail.id}"></li>
                         <li class="result-icon-set">
                             <img class="fas fa icon" th:if="${trail.getType().toString().equals('partial_paved')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/mixed_white.svg}"
-                                data-toggle="tooltip" data-placement="bottom" title="Partially paved" animation="true"/>
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Partially paved" animation="true"/>
                             <img class="fas fa icon" th:if="${trail.getType().toString().equals('gravel')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/gravel_white.svg}"
-                                data-toggle="tooltip" data-placement="bottom" title="Gravel surface" animation="true"/>
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Gravel surface" animation="true"/>
                             <img class="fas fa icon" th:if="${trail.getType().toString().equals('natural')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/natural_white.svg}"
-                                data-toggle="tooltip" data-placement="bottom" title="Natural surface" animation="true"/>
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Natural surface" animation="true"/>
                             <img class="fas fa icon" th:if="${trail.getType().toString().equals('paved')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/paved_white.svg}"
-                                data-toggle="tooltip" data-placement="bottom" title="Paved surface" animation="true"/>
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Paved surface" animation="true"/>
                             <img class="fas fa icon" th:if="${trail.getWater().toString().equals('creek')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/creek_white.svg}"
-                                data-toggle="tooltip" data-placement="bottom" title="Near creek" animation="true"/>
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Near creek" animation="true"/>
                             <img class="fas fa icon" th:if="${trail.getWater().toString().equals('lake')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/lake_white.svg}"
-                                data-toggle="tooltip" data-placement="bottom" title="Near lake" animation="true"/>
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Near lake" animation="true"/>
                             <img class="fas fa icon" th:if="${trail.getWater().toString().equals('river')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/river_white.svg}"
-                                data-toggle="tooltip" data-placement="bottom" title="Near river" animation="true"/>
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Near river" animation="true"/>
                             <i th:if="${trail.dogs}" class="fas fa-dog"
-                               data-toggle="tooltip" data-placement="bottom" title="Confirmed dog-friendly" animation="true">
+                               data-toggle="tooltip" data-bs-placement="bottom" title="Confirmed dog-friendly" animation="true">
                             </i>
                             <i th:if="${trail.woods}" class="fas fa-tree"
-                               data-toggle="tooltip" data-placement="bottom" title="Wooded area" animation="true">
+                               data-toggle="tooltip" data-bs-placement="bottom" title="Wooded area" animation="true">
                             </i>
                             <i th:if="${trail.bikes}" class="fas fa-biking"
-                               data-toggle="tooltip" data-placement="bottom" title="Confirmed bike-friendly" animation="true">
+                               data-toggle="tooltip" data-bs-placement="bottom" title="Confirmed bike-friendly" animation="true">
                             </i>
                             <i th:if="${trail.family}" class="fas fa-baby-carriage"
-                               data-toggle="tooltip" data-placement="bottom" title="Confirmed family-friendly" animation="true">
+                               data-toggle="tooltip" data-bs-placement="bottom" title="Confirmed family-friendly" animation="true">
                             </i>
 
                         </li>

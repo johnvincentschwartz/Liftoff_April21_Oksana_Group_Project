@@ -156,12 +156,14 @@ form {
 i, .icon {
     font-size: 2rem;
     margin-right: 1rem;
+    margin-bottom: 10px;
 }
 
 .result-icon-set {
     display: flex;
     margin: 0.5rem;
-    margin-left: 0
+    margin-left: 0;
+    flex-wrap: wrap;
 }
 
 .accordion-item {
