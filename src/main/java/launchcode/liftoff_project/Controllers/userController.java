@@ -24,17 +24,16 @@ import java.util.Optional;
 import static launchcode.liftoff_project.Controllers.AuthenticationController.userSessionKey;
 
 @Controller
-@RequestMapping(value="userProfile")
-public class userController extends HttpServlet {
+@RequestMapping("userProfile")
+public class userController {
     @Autowired
     AuthenticationController authenticationController;
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("")
-    public String displayUserProfile( @ModelAttribute @Valid LoginFormDTO loginFormDTO,
-                                      Model model,HttpServletRequest request){
+    @GetMapping
+    public String displayUserProfile(Model model, HttpServletRequest request){
 
         HttpSession session = request.getSession(false);
 
@@ -44,6 +43,7 @@ public class userController extends HttpServlet {
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
         model.addAttribute("email", email);
+//        model.addAttribute("user", userRepository.findAll());
         return "userProfile";
     }
 }

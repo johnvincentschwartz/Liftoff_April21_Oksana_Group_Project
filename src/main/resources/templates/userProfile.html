@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns: th="http://www.thymeleaf.org/" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <link th:href="@{/css/userProfile.css}" rel="stylesheet" />
+</head>
+<head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
@@ -15,17 +18,17 @@
 <h1 class="first_head">User Profile</h1>
 <table class="table table-stripped">
     <tr>
-        <th>First Name</th>
+        <th>First Name:</th>
 <!--        i have tried registerFormDTO on firstName and lastName, still nothing-->
-        <td th:text="${user.firstName}"></td>
+        <td th:text="${firstName}"></td>
     </tr>
     <tr>
-        <th>Last Name</th>
-        <td th:text="${user.lastName}"></td>
+        <th>Last Name:</th>
+        <td th:text="${lastName}"></td>
     </tr>
     <tr>
-        <th>Email</th>
-        <td th:text="${user.email}"></td>
+        <th>Email:</th>
+        <td th:text="${email}"></td>
     </tr>
 </table>
 </body>

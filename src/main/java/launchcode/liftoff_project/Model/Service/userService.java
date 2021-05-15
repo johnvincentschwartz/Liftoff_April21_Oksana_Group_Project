@@ -19,9 +19,9 @@ public class userService {
         return userRepository.findByEmail(email);
     }
 
-    public User findByConfirmationToken(String confirmationToken) {
-        return userRepository.findByConfirmationToken(confirmationToken);
-    }
+//    public User findByConfirmationToken(String confirmationToken) {
+//        return userRepository.findByConfirmationToken(confirmationToken);
+//    }
 
     public void saveUser(User user) {
         userRepository.save(user);

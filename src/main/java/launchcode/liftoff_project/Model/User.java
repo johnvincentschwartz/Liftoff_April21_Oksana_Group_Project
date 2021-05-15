@@ -22,8 +22,8 @@ public class User extends AbstractEntity {
     @NotNull
     private String pwHash;
 
-    @Column(name = "confirmation_token")
-    private String confirmationToken;
+//    @Column(name = "confirmation_token")
+//    private String confirmationToken;
 
     public User() {}
 
@@ -64,11 +64,11 @@ public class User extends AbstractEntity {
         return encoder.matches(password, pwHash);
     }
 
-    public String getConfirmationToken() {
-        return confirmationToken;
-    }
+//    public String getConfirmationToken() {
+//        return confirmationToken;
+//    }
 
-    public void setConfirmationToken(String confirmationToken) {
-        this.confirmationToken = confirmationToken;
-    }
+//    public void setConfirmationToken(String confirmationToken) {
+//        this.confirmationToken = confirmationToken;
+//    }
 }

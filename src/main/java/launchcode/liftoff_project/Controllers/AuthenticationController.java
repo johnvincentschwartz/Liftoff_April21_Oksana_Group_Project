@@ -99,7 +99,7 @@ public class AuthenticationController extends HttpServlet {
     @PostMapping("/login")
     public String processLoginForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO, HttpSession session,
                                    Errors errors, HttpServletRequest request,
-                                   Model model, RedirectAttributes redirectAttributes, @ModelAttribute @Valid RegisterFormDTO registrationFormDTO, @Valid User aUser) {
+                                   Model model, RedirectAttributes redirectAttributes, @ModelAttribute @Valid RegisterFormDTO registrationFormDTO) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Log In");
@@ -128,7 +128,7 @@ public class AuthenticationController extends HttpServlet {
         session.setAttribute("lastName", user.getLastName());
 
         redirectAttributes.addAttribute("theUser", user.getEmail());
-        return "userProfile";
+        return "redirect:/userProfile";
 
     }
 

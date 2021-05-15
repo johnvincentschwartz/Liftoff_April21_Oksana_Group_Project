@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends CrudRepository<User, Integer> {
 
     User findByEmail(String email);
-    User findByConfirmationToken(String confirmationToken);
+//    User findByConfirmationToken(String confirmationToken);
 }
