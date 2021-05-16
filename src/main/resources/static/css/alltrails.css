@@ -128,3 +128,8 @@ form {
     height: 50px !important;*/
     margin: 10px 10px 0 0;
 }
+
+i {
+    font-size: 2rem;
+    margin-right: 1rem;
+}

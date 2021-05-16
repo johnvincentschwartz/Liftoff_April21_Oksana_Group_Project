@@ -1,18 +1,25 @@
 package launchcode.liftoff_project.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import javax.persistence.*;
 import java.util.Objects;
+
 
 @Entity
 public class Trail implements Comparable<Trail>{
+
+    public enum Water {
+        lake,
+        river,
+        creek,
+        pond
+    }
+
+    public enum Type {
+        natural,
+        paved,
+        gravel,
+        partial_paved
+    }
 
     @Id
     @GeneratedValue
@@ -36,6 +43,20 @@ public class Trail implements Comparable<Trail>{
 
     private Float lng;
 
+    private Boolean dogs;
+
+    private Boolean family;
+
+    private Boolean bikes;
+
+    private Boolean woods;
+
+    @Enumerated(EnumType.STRING)
+    private Water water;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
     public Trail(String name, String city, String state, Float length, int difficulty) {
         this.name = name;
         this.city = city;
@@ -46,6 +67,12 @@ public class Trail implements Comparable<Trail>{
         this.google_name = null;
         this.lat = null;
         this.lng = null;
+        this.type = null;
+        this.water = null;
+        this.woods = null;
+        this.dogs = null;
+        this.family = null;
+        this.bikes = null;
     }
 
     public Trail(){}
@@ -124,6 +151,54 @@ public class Trail implements Comparable<Trail>{
 
     public void setLng(Float lng) {
         this.lng = lng;
+    }
+
+    public Boolean getDogs() {
+        return dogs;
+    }
+
+    public void setDogs(Boolean dogs) {
+        this.dogs = dogs;
+    }
+
+    public Boolean getFamily() {
+        return family;
+    }
+
+    public void setFamily(Boolean family) {
+        this.family = family;
+    }
+
+    public Boolean getBikes() {
+        return bikes;
+    }
+
+    public void setBikes(Boolean bikes) {
+        this.bikes = bikes;
+    }
+
+    public Boolean getWoods() {
+        return woods;
+    }
+
+    public void setWoods(Boolean woods) {
+        this.woods = woods;
+    }
+
+    public Water getWater() {
+        return water;
+    }
+
+    public void setWater(Water water) {
+        this.water = water;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override
