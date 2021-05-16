@@ -43,7 +43,7 @@
               </ul>
             </div>
             <div>
-                <ul th:if = "${user}" class="nav navbar-nav navbar-right">
+                <ul th:if = "${theUser}" class="nav navbar-nav navbar-right">
                     <li><a th:href="@{/index}"><span class="glyphicon glyphicon-user"></span>Welcome User</a></li>
                     <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-user"></span> Log Out</a></li>
                 </ul>

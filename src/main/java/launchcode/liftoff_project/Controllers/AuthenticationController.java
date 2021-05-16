@@ -123,11 +123,11 @@ public class AuthenticationController extends HttpServlet {
         }
         //This adds our user to our html to be able to use tell if logged in
         setUserInSession(request.getSession(), user);
-        session.setAttribute("email", user.getEmail());
-        session.setAttribute("firstName", user.getFirstName());
-        session.setAttribute("lastName", user.getLastName());
+//        session.setAttribute("email", user.getEmail());
+//        session.setAttribute("firstName", user.getFirstName());
+//        session.setAttribute("lastName", user.getLastName());
 
-        redirectAttributes.addAttribute("theUser", user.getEmail());
+//        redirectAttributes.addAttribute("theUser", user.getEmail());
         return "redirect:/userProfile";
 
     }

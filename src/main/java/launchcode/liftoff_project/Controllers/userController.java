@@ -33,18 +33,22 @@ public class userController {
     private UserRepository userRepository;
 
     @GetMapping
-    public String displayUserProfile(Model model, HttpServletRequest request){
+    public String displayUserProfile( Model model, HttpServletRequest request){
 
         HttpSession session = request.getSession(false);
+        if(session != null) {
+            User theUser = authenticationController.getUserFromSession(session);
+            if(theUser != null) {
+                model.addAttribute("theUser", theUser);
+                return "userProfile";
+            }else{
+                return "redirect:/login";
+            }
+        }else {
+            return "redirect:/login";
 
-        String firstName = (String)session.getAttribute("firstName");
-        String lastName = (String)session.getAttribute("lastName");
-        String email = (String)session.getAttribute("email");
-        model.addAttribute("firstName", firstName);
-        model.addAttribute("lastName", lastName);
-        model.addAttribute("email", email);
-//        model.addAttribute("user", userRepository.findAll());
-        return "userProfile";
+
+        }
     }
 }
 

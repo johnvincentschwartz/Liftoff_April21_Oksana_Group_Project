@@ -20,15 +20,15 @@
     <tr>
         <th>First Name:</th>
 <!--        i have tried registerFormDTO on firstName and lastName, still nothing-->
-        <td th:text="${firstName}"></td>
+        <td th:text="${theUser.firstName}"></td>
     </tr>
     <tr>
         <th>Last Name:</th>
-        <td th:text="${lastName}"></td>
+        <td th:text="${theUser.lastName}"></td>
     </tr>
     <tr>
         <th>Email:</th>
-        <td th:text="${email}"></td>
+        <td th:text="${theUser.email}"></td>
     </tr>
 </table>
 </body>
