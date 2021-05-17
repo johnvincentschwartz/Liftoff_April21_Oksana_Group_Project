@@ -163,7 +163,10 @@
             </ol>
         </div>
         <div id="map-column" class="col-sm-8 section-container">
-            <h2>Map</h2>
+            <h2>
+                Map
+                <button class="btn btn-primary" th:attr="onclick='checkLocation()'">Use My Location</button>
+            </h2>
             <div id="map"></div>
         </div>
     </div>
@@ -188,6 +191,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         document.querySelectorAll('.environment-checkbox').forEach(item => item.checked = false);
         document.querySelectorAll('.friendly-checkbox').forEach(item => item.checked = false);
     }
+
+
 
 </script>
 <script th:if="${searchLocation == null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initDefaultMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
