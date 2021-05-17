@@ -1,19 +1,18 @@
-//https://developers.google.com/maps/documentation/javascript/markers - "Make a Marker Accessible"
-//https://developers.google.com/maps/documentation/javascript/infowindows
-//https://developers.google.com/maps/documentation/javascript/events - "Listening to DOM Events"
-//https://developers.google.com/maps/documentation/javascript/geolocation
+//Globals passed by HTML:
+//    let trails = /*[[${trails}]]*/
+//    let searchLocation = /*[[${trailFilterDTO.searchLocation}]]*/
+//    let sort = /*[[${sort}]]*/
 
 let selectedZoom = 10;
 let selectedLocation = {lat: 38.6009, lng: -90.4330};
 let selectedId;
+let userLocation;
 let initialLoad = true;
 let map;
-let userLocation;
 const searchLocationInput = document.getElementById('search-location');
 const testDiv = document.getElementById('test-div')
 
 function setZoom(id) {
-    let selectedTrail = trails.find(trail => trail.id === id)
 
     selectedZoom = 13;
     lastSelectedId = selectedId;
@@ -23,7 +22,8 @@ function setZoom(id) {
 
     //If search location has been changed, recalculate with search map so distances don't recalculated to default/userLoc when you click on a trail result
     if (searchLocation){
-        initSearchMap()
+        console.log(searchLocation)
+        initSearchMap(searchLocation)
     } else {
         initDefaultMap()
     }
@@ -56,15 +56,17 @@ function calculateDistance(trails, userLocation){
     };
 }
 
-function initSearchMap() {
+function initSearchMap(searchLocation) {
     const geocoder = new google.maps.Geocoder();
+
+    alert(searchLocation)
 
     geocoder.geocode({ address: searchLocation }, (results, status) => {
         if (status === "OK") {
               const {lat, lng} = results[0].geometry.location;
               userLocation = {lat: lat(), lng: lng()}
         } else {
-            alert(status)
+            alert("status", status, "SEARCHLOC", searchLocation, "RESULTS", results)
         }
          map = new google.maps.Map(document.getElementById("map"), {
             zoom: selectedZoom,
@@ -78,6 +80,7 @@ function initSearchMap() {
 }
 
 function initDefaultMap() {
+    alert("default map")
     userLocation = new Object();
     const geocoder = new google.maps.Geocoder();
 
@@ -117,7 +120,7 @@ function processResults(trails, map){
 
     let allResults = [];
 
-    calculateDistance(trails, userLocation)
+    calculateDistance(trails, selectedLocation)
 
     const infoWindow = new google.maps.InfoWindow();
 
@@ -168,5 +171,4 @@ function processResults(trails, map){
         });
 
     });
-    console.log(trails)
 }

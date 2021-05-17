@@ -24,7 +24,7 @@
                 <div id="form-row" class="row justify-content-*-center" style="text-align: center">
                     <div id="search-location-container" class="form-el form-group col-sm">
                         <label>Search location:</label>
-                        <input id="search-location" th:value="${trailFilterDTO.searchLocation}" type="text" class="form-control" placeholder="Enter city or zipcode"/>
+                        <input id="search-location" th:field="${trailFilterDTO.searchLocation}" type="text" class="form-control" />
                     </div>
                     <div id="min-length-container" class="form-el form-group col-sm">
                         <label>Min length:</label>
@@ -189,7 +189,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         document.querySelectorAll('.friendly-checkbox').forEach(item => item.checked = false);
     }
 
-    console.log(trails)
 </script>
 <script th:if="${searchLocation == null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initDefaultMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
 <script th:if="${searchLocation != null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initSearchMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>

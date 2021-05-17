@@ -4,7 +4,7 @@ import java.util.*;
 
 public class TrailFilterDTO {
 
-    private String searchLocation;
+    private String searchLocation = "63110";
 
     private Double minLength = 0.0;
 

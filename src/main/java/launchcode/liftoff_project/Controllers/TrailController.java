@@ -36,7 +36,10 @@ public class TrailController {
 
         Iterable<Trail> allTrailsSorted = trailRepository.findAll(Sort.by(Sort.Direction.ASC, sort));
         Collection<Trail> results = filterTrails(trailFilterDTO, allTrailsSorted);
+        String searchLocation = trailFilterDTO.getSearchLocation();
+        System.out.println(searchLocation);
 
+        model.addAttribute("searchLocation", searchLocation);
         model.addAttribute("sort", sort);
         model.addAttribute("trails", results);
 
