@@ -157,7 +157,6 @@ div.desc {
         font-family: 'Roboto Condensed', sans-serif;
         font-weight: bold;
 }
-
 /* Search Table */
 .table {
       border-collapse: collapse;
@@ -206,3 +205,4 @@ form.example button {
   border-left: none;
   cursor: pointer;
 }
+
