@@ -1,20 +1,23 @@
-//Globals passed by HTML:
+//Available variables passed by Thymeleaf from allTrails.html:
 //    let trails = /*[[${trails}]]*/
 //    let searchLocation = /*[[${trailFilterDTO.searchLocation}]]*/
 //    let sort = /*[[${sort}]]*/
 
-let selectedZoom = 10;
+let map;
 let startLocation = {lat: 38.6009, lng: -90.4330};
+let selectedZoom = 10;
 let selectedId;
 let initialLoad = true;
-let map;
+
 const searchLocationInput = document.getElementById('search-location');
 
-function setZoom(id) {
+//Called when clicking on a search result title
+function focusTrail(id) {
     selectedZoom = 13;
     lastSelectedId = selectedId;
     selectedId = id;
 
+    //The initialLoad variable keeps the infoWindow from appearing when the page first loads without the user having clicked on anything
     initialLoad = false;
 
     //If search location has been changed, recalculate with search map so distances don't recalculated to default/startLoc when you click on a trail result
@@ -26,9 +29,11 @@ function setZoom(id) {
 
 }
 
+//Called to find distance between each trail and startLocation, and add that data to the search results column
 function calculateDistance(trails, startLocation){
     const service = new google.maps.DistanceMatrixService();
 
+    //request distance/drive information from google
     for (let i = 0; i < trails.length; i++){
         service.getDistanceMatrix({
             origins: [startLocation],
@@ -37,29 +42,33 @@ function calculateDistance(trails, startLocation){
             unitSystem: google.maps.UnitSystem.IMPERIAL
         }, callback)
 
+        //Assign dynamic variable to each trail's HTML element displaying distance and drivetime.
         const distanceAwayLi = document.getElementById(`distance-from-${trails[i].id}`)
 
+        //After google's data is retrieved, isolate the numeric value of distances and drivetimes
         function callback(response, status) {
             let origin = response.originAddresses[0];
             let destination = response.destinationAddresses[0]
             let element = response.rows[0].elements[0]
             let distance = element.distance.text
             let duration = element.duration.text
-
+            //Add those numbers to HTML
             distanceAwayLi.innerHTML = `${distance} away (${duration} drive)`;
         }
     };
 }
 
+//Triggers from clicking Use My Location button
 function checkLocation() {
-    //Try to set start location as user location. Will ask for permission. If declined, falls back to default location.
+    //If site not already Allowed to use location, will trigger browser alert asking for permission.
     if (navigator.geolocation){
          navigator.geolocation.getCurrentPosition(function(position) {
+            //If granted permission, startLocation becomes user position.
             startLocation.lat = position.coords.latitude,
             startLocation.lng = position.coords.longitude
 
+            //Google geocoder is used to find approximate zip code to put into Search box of Filter
             const geocoder = new google.maps.Geocoder();
-
             geocoder.geocode({ location: startLocation }, (results, status) => {
                 if (status === "OK") {
                     const zip = results[0].address_components[6].long_name;
@@ -70,8 +79,10 @@ function checkLocation() {
                 }
             })
         },
+        //Runs if you click Use My Location while browser has Location Services blocked
         () => {alert("Your web browser has blocked using your location. Please enable to use your current location.")}
     )
+    // !navigator.geolocation only the case when using a browser not capable of geolocation
     } else {
         alert("Your web browser does not support geolocation.")
     }
@@ -86,6 +97,7 @@ function initDefaultMap() {
         mapId: '59da3fe57cf0042e',
         mapTypeControl: false
     });
+
     processResults(trails, map)
 }
 
@@ -107,6 +119,7 @@ function initSearchMap() {
             mapId: '59da3fe57cf0042e',
             mapTypeControl: false
         });
+
         processResults(trails,map)
     })
 }
