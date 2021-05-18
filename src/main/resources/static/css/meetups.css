@@ -179,13 +179,15 @@ input[type=submit] {
     border-radius: 5px;
 }
 
-.map{
-    font-size: 30px;
-    font-weight: bold;
-    color:white;
+#map {
+    height:500px;
 }
 
 span {
     font-weight: bold;
     color: #303030
+}
+
+.meetup-trail-map {
+    padding: 4rem;
 }

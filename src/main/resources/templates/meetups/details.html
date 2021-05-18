@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="fragments :: head"></head>
 <head>
     <link th:href="@{/css/meetups.css}" rel="stylesheet" />
+</head>
+<head>
+    <link th:href="@{/css/alltrails.css}" rel="stylesheet" />
 </head>
 <body>
 <header th:replace="fragments :: header"></header>
@@ -21,14 +24,29 @@
     <div>
         <h1 class="details-name" th:text="${meetup.meetupName}"></h1>
         <ul>
-            <li th:text="'Meetup Description: ' + ${meetup.meetupDetails.meetupDescription}"></li>
-            <li th:text="${meetup.meetupDetails.meetupContactEmail}"></li>
+            <li th:text="'Description: ' + ${meetup.meetupDetails.meetupDescription}" class="meetup-description-details"></li>
+            <li th:text="'Date: ' + ${meetup.meetupDate}" class="meetup-date-details"></li>
+            <li th:text="'Contact Email: ' + ${meetup.meetupDetails.meetupContactEmail}" class="meetup-email-details"></li>
+            <li th:text="'Location: ' + ${meetup.trail}" class="meetup-location-details"></li>
         </ul>
     <!--tr>
         <th>Meetup Category</th>
         <td th:text="${meetup.meetupCategory}"></td>
     </tr-->
+
     </div>
+    <!--div th:each="trail : ${trails}" th:block><h4     th:attr="data-id=${trail.id}"></h4>
+    </div-->
+    <div id="map-column" class="meetup-trail-map">
+            <h3>Trail Location</h3>
+            <div id="map"></div>
+    </div>
+
+    <script th:src="@{/js/meetupMap.js}"></script>
+    <script th:inline="javascript">
+    let trails = /*[[${trails}]]*/
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=&v=weekly&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
 </section>
 </body>
 </html>

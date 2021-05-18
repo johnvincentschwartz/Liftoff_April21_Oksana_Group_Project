@@ -13,6 +13,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,23 +38,6 @@ public class MeetupController {
         return "meetups/index";
     }
 
-//    @GetMapping
-//    public String displayMeetups(@RequestParam(required = false) Integer categoryId, Model model) {
-//        if(categoryId == null) {
-//            //model.addAttribute("title", "Trail Meetups");
-//            model.addAttribute("meetups", meetupRepository.findAll());
-//        } else {
-//            Optional<MeetupCategory> result = meetupCategoryRepository.findById(categoryId);
-//            if (result.isEmpty()) {
-//                model.addAttribute("title", "Invalid: A Meetup With a Category ID of " + categoryId + " Does Not Exist.");
-//            }else{
-//                MeetupCategory category = result.get();
-//                model.addAttribute("title", "Results For Meetups in Category" + category.getMeetupCategoryName());
-//                model.addAttribute("meetups", category.getMeetups());
-//            }
-//        }
-//        return "meetups/index";
-//    }
 
     @GetMapping("create")
     public String displayCreateMeetupsForm(Model model) {
@@ -120,15 +104,38 @@ public class MeetupController {
 
     @GetMapping("details")
     public String displayMeetupDetails(@RequestParam Integer meetupId, Model model) {
+
+        model.addAttribute("trails", trailRepository.findAll());
+
         Optional<Meetup> result = meetupRepository.findById(meetupId);
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             model.addAttribute("title", "Invalid: A meetup with ID " + meetupId + "does not seem to exist.");
         } else {
             Meetup meetup = result.get();
             model.addAttribute("title", meetup.getMeetupName() + " Details");
             model.addAttribute("meetup", meetup);
         }
+
         return "meetups/details";
     }
+
+
+//    @GetMapping
+//    public String displayMeetups(@RequestParam(required = false) Integer categoryId, Model model) {
+//        if(categoryId == null) {
+//            //model.addAttribute("title", "Trail Meetups");
+//            model.addAttribute("meetups", meetupRepository.findAll());
+//        } else {
+//            Optional<MeetupCategory> result = meetupCategoryRepository.findById(categoryId);
+//            if (result.isEmpty()) {
+//                model.addAttribute("title", "Invalid: A Meetup With a Category ID of " + categoryId + " Does Not Exist.");
+//            }else{
+//                MeetupCategory category = result.get();
+//                model.addAttribute("title", "Results For Meetups in Category" + category.getMeetupCategoryName());
+//                model.addAttribute("meetups", category.getMeetups());
+//            }
+//        }
+//        return "meetups/index";
+//    }
 
 }
