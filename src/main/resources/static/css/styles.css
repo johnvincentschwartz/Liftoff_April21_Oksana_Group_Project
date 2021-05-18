@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 body {
@@ -96,6 +97,11 @@ div.gallery {
   width: 180px;
 }
 
+.navbar-right {
+    display: flex;
+    flex-direction: row;
+}
+
 /*
 div.gallery:hover {
   border: 1px solid #777;
@@ -133,10 +139,9 @@ div.desc {
       height: 100px;
 }
 
-.thumbnail {
+.img-thumbnail {
      width: 85%;
      height: auto;
-
 }
 /* Star Ratings */
 .checked {
@@ -185,6 +190,7 @@ td {
 h1 {
     font-family: 'Roboto Condensed', sans-serif;
 }
+
 form.example input[type=text] {
   padding: 10px;
   font-size: 17px;

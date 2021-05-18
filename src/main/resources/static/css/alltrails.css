@@ -153,7 +153,13 @@ form {
     margin: 10px 10px 0 0;
 }
 
-i, .icon {
+i #master-container {
+    font-size: 2rem;
+    margin-right: 1rem;
+    margin-bottom: 10px;
+}
+
+.icon #master-container {
     font-size: 2rem;
     margin-right: 1rem;
     margin-bottom: 10px;
