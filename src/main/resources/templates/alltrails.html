@@ -100,18 +100,18 @@
                     <div id="submit-clear-container" class="form-group col-sm">
                         <div class="row">
                             <input
-                                    id="submit-button"
-                                    class="form-el btn btn-primary col-sm"
-                                    type="submit"
-                                    style="margin-bottom: 1rem"
+                                id="submit-button"
+                                class="form-el btn btn-primary col-sm"
+                                type="submit"
+                                style="margin-bottom: 1rem"
                             />
                         </div>
                         <div class="row">
                             <button
-                                    id="clear-button"
-                                    type="button"
-                                    class="form-el btn btn-danger col-sm"
-                                    onclick="clearAll()"
+                                id="clear-button"
+                                type="button"
+                                class="form-el btn btn-danger col-sm"
+                                onclick="clearAll()"
                             >Clear All</button>
                         </div>
                     </div>
@@ -144,28 +144,46 @@
                                 data-toggle="tooltip" data-bs-placement="bottom" title="Near lake" animation="true"/>
                             <img class="fas fa icon" th:if="${trail.getWater().toString().equals('river')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/river_white.svg}"
                                 data-toggle="tooltip" data-bs-placement="bottom" title="Near river" animation="true"/>
-                            <i th:if="${trail.dogs}" class="fas fa-dog"
+                            <i th:if="${trail.dogs}" class="fas fa-dog icon"
                                data-toggle="tooltip" data-bs-placement="bottom" title="Confirmed dog-friendly" animation="true">
                             </i>
-                            <i th:if="${trail.woods}" class="fas fa-tree"
+                            <i th:if="${trail.woods}" class="fas fa-tree icon"
                                data-toggle="tooltip" data-bs-placement="bottom" title="Wooded area" animation="true">
                             </i>
-                            <i th:if="${trail.bikes}" class="fas fa-biking"
+                            <i th:if="${trail.bikes}" class="fas fa-biking icon"
                                data-toggle="tooltip" data-bs-placement="bottom" title="Confirmed bike-friendly" animation="true">
                             </i>
-                            <i th:if="${trail.family}" class="fas fa-baby-carriage"
+                            <i th:if="${trail.family}" class="fas fa-baby-carriage icon"
                                data-toggle="tooltip" data-bs-placement="bottom" title="Confirmed family-friendly" animation="true">
                             </i>
-
                         </li>
                     </ul>
-                </li>
+                    <div id="min-rating" class="rating" style="margin:0 auto;overflow:hidden">
+                        <input disabled type="radio" name="rating" value="5" id="5">
+                        <label for="5">☆</label>
+                        <input disabled type="radio" name="rating" value="4" id="4">
+                        <label for="4">☆</label>
+                        <input disabled type="radio" name="rating" value="3" id="3">
+                        <label for="3">☆</label>
+                        <input disabled type="radio" name="rating" value="2" id="2">
+                        <label for="2">☆</label>
+                        <input disabled type="radio" name="rating" value="1" id="1">
+                        <label for="1">☆</label>
+                    </div>
+                    <div class="row" style="display: flex">
+                        <button class="btn btn-primary col-sm" style="width: 100%; margin: 1rem">Add to Favorites</button><br />
+                        <button class="btn btn-primary col-sm" style="width: 100%; margin: 1rem">Plan a Meetup</button>
+                        <button class="btn btn-primary col-sm" style="width: 100%; margin: 1rem">More Info</button>
+                    </div>
             </ol>
         </div>
         <div id="map-column" class="col-sm-8 section-container">
-            <h2>
-                Map
-                <button class="btn btn-primary" th:attr="onclick='checkLocation()'">Use My Location</button>
+            <h2 style="display: flex; justify-content: space-between">
+                <span>Map</span>
+                <button class="btn btn-primary" th:attr="onclick='checkLocation()'">
+                    <i class="bi bi-pin-map-fill"></i>
+                    Use My Location
+                </button>
             </h2>
             <div id="map"></div>
         </div>

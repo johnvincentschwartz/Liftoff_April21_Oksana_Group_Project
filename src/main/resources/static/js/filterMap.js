@@ -143,23 +143,9 @@ function processResults(trails, map){
     const infoWindow = new google.maps.InfoWindow();
     for (let trail of trails){
         const infoWindowContent =
-            `<div style="background-color: #091E05; color: white; padding: 3rem; margin: 0; width: auto; height: auto">
-                <h3>${trail.name}</h3>
-                <h4>${trail.length} mi, Level ${trail.difficulty}</h4>
-                <div id="min-rating" class="rating" style="margin:0 auto;overflow:hidden">
-                    <input disabled type="radio" name="rating" value="5" id="5">
-                    <label for="5">☆</label>
-                    <input disabled type="radio" name="rating" value="4" id="4">
-                    <label for="4">☆</label>
-                    <input disabled type="radio" name="rating" value="3" id="3">
-                    <label for="3">☆</label>
-                    <input disabled type="radio" name="rating" value="2" id="2">
-                    <label for="2">☆</label>
-                    <input disabled type="radio" name="rating" value="1" id="1">
-                    <label for="1">☆</label>
-                </div>
-                <button class="btn btn-primary" style="width: 100%; margin: 0.5rem 0">Add to Favorites</button><br />
-                <button class="btn btn-primary" style="width: 100%; margin: 0.5rem 0">Plan a Meetup</button>
+            `<div style="background-color: #091E05; color: white; padding: 1rem; margin: 0; width: auto; height: auto">
+                <h4>${trail.name}</h4>
+                <h5>${trail.length} mi, Level ${trail.difficulty}</h5>
             </div>`
 
         //Create object for each result containing the position and info window content for its marker
