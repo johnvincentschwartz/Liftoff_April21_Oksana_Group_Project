@@ -1,9 +1,18 @@
 package launchcode.liftoff_project.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id") //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion Resolves infinite recursion error related to Rating class
 @Entity
 public class Trail implements Comparable<Trail>{
 
@@ -80,6 +89,12 @@ public class Trail implements Comparable<Trail>{
 
     @Enumerated(EnumType.STRING)
     private Type type;
+
+    @OneToMany(mappedBy = "trail")
+    List<Rating> ratings;
+
+    @ManyToMany(mappedBy = "favoriteTrails")
+    private Set<User> usersFavorited;
 
     public Trail(String name, String city, String state, Float length, int difficulty) {
         this.name = name;
@@ -223,6 +238,26 @@ public class Trail implements Comparable<Trail>{
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public Double getRatingAverage(){
+        List<Integer> allRatingsValues = this.getRatings().stream().map(Rating::getRatingValue).collect(Collectors.toList());
+        if (allRatingsValues.size() == 0){
+            return 0.0;
+        }
+        Double total = 0.0;
+        for (Integer rating : allRatingsValues){
+            total += rating;
+        }
+        return total / allRatingsValues.size();
+    }
+
+    public Set<User> getUsersFavorited() {
+        return usersFavorited;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package launchcode.liftoff_project.Controllers;
 
 import launchcode.liftoff_project.Model.Trail;
+import launchcode.liftoff_project.Model.data.RatingRepository;
 import launchcode.liftoff_project.Model.data.TrailRepository;
 import launchcode.liftoff_project.Model.dto.TrailFilterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("alltrails")
@@ -19,6 +24,9 @@ public class TrailController {
     @Autowired
     private TrailRepository trailRepository;
 
+    @Autowired
+    private RatingRepository ratingRepository;
+
     @GetMapping
     public String index(Model model){
 
@@ -26,6 +34,10 @@ public class TrailController {
 
         model.addAttribute("trailFilterDTO", trailFilterDTO);
         model.addAttribute("trails", trailRepository.findAll());
+
+        for (Trail trail : trailRepository.findAll()){
+            System.out.println(trail.getRatingAverage());
+        }
 
         return "alltrails";
     }
