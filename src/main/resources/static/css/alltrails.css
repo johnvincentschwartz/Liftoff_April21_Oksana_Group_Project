@@ -32,6 +32,11 @@ ol {
     margin: 1rem 2rem 1rem 0;
     background-color: rgba(255,255,255,0.2);
 }
+
+.trail-result-block-favorite {
+    border: 5px solid gold;
+}
+
 .trail-result-details {
     padding-left: 2rem;
 }
@@ -110,7 +115,6 @@ form {
     position: relative;
     font-size: 2em;
     color: #ffffff;
-    cursor: not-allowed
 }
 
 .rating>label::before {
@@ -178,4 +182,8 @@ form {
 .accordion-button:not(.collapsed) {
     color: inherit;
     background-color: rgba(0,0,0,0.2)
+}
+
+#result-options .btn {
+    margin: 0.25rem !important
 }

@@ -25,6 +25,9 @@ public class User extends AbstractEntity {
     @NotNull
     private String pwHash;
 
+//    @Column(name = "confirmation_token")
+//    private String confirmationToken;
+
     @OneToMany(mappedBy = "user")
     Set<Rating> ratings;
 
@@ -34,9 +37,6 @@ public class User extends AbstractEntity {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "trail_id"))
     Set<Trail> favoriteTrails;
-
-//    @Column(name = "confirmation_token")
-//    private String confirmationToken;
 
     public User() {}
 

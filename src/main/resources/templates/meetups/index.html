@@ -6,30 +6,8 @@
 </head>
 <body class="container">
 <header th:replace="fragments :: header"></header>
-
-<div class="meetup -page-header">
-    <h1 th:text="${title}">TrailTracker</h1>
-    <ul class="nav" style="float:right;">
-        <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
-    </ul>
-    <ul class="nav">
-        <li class="nav-item"><a class="nav-link" href="/meetups">All Meetups</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetups/create">Create a Meetup</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetups/delete">Delete a Meetup</a></li>
-        <li class="nav-item"><a class="nav-link" href="/meetupCategories">Meetup Categories</a></li>
-    </ul>
-</div>
-<<<<<<< HEAD
-<table th:each="meetup: ${meetups}" class="table table-stripped">
-
-=======
-
-<<<<<<< HEAD
-<table th:each="meetup : ${meetups}" class="table table-stripped">
-=======
-<table th:each="meetup: ${meetups}" class="table table-stripped">
->>>>>>> 3580590e48cac1df3cae7861f3b43f0d82b5228c
->>>>>>> 14eadadbf756dfc4cc766e96e470ec44712e20ec
+<h1>Trail Meetups</h1>
+<table th:each="meetup: ${meetups}" class="table table-striped">
     <tr>
         <th>Meetup ID</th>
         <td th:text="${meetup.id}"></td>
