@@ -4,30 +4,45 @@
 <head>
     <link th:href="@{/css/alltrails.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 <body>
-<header th:replace="fragments :: nav"></header>
-<div id="master-container" class="container">
+<header th:replace="fragments :: header"></header>
+<div id="master-container" class="container col-xs">
+    <h1 id="all-trails-heading">All Trails</h1>
     <div id="filter-row" class="row">
-        <div id="filter-column" class="col-sm section-container container">
-            <h2>Filter</h2>
-            <form id="filter-form" class="form-inline" th:action="@{/alltrails/}" method="post">
+        <div id="filter-column" class="col-sm section-container container accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#filter-form" aria-expanded="false" aria-controls="filter-form">
+                    <h2>
+                        <i class="bi bi-filter-circle-fill"></i>
+                        Filter
+                    </h2>
+                </button>
+            </h2>
+            <form id="filter-form" class="form-inline accordion-collapse collapse" th:action="@{/alltrails/}" method="post">
                 <div id="form-row" class="row justify-content-*-center" style="text-align: center">
-                    <div id="search-location-container" class="form-group col-sm">
-                        <label for="search-location">Search location:</label>
-                        <input id="search-location" th:value="${searchLocation}" name="searchLocation" type="text" class="form-control" placeholder="Enter city or zipcode"/>
+                    <div id="search-location-container" class="form-el form-group col-sm">
+                        <label>Search location:</label>
+                        <input id="search-location" th:field="${trailFilterDTO.searchLocation}" type="text" class="form-control" />
                     </div>
-                    <div id="max-distance-container" class="form-group col-sm">
-                        <label for="max-distance">Max Distance (mi):</label>
-                        <input id="max-distance" th:value="${maxDistance}" name="maxDistance" type="number" class="form-control" placeholder="None" />
+                    <div id="min-length-container" class="form-el form-group col-sm">
+                        <label>Min length:</label>
+                        <input class="form-control" th:field="${trailFilterDTO.minLength}" type="number" step="0.1"/>
                     </div>
-                    <div id="min-length-container" class="form-group col-sm">
-                        <label for="min-length">Min. length (mi):</label>
-                        <input id="min-length" th:value="${minLength}" type="number" step="0.1" class="form-control" name="minLength" placeholder="0" />
+                    <div id="max-length-container" class="form-el form-group col-sm">
+                        <label>Max length:</label>
+                        <input class="form-control" th:field="${trailFilterDTO.maxLength}" type="number" step="0.1"/>
                     </div>
-                    <div id="max-length-container" class="form-group col-sm">
-                        <label for="max-length">Max. Length (mi):</label>
-                        <input id="max-length" th:value="${maxLength}" type="number" step="0.1" class="form-control" name="maxLength" placeholder="1000" />
+                    <div id="difficulty-container" class="form-group col-sm">
+                        <label>Difficulty:</label><br/>
+                        <div id="difficulty-inputs">
+                            <label class="difficulty-label">1<input id="difficulty1" name="difficulty" th:checked="${trailFilterDTO.difficulty.contains(1)}" type="checkBox" th:value="1" /></label>
+                            <label class="difficulty-label">2<input id="difficulty2" name="difficulty" th:checked="${trailFilterDTO.difficulty.contains(2)}" type="checkBox" th:value="2" /></label>
+                            <label class="difficulty-label">3<input id="difficulty3" name="difficulty" th:checked="${trailFilterDTO.difficulty.contains(3)}" type="checkBox" th:value="3" /></label>
+                            <label class="difficulty-label">4<input id="difficulty4" name="difficulty" th:checked="${trailFilterDTO.difficulty.contains(4)}" type="checkBox" th:value="4" /></label>
+                            <label class="difficulty-label">5<input id="difficulty5" name="difficulty" th:checked="${trailFilterDTO.difficulty.contains(5)}" type="checkBox" th:value="5" /></label>
+                        </div>
                     </div>
                     <div id="min-rating-container" class="form-group col-sm">
                         <label for="min-rating">Min. rating:</label>
@@ -44,28 +59,61 @@
                             <label for="1">☆</label>
                         </div>
                     </div>
-                    <div id="difficulty-container" class="form-group col-sm">
-                        <label>Difficulty:</label><br/>
-                        <div id="difficulty-inputs">
-                            <label for="difficulty1" class="difficulty-label">1<input id="difficulty1" th:checked="${difficulty.contains(1)}" type="checkBox" name="difficulty" th:value="1" /></label>
-                            <label for="difficulty2" class="difficulty-label">2<input id="difficulty2" th:checked="${difficulty.contains(2)}" type="checkBox" name="difficulty" th:value="2" /></label>
-                            <label for="difficulty3" class="difficulty-label">3<input id="difficulty3" th:checked="${difficulty.contains(3)}" type="checkBox" name="difficulty" th:value="3" /></label>
-                            <label for="difficulty4" class="difficulty-label">4<input id="difficulty4" th:checked="${difficulty.contains(4)}" type="checkBox" name="difficulty" th:value="4" /></label>
-                            <label for="difficulty5" class="difficulty-label">5<input id="difficulty5" th:checked="${difficulty.contains(5)}" type="checkBox" name="difficulty" th:value="5" /></label>
+                    <div id="friendly-options-container" class="form-group col-sm">
+                        <label style="white-space: nowrap"><input type="checkbox" class="friendly-checkbox" th:field="${trailFilterDTO.dogFriendly}" th:value="true" /> Dog-Friendly</label>
+                        <label style="white-space: nowrap"><input type="checkbox" class="friendly-checkbox" th:field="${trailFilterDTO.kidFriendly}" th:value="true"/> Kid-Friendly</label>
+                        <label style="white-space: nowrap"><input type="checkbox" class="friendly-checkbox" th:field="${trailFilterDTO.bikeFriendly}" th:value="true"/> Bike-Friendly</label>
+                    </div>
+                    <div id="environment-options-container" class="form-group col-sm">
+                        <label>Environment</label>
+                        <div class="row"><div class="col"><label>
+                            <input th:field="${trailFilterDTO.nearWater}" class="environment-checkbox" th:value="true" type="checkbox"/> By Water
+                        </label></div>
+                        <div class="col"><label>
+                            <input th:field="${trailFilterDTO.nearWoods}" class="environment-checkbox" th:value="true" type="checkbox"/> Wooded Area
+                        </label></div></div>
+                    </div>
+                    <div id="surface-options-container" class="form-group col-sm">
+                        <label>Trail surface</label>
+                        <div class="row" style="flex-wrap: nowrap">
+                            <div class="col-sm"><label>
+                                <input type="checkbox" name="trailSurface" th:checked="${trailFilterDTO.trailSurface.contains('paved')}" th:value="paved" /> Paved
+                            </label></div>
+                            <div class="col-sm"><label>
+                                <input type="checkbox" name="trailSurface" th:checked="${trailFilterDTO.trailSurface.contains('natural')}" th:value="natural"/> Natural
+                            </label></div>
+                        </div>
+                        <div class="row" style="flex-wrap: nowrap">
+                            <div class="col-sm"><label>
+                                <input type="checkbox" name="trailSurface" th:checked="${trailFilterDTO.trailSurface.contains('gravel')}" th:value="gravel"/> Gravel
+                            </label></div>
+                            <div class="col-sm"><label>
+                                <input type="checkbox" name="trailSurface" th:checked="${trailFilterDTO.trailSurface.contains('partial_paved')}" th:value="partial_paved"/> Mixed
+                            </label></div>
                         </div>
                     </div>
                     <div id="sort-container" class="form-group col-sm">
-                        <label for="sort">Sort By:</label>
-                        <select id="sort" name="sort" class="custom-select">
-                            <option th:value="distance" disabled>Distance</option>
-                            <option th:value="length">Length</option>
-                            <option th:value="rating" disabled>Rating</option>
-                            <option th:value="difficulty">Difficulty</option>
-                        </select>
+                        <div class="col"><label><input type="radio" name="sort" th:value="length" checked/> Sort by Length</label></div>
+                        <div class="col"><label><input type="radio" name="sort" th:value="difficulty"/> Sort by Difficulty</label></div>
+                        <div class="col"><label><input type="radio" name="sort" th:value="rating"/> Sort by Rating</label></div>
                     </div>
-                    <div id="button-container" class="form-group col-sm">
-                        <input id="submit-button" class="btn btn-primary" type="submit" />
-                        <button id="clear-button" class="btn btn-danger" onclick="clearAll()">Clear all</button>
+                    <div id="submit-clear-container" class="form-group col-sm">
+                        <div class="row">
+                            <input
+                                id="submit-button"
+                                class="form-el btn btn-primary col-sm"
+                                type="submit"
+                                style="margin-bottom: 1rem"
+                            />
+                        </div>
+                        <div class="row">
+                            <button
+                                id="clear-button"
+                                type="button"
+                                class="form-el btn btn-danger col-sm"
+                                onclick="clearAll()"
+                            >Clear All</button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -76,43 +124,94 @@
             <h2 th:text="'Results (' + ${trails.size()} + ')'"></h2>
             <ol id="results-list" class="mb-0">
                 <li class="trail-result-block" th:each="trail : ${trails}" th:block>
-                    <h4 class="trail-result-name" th:text="${trail.name}" th:attr="onclick='setZoom(' + ${trail.id} + ')'"></h4>
+                    <h4 class="trail-result-name" th:text="${trail.name}" th:attr="onclick='focusTrail(' + ${trail.id} + ')'"></h4>
                     <ul class="trail-result-details">
                         <li th:text="${trail.length} + ' mi long, Level ' + ${trail.difficulty}"></li>
                         <li th:text="${trail.city} +', ' + ${trail.state}"></li>
                         <li th:id="'distance-from-' + ${trail.id}"></li>
-                        <li>
-                            <i th:if="${trail.dogs}" class="fas fa-dog"></i>
-                            <i th:if="${trail.woods}" class="fas fa-tree"></i>
-                            <i th:if="${trail.type} != 'natural'" class="fas fa-road"></i>
-                            <i th:if="${trail.bikes}" class="fas fa-biking"></i>
-                            <i th:if="${trail.family}" class="fas fa-baby-carriage"></i>
-                            <i th:if=${trail.water} class="fas fa-water"></i>
+                        <li class="result-icon-set">
+                            <img class="fas fa icon" th:if="${trail.getType().toString().equals('partial_paved')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/mixed_white.svg}"
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Partially paved" animation="true"/>
+                            <img class="fas fa icon" th:if="${trail.getType().toString().equals('gravel')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/gravel_white.svg}"
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Gravel surface" animation="true"/>
+                            <img class="fas fa icon" th:if="${trail.getType().toString().equals('natural')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/natural_white.svg}"
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Natural surface" animation="true"/>
+                            <img class="fas fa icon" th:if="${trail.getType().toString().equals('paved')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/paved_white.svg}"
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Paved surface" animation="true"/>
+                            <img class="fas fa icon" th:if="${trail.getWater().toString().equals('creek')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/creek_white.svg}"
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Near creek" animation="true"/>
+                            <img class="fas fa icon" th:if="${trail.getWater().toString().equals('lake')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/lake_white.svg}"
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Near lake" animation="true"/>
+                            <img class="fas fa icon" th:if="${trail.getWater().toString().equals('river')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/river_white.svg}"
+                                data-toggle="tooltip" data-bs-placement="bottom" title="Near river" animation="true"/>
+                            <i th:if="${trail.dogs}" class="fas fa-dog icon"
+                               data-toggle="tooltip" data-bs-placement="bottom" title="Confirmed dog-friendly" animation="true">
+                            </i>
+                            <i th:if="${trail.woods}" class="fas fa-tree icon"
+                               data-toggle="tooltip" data-bs-placement="bottom" title="Wooded area" animation="true">
+                            </i>
+                            <i th:if="${trail.bikes}" class="fas fa-biking icon"
+                               data-toggle="tooltip" data-bs-placement="bottom" title="Confirmed bike-friendly" animation="true">
+                            </i>
+                            <i th:if="${trail.family}" class="fas fa-baby-carriage icon"
+                               data-toggle="tooltip" data-bs-placement="bottom" title="Confirmed family-friendly" animation="true">
+                            </i>
                         </li>
                     </ul>
-                </li>
+                    <div id="min-rating" class="rating" style="margin:0 auto;overflow:hidden">
+                        <input disabled type="radio" name="rating" value="5" id="5">
+                        <label for="5">☆</label>
+                        <input disabled type="radio" name="rating" value="4" id="4">
+                        <label for="4">☆</label>
+                        <input disabled type="radio" name="rating" value="3" id="3">
+                        <label for="3">☆</label>
+                        <input disabled type="radio" name="rating" value="2" id="2">
+                        <label for="2">☆</label>
+                        <input disabled type="radio" name="rating" value="1" id="1">
+                        <label for="1">☆</label>
+                    </div>
+                    <div class="row" style="display: flex">
+                        <button class="btn btn-primary col-sm" style="width: 100%; margin: 1rem">Add to Favorites</button><br />
+                        <button class="btn btn-primary col-sm" style="width: 100%; margin: 1rem">Plan a Meetup</button>
+                        <button class="btn btn-primary col-sm" style="width: 100%; margin: 1rem">More Info</button>
+                    </div>
             </ol>
         </div>
         <div id="map-column" class="col-sm-8 section-container">
-            <h2>Map</h2>
+            <h2 style="display: flex; justify-content: space-between">
+                <span>Map</span>
+                <button class="btn btn-primary" th:attr="onclick='checkLocation()'">
+                    <i class="bi bi-pin-map-fill"></i>
+                    Use My Location
+                </button>
+            </h2>
             <div id="map"></div>
         </div>
     </div>
 </div>
 <script th:src="@{/js/filterMap.js}"></script>
+<script>
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'));
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+});
+</script>
 <script th:inline="javascript">
     let trails = /*[[${trails}]]*/
     let searchLocation = /*[[${searchLocation}]]*/
     let sort = /*[[${sort}]]*/
 
     function clearAll(){
-        document.getElementById('max-distance').value = null;
-        document.getElementById('min-length').value = null;
-        document.getElementById('max-length').value = null;
-        document.querySelectorAll('[type="checkbox"]').forEach(item => item.checked = true);
+        document.getElementById('minLength').value = 0;
+        document.getElementById('maxLength').value = 250;
+        document.querySelectorAll('[name = "difficulty"]').forEach(item => item.checked = true);
+        document.querySelectorAll('[name = "trailSurface"]').forEach(item => item.checked = true);
+        document.querySelectorAll('.environment-checkbox').forEach(item => item.checked = false);
+        document.querySelectorAll('.friendly-checkbox').forEach(item => item.checked = false);
     }
 
-    console.log(trails)
+
+
 </script>
 <script th:if="${searchLocation == null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initDefaultMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
 <script th:if="${searchLocation != null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initSearchMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>

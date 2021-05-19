@@ -1,3 +1,7 @@
+#master-container {
+    margin: 3rem auto;
+}
+
 .section-container {
     border: 3px solid black;
     padding: 2rem
@@ -25,7 +29,8 @@ ol {
 
 .trail-result-block {
     padding: 1rem;
-    margin: 1rem 0;
+    margin: 1rem 2rem 1rem 0;
+    background-color: rgba(255,255,255,0.2);
 }
 .trail-result-details {
     padding-left: 2rem;
@@ -43,8 +48,27 @@ ol {
     height:500px
 }
 
+.form-group{
+    background-color: rgba(255,255,255,0.3);
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.form-control{
+    display: inline-block
+}
+
+label {
+    white-space: nowrap;
+}
+
 .form-group {
+/*    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin: 2rem;
+    padding: 1rem;
+    background-color: rgba(255,255,255,0.5) */
 }
 
 input[type="number"]{
@@ -129,7 +153,29 @@ form {
     margin: 10px 10px 0 0;
 }
 
-i {
+.icon {
     font-size: 2rem;
     margin-right: 1rem;
+    margin-bottom: 10px;
+}
+
+.result-icon-set {
+    display: flex;
+    margin: 0.5rem;
+    margin-left: 0;
+    flex-wrap: wrap;
+}
+
+.accordion-item {
+    background-color: inherit
+}
+
+.accordion-button {
+    color: inherit;
+    background-color: rgba(255,255,255,0.4)
+}
+
+.accordion-button:not(.collapsed) {
+    color: inherit;
+    background-color: rgba(0,0,0,0.2)
 }

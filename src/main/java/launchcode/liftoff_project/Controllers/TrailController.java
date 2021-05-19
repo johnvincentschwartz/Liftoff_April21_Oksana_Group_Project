@@ -2,22 +2,18 @@ package launchcode.liftoff_project.Controllers;
 
 import launchcode.liftoff_project.Model.Trail;
 import launchcode.liftoff_project.Model.data.TrailRepository;
-import org.hibernate.annotations.SQLInsert;
+import launchcode.liftoff_project.Model.dto.TrailFilterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.*;
 
 @Controller
 @RequestMapping("alltrails")
-
 public class TrailController {
 
     @Autowired
@@ -26,31 +22,23 @@ public class TrailController {
     @GetMapping
     public String index(Model model){
 
-        List<Integer> difficulty = new ArrayList<>();
-        difficulty.add(1);
-        difficulty.add(2);
-        difficulty.add(3);
-        difficulty.add(4);
-        difficulty.add(5);
+        TrailFilterDTO trailFilterDTO = new TrailFilterDTO();
 
+        model.addAttribute("trailFilterDTO", trailFilterDTO);
         model.addAttribute("trails", trailRepository.findAll());
-        model.addAttribute("difficulty", difficulty);
 
         return "alltrails";
     }
 
-    @PostMapping()
-    public String displayFilterResults(Model model, @RequestParam Double minLength, @RequestParam Double maxLength,
-                                       @RequestParam List<Integer> difficulty, @RequestParam String searchLocation,
-                                       @RequestParam Double maxDistance, @RequestParam String sort){
+    @PostMapping
+    public String displayFilterResults(Model model, @ModelAttribute @Valid TrailFilterDTO trailFilterDTO,
+                                       HttpServletRequest request, @RequestParam String sort){
 
         Iterable<Trail> allTrailsSorted = trailRepository.findAll(Sort.by(Sort.Direction.ASC, sort));
-        Collection<Trail> results = filterTrails(minLength, maxLength, difficulty, allTrailsSorted);
+        Collection<Trail> results = filterTrails(trailFilterDTO, allTrailsSorted);
+        String searchLocation = trailFilterDTO.getSearchLocation();
+        System.out.println(searchLocation);
 
-        model.addAttribute("minLength", minLength);
-        model.addAttribute("maxLength", maxLength);
-        model.addAttribute("difficulty", difficulty);
-        model.addAttribute("maxDistance", maxDistance);
         model.addAttribute("searchLocation", searchLocation);
         model.addAttribute("sort", sort);
         model.addAttribute("trails", results);
@@ -59,30 +47,29 @@ public class TrailController {
 
     }
 
-    public static ArrayList<Trail> filterTrails(Double minLength, Double maxLength, List<Integer> difficulty, Iterable<Trail> allTrails){
+    public static ArrayList<Trail> filterTrails(TrailFilterDTO dto, Iterable<Trail> allTrails){
+
         ArrayList<Trail> results = new ArrayList<>();
 
-        if (minLength == null){ minLength = 0.0; }
-        if (maxLength == null){ maxLength = 1000.0;}
-        if (difficulty == null){
-            difficulty = new ArrayList<>();
-            difficulty.add(1);
-            difficulty.add(2);
-            difficulty.add(3);
-            difficulty.add(4);
-            difficulty.add(5);
-        }
-
         for (Trail trail : allTrails){
+            if (
+                   (dto.getDogFriendly() && !trail.getDogs())
+                || (dto.getKidFriendly() && !trail.getFamily())
+                || (dto.getBikeFriendly() && !trail.getBikes())
+                || (dto.getNearWater() && trail.getWater().toString().equals("none"))
+                || (dto.getNearWoods() && !trail.getWoods())
+            ) {continue;}
 
             if (
-                trail.getLength() > minLength && trail.getLength() < maxLength
-                && difficulty.contains(trail.getDifficulty())) {
+                trail.getLength() > dto.getMinLength()
+                && trail.getLength() < dto.getMaxLength()
+                && dto.getDifficulty().contains(trail.getDifficulty())
+                && dto.getTrailSurface().contains(trail.getType().toString())
+            ) {
                 results.add(trail);
             }
         }
 
         return results;
     }
-
 }

@@ -8,17 +8,41 @@ import java.util.Objects;
 public class Trail implements Comparable<Trail>{
 
     public enum Water {
-        lake,
-        river,
-        creek,
-        pond
+        none("none"),
+        lake("lake"),
+        river("river"),
+        creek("creek"),
+        pond("pond");
+
+
+        public final String label;
+
+        private Water(String label){
+            this.label = label;
+        }
+
+        @Override
+        public String toString() {
+            return this.label;
+        }
     }
 
     public enum Type {
-        natural,
-        paved,
-        gravel,
-        partial_paved
+        natural("natural"),
+        paved("paved"),
+        gravel("gravel"),
+        partial_paved("partial_paved");
+
+        public final String label;
+
+        private Type(String label){
+            this.label = label;
+        }
+
+        @Override
+        public String toString(){
+            return this.label;
+        }
     }
 
     @Id
