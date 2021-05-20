@@ -33,7 +33,7 @@
                 <label for="min-rating">Min. rating:</label>
                 <div id="min-rating" class="rating">
                     <th:block th:each="i: ${#numbers.sequence(5,1)}">
-                        <input type="radio" name="rating" th:value="${i}" th:id="${i}"/>
+                        <input type="checkbox" name="minRating" th:value="${i}" th:id="${i}" th:checked="${trailFilterDTO.minRating == i}"/>
                         <label th:for="${i}">☆</label>
                     </th:block>
                 </div>
@@ -72,9 +72,9 @@
                 </div>
             </div>
             <div id="sort-container" class="form-group col-sm">
-                <div class="col"><label><input type="radio" name="sort" th:value="length" checked/> Sort by Length</label></div>
-                <div class="col"><label><input type="radio" name="sort" th:value="difficulty"/> Sort by Difficulty</label></div>
-                <div class="col"><label><input type="radio" name="sort" th:value="averageRating"/> Sort by Rating</label></div>
+                <div class="col"><label><input type="radio" name="sort" th:value="averageRating" checked /> Sort by Rating</label></div>
+                <div class="col"><label><input type="radio" name="sort" th:value="length" /> Sort by Length</label></div>
+                <div class="col"><label><input type="radio" name="sort" th:value="difficulty" /> Sort by Difficulty</label></div>
             </div>
             <div id="submit-clear-container" class="form-group col-sm">
                 <div class="row">

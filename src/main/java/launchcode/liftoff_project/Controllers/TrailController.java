@@ -87,6 +87,13 @@ public class TrailController {
                 || (dto.getNearWoods() && !trail.getWoods())
             ) {continue;}
 
+            if (dto.getMinRating() != null){
+                if (
+                    trail.getAverageRating() == null
+                    || trail.getAverageRating() < dto.getMinRating()
+                ){continue;}
+            }
+
             if (
                 trail.getLength() > dto.getMinLength()
                 && trail.getLength() < dto.getMaxLength()
