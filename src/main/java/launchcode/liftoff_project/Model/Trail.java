@@ -2,13 +2,13 @@ package launchcode.liftoff_project.Model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.decimal4j.util.DoubleRounder;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -95,6 +95,8 @@ public class Trail implements Comparable<Trail>{
 
     @ManyToMany(mappedBy = "favoriteTrails")
     private Set<User> usersFavorited;
+
+    private Double averageRating;
 
     public Trail(String name, String city, String state, Float length, int difficulty) {
         this.name = name;
@@ -244,16 +246,8 @@ public class Trail implements Comparable<Trail>{
         return ratings;
     }
 
-    public Double getRatingAverage(){
-        List<Integer> allRatingsValues = this.getRatings().stream().map(Rating::getRatingValue).collect(Collectors.toList());
-        if (allRatingsValues.size() == 0){
-            return 0.0;
-        }
-        Double total = 0.0;
-        for (Integer rating : allRatingsValues){
-            total += rating;
-        }
-        return total / allRatingsValues.size();
+    public Double getAverageRating() {
+        return averageRating;
     }
 
     public Set<User> getUsersFavorited() {

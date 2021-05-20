@@ -56,10 +56,15 @@ public class TrailController {
     public String displayFilterResults(Model model, @ModelAttribute @Valid TrailFilterDTO trailFilterDTO,
                                        HttpServletRequest request, @RequestParam String sort){
 
-        Iterable<Trail> allTrailsSorted = trailRepository.findAll(Sort.by(Sort.Direction.ASC, sort));
+        Iterable<Trail> allTrailsSorted = trailRepository.findAll(Sort.by(Sort.Direction.DESC, sort));
         Collection<Trail> results = filterTrails(trailFilterDTO, allTrailsSorted);
         String searchLocation = trailFilterDTO.getSearchLocation();
-        System.out.println(searchLocation);
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            User theUser = authenticationController.getUserFromSession(session);
+            model.addAttribute("theUser", theUser);
+        }
 
         model.addAttribute("searchLocation", searchLocation);
         model.addAttribute("sort", sort);

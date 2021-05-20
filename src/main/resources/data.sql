@@ -28,10 +28,10 @@ INSERT INTO trail (name, city, state, length, difficulty, google_id, google_name
 ('Barathaven Lake Trail Loop','Dardenne Prairie','MO',1.5,1,'ChIJRztshYfR3ocRsozLFqBqR-I','Dardenne Greenway at BaratHaven Park',38.735138,-90.722934, 'paved', 'lake', false, false, false, true),
 ('Grants Trail','Oakland','MO',8.4,1,'Eh9HcmFudCdzIFRyYWlsLCBPYWtsYW5kLCBNTywgVVNBIi4qLAoUChIJv1chvBLJ2IcRkx65J5C-5rgSFAoSCbuDZuYazNiHERgrcolSMGNx','Grant\'s Trail',38.569753,-90.390563, 'paved', "none", false, false, false, true),
 ('Boschert Greenway Trail','Saint Charles','MO',5.3,1,'ChIJOyQ6B7wv34cRqSmWxhj3lMQ','Boschert Greenway - Boschert Landing',38.793538,-90.474167, 'paved', 'river', false, true, true, true),
-('River des Peres Greenway Trail','Shrewsbury','MO',5,2,'ChIJ4Z8Ww2W22IcRcTGKzlToq5A','River Des Peres Greenway',38.564598,-90.297694, 'paved', "none", false, true, true, true)
---('Deer Creek Greenway','Maplewood','MO',0.6,1,'EidEZWVyIENyZWVrIEdyZWVud2F5LCBNYXBsZXdvb2QsIE1PLCBVU0EiLiosChQKEgl3RgbzUMrYhxEmPMJvhiqw9xIUChIJy9pY4YnK2IcRXco2sfA0JQw','Deer Creek Greenway',38.603183,-90.330672, 'paved', "none", false, true, true, true),
---('Sunset Greenway','Florissant','MO',3.9,3,'ChIJ8eNFdd0534cRNdLUjMMPyYg','Sunset Greenway Trailhead: Sunset Park',38.827821,-90.354964, 'paved', 'lake', false, false, true, true),
---('St. Stanislaus Truman Park Connector Trail','Hazelwood','MO',3.5,1,'ChIJtZl9k8sw34cRlxXqdi6rzFQ','Missouri Greenway Trailhead: Harry S Truman Park',38.795414,-90.37925, 'partial_paved', "none", false, true, false, false),
+('River des Peres Greenway Trail','Shrewsbury','MO',5,2,'ChIJ4Z8Ww2W22IcRcTGKzlToq5A','River Des Peres Greenway',38.564598,-90.297694, 'paved', "none", false, true, true, true),
+('Deer Creek Greenway','Maplewood','MO',0.6,1,'EidEZWVyIENyZWVrIEdyZWVud2F5LCBNYXBsZXdvb2QsIE1PLCBVU0EiLiosChQKEgl3RgbzUMrYhxEmPMJvhiqw9xIUChIJy9pY4YnK2IcRXco2sfA0JQw','Deer Creek Greenway',38.603183,-90.330672, 'paved', "none", false, true, true, true),
+('Sunset Greenway','Florissant','MO',3.9,3,'ChIJ8eNFdd0534cRNdLUjMMPyYg','Sunset Greenway Trailhead: Sunset Park',38.827821,-90.354964, 'paved', 'lake', false, false, true, true),
+('St. Stanislaus Truman Park Connector Trail','Hazelwood','MO',3.5,1,'ChIJtZl9k8sw34cRlxXqdi6rzFQ','Missouri Greenway Trailhead: Harry S Truman Park',38.795414,-90.37925, 'partial_paved', "none", false, true, false, false)
 --('Spanish Trace Trail','Spanish Lake','MO',2,1,'ChIJ70mjfkBP34cR3xKFMeOZJFo','Spanish Lake Park',38.799414,-90.206271, 'paved', 'lake', true, false, false, false),
 --('St. Vincent Greenway','Cool Valley','MO',3.6,3,'ChIJKa9Bvpo134cRdBIjIUx6nVk','Saint Vincent Greenway',38.708491,-90.31079, 'paved', "none", false, false, true, true),
 --('Portage Des Sioux Nature Area Trail','Florissant','MO',1,1,'ChIJid0TWuA-34cRizRXqUthKPw','Portage Des Sioux Nature Area',38.926463,-90.33919, 'partial_paved', 'river', false, false, false, false),
@@ -59,3 +59,12 @@ INSERT INTO trail (name, city, state, length, difficulty, google_id, google_name
 --('Lakeside Park Trail','Saint Peters','MO',6.3,1,'EidMYWtlc2lkZSBQYXJrIFRyYWlsLCBTdCBQZXRlcnMsIE1PLCBVU0EiLiosChQKEgnxiOOb0CffhxGWF1HOXte7QxIUChIJm9TT9xfX3ocRJTQVPyCM9vY','Lakeside Park Trail',38.819681,-90.581917, 'paved', 'lake', false, true, true, false),
 --('Ruth Woods Trail - Full Loop','Olivette','MO',0.9,2,'ChIJnzScxsE034cR4FZ1MNnvew4','Ruth Park Nature Trail',38.672492,-90.356779, 'natural', "none", true, true, false, false)
 ;
+
+ALTER TABLE trail ADD average_rating DOUBLE(3,2);
+UPDATE trail
+SET average_rating = (
+    SELECT avg(rating.rating)
+    FROM rating
+    WHERE trail.id = rating.trail_id
+    GROUP BY trail.id
+);
