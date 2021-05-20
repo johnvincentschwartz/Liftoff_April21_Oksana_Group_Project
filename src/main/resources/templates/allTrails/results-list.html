@@ -1,0 +1,62 @@
+<div th:fragment="results-list" id="results-column" class="col-sm-4 section-container" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h2 th:text="'Results (' + ${trails.size()} + ')'"></h2>
+    <ol id="results-list" class="mb-0">
+        <th:block th:each="trail : ${trails}">
+            <li th:class="'trail-result-block ' + ${theUser != null AND theUser.getFavoriteTrails().contains(trail) ? 'trail-result-block-favorite' : ''}" >
+                <h4
+                        class="trail-result-name"
+                        th:text="${trail.getRatingAverage() > 0.0} ? ${trail.name} + ' (☆ ' + ${trail.getRatingAverage()} + ')' : ${trail.name}"
+                        th:attr="onclick='focusTrail(' + ${trail.id} + ')'">
+                </h4>
+                <ul class="trail-result-details">
+                    <li th:text="${trail.length} + ' mi long, Level ' + ${trail.difficulty}"></li>
+                    <li th:text="${trail.city} +', ' + ${trail.state}"></li>
+                    <li th:id="'distance-from-' + ${trail.id}"></li>
+                    <li class="result-icon-set">
+                        <img class="fas fa icon" th:if="${trail.getType().toString().equals('partial_paved')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/mixed_white.svg}"
+                             data-toggle="tooltip" data-bs-placement="bottom" title="Partially paved" animation="true"/>
+                        <img class="fas fa icon" th:if="${trail.getType().toString().equals('gravel')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/gravel_white.svg}"
+                             data-toggle="tooltip" data-bs-placement="bottom" title="Gravel surface" animation="true"/>
+                        <img class="fas fa icon" th:if="${trail.getType().toString().equals('natural')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/natural_white.svg}"
+                             data-toggle="tooltip" data-bs-placement="bottom" title="Natural surface" animation="true"/>
+                        <img class="fas fa icon" th:if="${trail.getType().toString().equals('paved')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/paved_white.svg}"
+                             data-toggle="tooltip" data-bs-placement="bottom" title="Paved surface" animation="true"/>
+                        <img class="fas fa icon" th:if="${trail.getWater().toString().equals('creek')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/creek_white.svg}"
+                             data-toggle="tooltip" data-bs-placement="bottom" title="Near creek" animation="true"/>
+                        <img class="fas fa icon" th:if="${trail.getWater().toString().equals('lake')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/lake_white.svg}"
+                             data-toggle="tooltip" data-bs-placement="bottom" title="Near lake" animation="true"/>
+                        <img class="fas fa icon" th:if="${trail.getWater().toString().equals('river')}" style="vertical-align: baseline; height: 2rem" th:src="@{/svg/river_white.svg}"
+                             data-toggle="tooltip" data-bs-placement="bottom" title="Near river" animation="true"/>
+                        <i th:if="${trail.dogs}" class="fas fa-dog icon"
+                           data-toggle="tooltip" data-bs-placement="bottom" title="Confirmed dog-friendly" animation="true">
+                        </i>
+                        <i th:if="${trail.woods}" class="fas fa-tree icon"
+                           data-toggle="tooltip" data-bs-placement="bottom" title="Wooded area" animation="true">
+                        </i>
+                        <i th:if="${trail.bikes}" class="fas fa-biking icon"
+                           data-toggle="tooltip" data-bs-placement="bottom" title="Confirmed bike-friendly" animation="true">
+                        </i>
+                        <i th:if="${trail.family}" class="fas fa-baby-carriage icon"
+                           data-toggle="tooltip" data-bs-placement="bottom" title="Confirmed family-friendly" animation="true">
+                        </i>
+                    </li>
+                </ul>
+                <div id="result-options" class="row" style="display: flex">
+                    <span th:if="${theUser == null}">Sign into Favorite or plan a meetup</span>
+                    <button
+                            th:if="${theUser != null AND !theUser.getFavoriteTrails().contains(trail)}"
+                            class="btn btn-primary col-sm" style="width: 100%; margin: 1rem">Favorite
+                    </button>
+                    <button
+                            th:if="${theUser != null AND theUser.getFavoriteTrails().contains(trail)}"
+                            class="btn btn-danger col-sm" style="width: 100%; margin: 1rem">Unfavorite
+                    </button>
+                    <button th:if="${theUser != null}" class="btn btn-primary col-sm" style="width: 100%; margin: 1rem">+ Meetup</button>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary col-sm" style="width: 100%; margin: 1rem">More Info</button>
+                </div>
+            </li>
+        </th:block>
+    </ol>
+</div>

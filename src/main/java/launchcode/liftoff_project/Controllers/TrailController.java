@@ -46,12 +46,10 @@ public class TrailController {
             model.addAttribute("theUser", theUser);
         }
 
-
-
         model.addAttribute("trailFilterDTO", trailFilterDTO);
         model.addAttribute("trails", trailRepository.findAll());
 
-        return "alltrails";
+        return "alltrails/index";
     }
 
     @PostMapping
@@ -67,7 +65,7 @@ public class TrailController {
         model.addAttribute("sort", sort);
         model.addAttribute("trails", results);
 
-        return "alltrails";
+        return "alltrails/index";
 
     }
 
