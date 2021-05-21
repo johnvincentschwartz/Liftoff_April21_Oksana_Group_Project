@@ -1,5 +1,7 @@
 package launchcode.liftoff_project.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -12,11 +14,11 @@ import java.util.Date;
 @Entity
 public class Meetup extends AbstractEntity {
 
-    @NotBlank(message = "Name field cannot be left blank. Please provide a meetup name.")
+    @NotBlank(message = "Name field cannot be left blank.")
     @Size(min = 2, max = 50, message = "Meetup name must be between 2 and 50 characters")
     private String meetupName;
 
-    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @NotNull(message = "Date & time is required.(mm/dd/yyyy hh:mm)")
     private Date meetupDate;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -24,16 +26,22 @@ public class Meetup extends AbstractEntity {
     @NotNull
     private MeetupDetails meetupDetails;
 
-
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @ManyToOne
+    @JoinColumn(name = "trail_id")
+    private Trail trail;
 
 //    @ManyToOne
 //    @NotNull(message = "Please select a category for the meetup.")
 //    private MeetupCategory meetupCategory;
 
-    public Meetup(@NotBlank(message = "Name field cannot be left blank. Please provide a meetup name.") @Size(min = 2, max = 50, message = "Meetup name must be between 2 and 50 characters") String meetupName, @DateTimeFormat(pattern="dd/MM/yyyy") Date meetupDate
+    public Meetup(@NotBlank(message = "Name field cannot be left blank.") @Size(min = 2, max = 50, message = "Meetup name must be between 2 and 50 characters") String meetupName,
+                  @NotNull(message = "Date & time is required.(mm/dd/yyyy hh:mm)") Date meetupDate, Trail trail
                   /*@NotNull(message = "Please select a category for the meetup.") MeetupCategory meetupCategory*/) {
+        super();
         this.meetupName = meetupName;
         this.meetupDate = meetupDate;
+        this.trail = trail;
         //this.meetupCategory = meetupCategory;
     }
 
@@ -61,6 +69,14 @@ public class Meetup extends AbstractEntity {
 
     public void setMeetupDate(Date meetupDate) {
         this.meetupDate = meetupDate;
+    }
+
+    public Trail getTrail() {
+        return trail;
+    }
+
+    public void setTrail(Trail trail) {
+        this.trail = trail;
     }
 
     //    public MeetupCategory getMeetupCategory() {

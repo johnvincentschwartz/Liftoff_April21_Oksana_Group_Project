@@ -37,6 +37,7 @@ public class MeetupDetails extends AbstractEntity {
     public void setMeetupContactEmail(String meetupContactEmail) {
         this.meetupContactEmail = meetupContactEmail;
     }
+
 }
 
 
