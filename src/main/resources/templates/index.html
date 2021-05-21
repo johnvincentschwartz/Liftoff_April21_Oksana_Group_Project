@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns: th="http://www.thymeleaf.org/">
+<html lang="en" xmlns: th="http://www.thymeleaf.org/" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments :: head"></head>
 <head>
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link th:href="@{/css/styles.css}" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
-    <title>Trial Tracker</title>
 </head>
 <body>
 <header th:replace="fragments :: header"></header>
+<div class="header">
+    <img th:src="@{/images/rocks-1837129.jpg}" width="100%" height="400px">
+    <div class="centered">Welcome to Trail Tracker</div>
+</div>
 <h1 class="first_head">Featured Trails</h1>
 <div class="row">
     <div class="col-md-4">
-        <div class="thumbnail">
+        <div class="img-thumbnail">
             <a target="_blank" th:href="@{/images/germany-1751443.jpg}">
                 <img th:src="@{/images/germany-1751443.jpg}" width="100%">
             </a>
@@ -32,7 +30,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="thumbnail">
+        <div class="img-thumbnail">
             <a target="_blank" th:href="@{/images/mountains-5485366.jpg}">
                 <img th:src="@{/images/mountains-5485366.jpg}" width="100%">
             </a>
@@ -49,7 +47,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="thumbnail">
+        <div class="img-thumbnail">
             <a target="_blank" th:href="@{/images/yellowstone-4319675.jpg}">
                 <img th:src="@{/images/yellowstone-4319675.jpg}" width="100%">
             </a>
@@ -66,7 +64,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="thumbnail">
+        <div class="img-thumbnail">
             <a target="_blank" th:href="@{/images/forest-path-4697056.jpg}">
                 <img th:src="@{/images/forest-path-4697056.jpg}" width="100%">
             </a>

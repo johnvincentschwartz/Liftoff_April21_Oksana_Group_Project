@@ -1,24 +1,56 @@
 package launchcode.liftoff_project.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id") //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion Resolves infinite recursion error related to Rating class
 @Entity
 public class Trail implements Comparable<Trail>{
 
     public enum Water {
-        lake,
-        river,
-        creek,
-        pond
+        none("none"),
+        lake("lake"),
+        river("river"),
+        creek("creek"),
+        pond("pond");
+
+
+        public final String label;
+
+        private Water(String label){
+            this.label = label;
+        }
+
+        @Override
+        public String toString() {
+            return this.label;
+        }
     }
 
     public enum Type {
-        natural,
-        paved,
-        gravel,
-        partial_paved
+        natural("natural"),
+        paved("paved"),
+        gravel("gravel"),
+        partial_paved("partial_paved");
+
+        public final String label;
+
+        private Type(String label){
+            this.label = label;
+        }
+
+        @Override
+        public String toString(){
+            return this.label;
+        }
     }
 
     @Id
@@ -56,6 +88,14 @@ public class Trail implements Comparable<Trail>{
 
     @Enumerated(EnumType.STRING)
     private Type type;
+
+    @OneToMany(mappedBy = "trail")
+    List<Rating> ratings;
+
+    @ManyToMany(mappedBy = "favoriteTrails")
+    private Set<User> usersFavorited;
+
+    private Double averageRating;
 
     public Trail(String name, String city, String state, Float length, int difficulty) {
         this.name = name;
@@ -199,6 +239,18 @@ public class Trail implements Comparable<Trail>{
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public Set<User> getUsersFavorited() {
+        return usersFavorited;
     }
 
     @Override
