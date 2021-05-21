@@ -19,33 +19,29 @@
         <li class="nav-item"><a class="nav-link" href="/meetupCategories">Meetup Categories</a></li>
     </ul>
 </div>
-<<<<<<< HEAD
-<table th:each="meetup: ${meetups}" class="table table-stripped">
 
-=======
-
-<<<<<<< HEAD
-<table th:each="meetup : ${meetups}" class="table table-stripped">
-=======
-<table th:each="meetup: ${meetups}" class="table table-stripped">
->>>>>>> 3580590e48cac1df3cae7861f3b43f0d82b5228c
->>>>>>> 14eadadbf756dfc4cc766e96e470ec44712e20ec
-    <tr>
-        <th>Meetup ID</th>
-        <td th:text="${meetup.id}"></td>
-    </tr>
-    <tr>
-        <th>Meetup Description</th>
-        <td th:text="${meetup.meetupDetails.meetupDescription}"></td>
-    </tr>
-    <tr>
-        <th>Meetup Contact Email</th>
-        <td th:text="${meetup.meetupDetails.meetupContactEmail}"></td>
-    </tr>
-    <tr>
-        <th>Meetup Category</th>
-        <td th:text="${meetup.meetupCategory}"></td>
-    </tr>
-</table>
+    <<<<<<< HEAD
+    <table th:each="meetup : ${meetups}" class="table table-stripped">
+        =======
+        <table th:each="meetup: ${meetups}" class="table table-stripped">
+            >>>>>>> 3580590e48cac1df3cae7861f3b43f0d82b5228c
+            >>>>>>> 14eadadbf756dfc4cc766e96e470ec44712e20ec
+            <tr>
+                <th>Meetup ID</th>
+                <td th:text="${meetup.id}"></td>
+            </tr>
+            <tr>
+                <th>Meetup Description</th>
+                <td th:text="${meetup.meetupDetails.meetupDescription}"></td>
+            </tr>
+            <tr>
+                <th>Meetup Contact Email</th>
+                <td th:text="${meetup.meetupDetails.meetupContactEmail}"></td>
+            </tr>
+            <tr>
+                <th>Meetup Category</th>
+                <td th:text="${meetup.meetupCategory}"></td>
+            </tr>
+        </table>
 </body>
 </html>

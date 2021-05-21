@@ -34,7 +34,7 @@ public class userController {
 
     @GetMapping
     public String displayUserProfile( Model model, HttpServletRequest request){
-
+        System.out.println(request);
         HttpSession session = request.getSession(false);
         if(session != null) {
             User theUser = authenticationController.getUserFromSession(session);

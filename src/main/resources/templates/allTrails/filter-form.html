@@ -1,0 +1,99 @@
+<div th:fragment="filter-form" id="filter-column" class="col-sm section-container container accordion-item text-center" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#filter-form" aria-expanded="false" aria-controls="filter-form">
+            <h2>
+                <i class="bi bi-filter-circle-fill"></i> Filter
+            </h2>
+        </button>
+    </h2>
+    <form id="filter-form" class="form-inline accordion-collapse collapse text-center" th:action="@{/alltrails/}" method="post">
+        <div id="form-row" class="row justify-content-*-center" style="text-align: center">
+            <div id="search-location-container" class="form-el form-group col-sm">
+                <label>Search location:</label>
+                <input id="search-location" th:field="${trailFilterDTO.searchLocation}" type="text" class="form-control" />
+            </div>
+            <div id="min-length-container" class="form-el form-group col-sm">
+                <label>Min length:</label>
+                <input class="form-control mx-auto" th:field="${trailFilterDTO.minLength}" type="number" step="0.1"/>
+            </div>
+            <div id="max-length-container" class="form-el form-group col-sm">
+                <label>Max length:</label>
+                <input class="form-control mx-auto" th:field="${trailFilterDTO.maxLength}" type="number" step="0.1"/>
+            </div>
+            <div id="difficulty-container" class="form-group col-sm">
+                <label>Difficulty:</label>
+                <div id="difficulty-inputs">
+                    <div th:block th:each="i: ${#numbers.sequence(1,5)}" class="difficulty-label">
+                        <label th:for="'difficulty' + ${i}" th:text="${i}"></label>
+                        <input th:id="'difficulty' + ${i}" name="difficulty" th:checked="${trailFilterDTO.difficulty.contains(i)}" type="checkBox" th:value="${i}" />
+                    </div>
+                </div>
+            </div>
+            <div id="min-rating-container" class="form-group col-sm">
+                <label for="min-rating">Min. rating:</label>
+                <div id="min-rating" class="rating">
+                    <th:block th:each="i: ${#numbers.sequence(5,1)}">
+                        <input type="checkbox" name="minRating" th:value="${i}" th:id="${i}" th:checked="${trailFilterDTO.minRating == i}"/>
+                        <label th:for="${i}">☆</label>
+                    </th:block>
+                </div>
+            </div>
+            <div id="friendly-options-container" class="form-group col-sm">
+                <label style="white-space: nowrap"><input type="checkbox" class="friendly-checkbox" th:field="${trailFilterDTO.dogFriendly}" th:value="true" /> Dog-Friendly</label>
+                <label style="white-space: nowrap"><input type="checkbox" class="friendly-checkbox" th:field="${trailFilterDTO.kidFriendly}" th:value="true"/> Kid-Friendly</label>
+                <label style="white-space: nowrap"><input type="checkbox" class="friendly-checkbox" th:field="${trailFilterDTO.bikeFriendly}" th:value="true"/> Bike-Friendly</label>
+            </div>
+            <div id="environment-options-container" class="form-group col-sm">
+                <label>Environment</label>
+                <div class="row"><div class="col"><label>
+                    <input th:field="${trailFilterDTO.nearWater}" class="environment-checkbox" th:value="true" type="checkbox"/> By Water
+                </label></div>
+                    <div class="col"><label>
+                        <input th:field="${trailFilterDTO.nearWoods}" class="environment-checkbox" th:value="true" type="checkbox"/> Wooded Area
+                    </label></div></div>
+            </div>
+            <div id="surface-options-container" class="form-group col-sm">
+                <label>Trail surface</label>
+                <div class="row" style="flex-wrap: nowrap">
+                    <div class="col-sm"><label>
+                        <input type="checkbox" name="trailSurface" th:checked="${trailFilterDTO.trailSurface.contains('paved')}" th:value="paved" /> Paved
+                    </label></div>
+                    <div class="col-sm"><label>
+                        <input type="checkbox" name="trailSurface" th:checked="${trailFilterDTO.trailSurface.contains('natural')}" th:value="natural"/> Natural
+                    </label></div>
+                </div>
+                <div class="row" style="flex-wrap: nowrap">
+                    <div class="col-sm"><label>
+                        <input type="checkbox" name="trailSurface" th:checked="${trailFilterDTO.trailSurface.contains('gravel')}" th:value="gravel"/> Gravel
+                    </label></div>
+                    <div class="col-sm"><label>
+                        <input type="checkbox" name="trailSurface" th:checked="${trailFilterDTO.trailSurface.contains('partial_paved')}" th:value="partial_paved"/> Mixed
+                    </label></div>
+                </div>
+            </div>
+            <div id="sort-container" class="form-group col-sm">
+                <div class="col"><label><input type="radio" name="sort" th:value="averageRating" checked /> Sort by Rating</label></div>
+                <div class="col"><label><input type="radio" name="sort" th:value="length" /> Sort by Length</label></div>
+                <div class="col"><label><input type="radio" name="sort" th:value="difficulty" /> Sort by Difficulty</label></div>
+            </div>
+            <div id="submit-clear-container" class="form-group col-sm">
+                <div class="row">
+                    <input
+                            id="submit-button"
+                            class="form-el btn btn-primary col-sm"
+                            type="submit"
+                            style="margin-bottom: 1rem"
+                    />
+                </div>
+                <div class="row">
+                    <button
+                            id="clear-button"
+                            type="button"
+                            class="form-el btn btn-danger col-sm"
+                            onclick="clearAll()"
+                    >Clear All</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

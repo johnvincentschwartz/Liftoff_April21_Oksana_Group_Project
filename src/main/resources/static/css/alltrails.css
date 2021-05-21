@@ -1,39 +1,20 @@
-#master-container {
-    margin: 3rem auto;
+#outside-border {
+    border: 3px solid black;
 }
 
 .section-container {
     border: 3px solid black;
-    padding: 2rem
-}
-
-h2 {
-    margin-top: 0
-}
-
-ol {
-    margin-bottom: 0
-}
-
-#results-column {
-    padding-right: 0
+    padding: 1.5rem
 }
 
 #results-list {
-    color: white;
     overflow-y: scroll;
     height: 500px;
-    padding-left: 3rem;
     background-color: #091E05;
 }
 
 .trail-result-block {
-    padding: 1rem;
-    margin: 1rem 2rem 1rem 0;
     background-color: rgba(255,255,255,0.2);
-}
-.trail-result-details {
-    padding-left: 2rem;
 }
 
 .trail-result-name {
@@ -63,20 +44,13 @@ label {
 }
 
 .form-group {
-/*    display: flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 2rem;
-    padding: 1rem;
-    background-color: rgba(255,255,255,0.5) */
 }
 
 input[type="number"]{
     width: 8rem !important;
-}
-
-form {
-    text-align: center
 }
 
 #difficulty-inputs {
@@ -85,7 +59,6 @@ form {
 }
 
 #min-rating {
-    display: flex;
     justify-content: space-around;
 }
 
@@ -95,11 +68,38 @@ form {
     flex-direction: column;
 }
 
+.icon {
+    font-size: 2rem;
+    margin-right: 1rem;
+    margin-bottom: 10px;
+}
+
+.result-icon-set {
+    display: flex;
+    margin: 0.5rem;
+    margin-left: 0;
+    flex-wrap: wrap;
+}
+
+.accordion-item {
+    background-color: inherit;
+    border-radius: 0 !important
+}
+
+.accordion-button {
+    color: inherit;
+    background-color: rgba(255,255,255,0.4)
+}
+
+.accordion-button:not(.collapsed) {
+    color: inherit;
+    background-color: rgba(0,0,0,0.2)
+}
+
 /* from https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 .rating {
     display: flex;
     flex-direction: row-reverse;
-    justify-content: center;
 }
 
 .rating>input {
@@ -110,7 +110,7 @@ form {
     position: relative;
     font-size: 2em;
     color: #ffffff;
-    cursor: not-allowed
+    cursor: pointer;
 }
 
 .rating>label::before {
@@ -132,7 +132,7 @@ form {
     opacity: 0.4
 }
 
-/* infoWindow */
+/* Google Maps InfoWindow overrides*/
 .gm-style .gm-style-iw-c {
     padding: 0;
     background-color: #091E05 !important;
@@ -143,39 +143,9 @@ form {
 .gm-style-iw-d {
     padding: 0;
     overflow: hidden !important;
-
 }
 
 .gm-ui-hover-effect {
     background-color: rgb(171, 196, 173) !important;
-    /*width: 50px !important;
-    height: 50px !important;*/
     margin: 10px 10px 0 0;
-}
-
-.icon {
-    font-size: 2rem;
-    margin-right: 1rem;
-    margin-bottom: 10px;
-}
-
-.result-icon-set {
-    display: flex;
-    margin: 0.5rem;
-    margin-left: 0;
-    flex-wrap: wrap;
-}
-
-.accordion-item {
-    background-color: inherit
-}
-
-.accordion-button {
-    color: inherit;
-    background-color: rgba(255,255,255,0.4)
-}
-
-.accordion-button:not(.collapsed) {
-    color: inherit;
-    background-color: rgba(0,0,0,0.2)
 }

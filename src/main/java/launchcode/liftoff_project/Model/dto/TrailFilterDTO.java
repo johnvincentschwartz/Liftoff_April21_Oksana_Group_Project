@@ -12,7 +12,7 @@ public class TrailFilterDTO {
 
     public List<Integer> difficulty = new ArrayList<>();
 
-    private Integer minRating = 0;
+    private Integer minRating = null;
 
     private Boolean dogFriendly = false;
 
