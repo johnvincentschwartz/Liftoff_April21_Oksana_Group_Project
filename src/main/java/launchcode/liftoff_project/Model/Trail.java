@@ -1,5 +1,8 @@
 package launchcode.liftoff_project.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.io.FileReader;
 import java.io.IOException;
@@ -34,11 +37,9 @@ public class Trail implements Comparable<Trail>{
 
     private Float lng;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "trail")
     private List<Meetup> meetups = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "trail", cascade = CascadeType.ALL)
-//    private List<Meetup> meetups = new ArrayList<Meetup>();
 
     public Trail(String name, String city, String state, Float length, int difficulty, List<Meetup> meetups) {
         this.name = name;

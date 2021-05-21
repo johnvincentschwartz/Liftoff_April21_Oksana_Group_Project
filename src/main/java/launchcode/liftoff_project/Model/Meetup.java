@@ -1,5 +1,7 @@
 package launchcode.liftoff_project.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -24,6 +26,7 @@ public class Meetup extends AbstractEntity {
     @NotNull
     private MeetupDetails meetupDetails;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     @JoinColumn(name = "trail_id")
     private Trail trail;

@@ -105,15 +105,14 @@ public class MeetupController {
     @GetMapping("details")
     public String displayMeetupDetails(@RequestParam Integer meetupId, Model model) {
 
-        model.addAttribute("trails", trailRepository.findAll());
-
         Optional<Meetup> result = meetupRepository.findById(meetupId);
         if (result.isEmpty()) {
             model.addAttribute("title", "Invalid: A meetup with ID " + meetupId + "does not seem to exist.");
         } else {
             Meetup meetup = result.get();
             model.addAttribute("title", meetup.getMeetupName() + " Details");
-            model.addAttribute("meetup", meetup);
+            model.addAttribute("meetups", meetup);
+            model.addAttribute("trails", trailRepository.findAll());
         }
 
         return "meetups/details";

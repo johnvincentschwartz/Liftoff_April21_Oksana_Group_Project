@@ -22,12 +22,12 @@
 </div>
 <section>
     <div>
-        <h1 class="details-name" th:text="${meetup.meetupName}"></h1>
+        <h1 class="details-name" th:text="${meetups.meetupName}"></h1>
         <ul>
-            <li th:text="'Description: ' + ${meetup.meetupDetails.meetupDescription}" class="meetup-description-details"></li>
-            <li th:text="'Date: ' + ${meetup.meetupDate}" class="meetup-date-details"></li>
-            <li th:text="'Contact Email: ' + ${meetup.meetupDetails.meetupContactEmail}" class="meetup-email-details"></li>
-            <li th:text="'Location: ' + ${meetup.trail}" class="meetup-location-details"></li>
+            <li th:text="'Description: ' + ${meetups.meetupDetails.meetupDescription}" class="meetup-description-details"></li>
+            <li th:text="'Date: ' + ${meetups.meetupDate}" class="meetup-date-details"></li>
+            <li th:text="'Contact Email: ' + ${meetups.meetupDetails.meetupContactEmail}" class="meetup-email-details"></li>
+            <li th:text="'Location: ' + ${meetups.trail}" class="meetup-location-details"></li>
         </ul>
     <!--tr>
         <th>Meetup Category</th>
@@ -45,6 +45,7 @@
     <script th:src="@{/js/meetupMap.js}"></script>
     <script th:inline="javascript">
     let trails = /*[[${trails}]]*/
+    let meetups = /*[[${meetups}]]*/
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=&v=weekly&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
 </section>
