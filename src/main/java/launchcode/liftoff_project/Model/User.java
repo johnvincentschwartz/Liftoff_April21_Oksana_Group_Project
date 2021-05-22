@@ -1,6 +1,8 @@
 package launchcode.liftoff_project.Model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.istack.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -8,9 +10,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
 import java.util.Set;
 
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id") //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion Resolves infinite recursion error related to Rating class
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id") //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion Resolves infinite recursion error related to Rating class
 @Entity
 public class User extends AbstractEntity {
     @NotNull
@@ -28,15 +30,17 @@ public class User extends AbstractEntity {
 //    @Column(name = "confirmation_token")
 //    private String confirmationToken;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
-    Set<Rating> ratings;
+    private Set<Rating> ratings;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "favoriteTrails",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "trail_id"))
-    Set<Trail> favoriteTrails;
+    private Set<Trail> favoriteTrails;
 
     public User() {}
 

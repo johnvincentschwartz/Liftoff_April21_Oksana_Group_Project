@@ -1,7 +1,5 @@
 package launchcode.liftoff_project.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 
 @Entity
@@ -20,12 +18,12 @@ public class Rating {
     @JoinColumn(name = "trail_id")
     Trail trail;
 
-    int rating;
+    int ratingValue;
 
-    public Rating(User user, Trail trail, int rating) {
+    public Rating(User user, Trail trail, int ratingValue) {
         this.user = user;
         this.trail = trail;
-        this.rating = rating;
+        this.ratingValue = ratingValue;
     }
 
     public Rating(){}
@@ -51,10 +49,10 @@ public class Rating {
     }
 
     public int getRatingValue() {
-        return rating;
+        return ratingValue;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setRatingValue(int ratingValue) {
+        this.ratingValue = ratingValue;
     }
 }

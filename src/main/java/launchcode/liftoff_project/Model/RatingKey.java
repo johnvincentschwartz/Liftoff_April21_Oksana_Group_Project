@@ -1,3 +1,5 @@
+//https://www.baeldung.com/jpa-many-to-many section 3
+
 package launchcode.liftoff_project.Model;
 
 import javax.persistence.Column;
@@ -20,6 +22,14 @@ public class RatingKey implements Serializable {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getTrailId() {
+        return trailId;
+    }
+
+    public void setTrailId(int trailId) {
+        this.trailId = trailId;
     }
 
     @Override
