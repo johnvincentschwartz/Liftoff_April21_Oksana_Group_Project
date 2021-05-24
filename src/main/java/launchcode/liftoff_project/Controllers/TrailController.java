@@ -4,6 +4,7 @@ import launchcode.liftoff_project.Model.Trail;
 import launchcode.liftoff_project.Model.User;
 import launchcode.liftoff_project.Model.data.RatingRepository;
 import launchcode.liftoff_project.Model.data.TrailRepository;
+import launchcode.liftoff_project.Model.data.UserRepository;
 import launchcode.liftoff_project.Model.dto.TrailFilterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -35,6 +36,9 @@ public class TrailController {
     @Autowired
     AuthenticationController authenticationController;
 
+    @Autowired
+    UserRepository userRepository;
+
     @GetMapping
     public String index(Model model, HttpServletRequest request){
 
@@ -47,7 +51,8 @@ public class TrailController {
         }
 
         model.addAttribute("trailFilterDTO", trailFilterDTO);
-        model.addAttribute("trails", trailRepository.findAll());
+        model.addAttribute("trails", trailRepository.findAll(Sort.by(Sort.Direction.DESC, "averageRating")));
+
 
         return "alltrails/index";
     }
@@ -71,7 +76,39 @@ public class TrailController {
         model.addAttribute("trails", results);
 
         return "alltrails/index";
+    }
 
+    @PostMapping("modify-favorites")
+    public String addFavorite(@RequestParam int trailId, @RequestParam int userId, @RequestParam String type,
+                              @ModelAttribute @Valid TrailFilterDTO trailFilterDTO,
+                              HttpServletRequest request, @RequestParam String sort, Model model){
+
+        Iterable<Trail> allTrailsSorted = trailRepository.findAll(Sort.by(Sort.Direction.DESC, sort));
+        Collection<Trail> results = filterTrails(trailFilterDTO, allTrailsSorted);
+        String searchLocation = trailFilterDTO.getSearchLocation();
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            User currentUser = authenticationController.getUserFromSession(session);
+            model.addAttribute("theUser", currentUser);
+            Optional<Trail> selectedTrailOpt = trailRepository.findById(trailId);
+            if (selectedTrailOpt.isPresent()){
+                Trail selectedTrail = selectedTrailOpt.get();
+                if (type.equals("add")) {
+                    currentUser.addFavoriteTrail(selectedTrail);
+                    userRepository.save(currentUser);
+                } else if (type.equals("remove")) {
+                    currentUser.removeFavoriteTrail(selectedTrail);
+                    userRepository.save(currentUser);
+                }
+            }
+        }
+
+        model.addAttribute("searchLocation", searchLocation);
+        model.addAttribute("sort", sort);
+        model.addAttribute("trails", results);
+
+        return "alltrails/index";
     }
 
     public static ArrayList<Trail> filterTrails(TrailFilterDTO dto, Iterable<Trail> allTrails){

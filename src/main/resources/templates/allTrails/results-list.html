@@ -41,12 +41,29 @@
                         </i>
                     </li>
                 </ul>
+                <form th:if="${theUser != null}" hidden th:id="'add-favorites' + ${trail.id}" th:action="@{/alltrails/modify-favorites}" method="POST">
+                    <input name="trailId" th:value="${trail.getId()}" />
+                    <input name="userId" th:value="${theUser.id}" />
+                    <input name="type" th:value="add" />
+                    <input name="sort" th:value="averageRating" />
+                </form>
+                <form th:if="${theUser != null}" hidden th:id="'remove-favorites' + ${trail.id}" th:action="@{/alltrails/modify-favorites}" method="POST">
+                    <input name="trailId" th:value="${trail.getId()}" />
+                    <input name="userId" th:value="${theUser.id}" />
+                    <input name="type" th:value="remove" />
+                    <input name="sort" th:value="averageRating" />
+                </form>
                 <div id="result-options" class="row" style="display: flex">
                     <button
-                            th:if="${theUser != null AND !theUser.getFavoriteTrails().contains(trail)}"
-                            class="btn btn-primary col-sm m-1" style="width: 100%; margin: 1rem">Favorite
+                        onclick=""
+                        type="submit"
+                        th:form="'add-favorites' + ${trail.id}"
+                        th:if="${theUser != null AND !theUser.getFavoriteTrails().contains(trail)}"
+                        class="btn btn-primary col-sm m-1" style="width: 100%; margin: 1rem">Favorite
                     </button>
                     <button
+                            type="submit"
+                            th:form="'remove-favorites' + ${trail.id}"
                             th:if="${theUser != null AND theUser.getFavoriteTrails().contains(trail)}"
                             class="btn btn-danger col-sm m-1" style="width: 100%; margin: 1rem">Unfavorite
                     </button>

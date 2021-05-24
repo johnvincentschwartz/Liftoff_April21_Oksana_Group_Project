@@ -1,24 +1,29 @@
 package launchcode.liftoff_project.Model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Rating {
 
     @EmbeddedId
-    RatingKey id;
+    private RatingKey id;
 
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
     @ManyToOne
     @MapsId("trailId")
     @JoinColumn(name = "trail_id")
-    Trail trail;
+    private Trail trail;
 
-    int ratingValue;
+    private int ratingValue;
+
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String review;
 
     public Rating(User user, Trail trail, int ratingValue) {
         this.user = user;
@@ -54,5 +59,26 @@ public class Rating {
 
     public void setRatingValue(int ratingValue) {
         this.ratingValue = ratingValue;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rating rating = (Rating) o;
+        return Objects.equals(id, rating.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

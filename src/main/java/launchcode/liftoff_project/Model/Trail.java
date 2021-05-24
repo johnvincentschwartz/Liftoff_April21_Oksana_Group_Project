@@ -90,11 +90,11 @@ public class Trail implements Comparable<Trail>{
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @JsonIgnore
+    @JsonIgnore //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion Section 5
     @OneToMany(mappedBy = "trail")
     private List<Rating> ratings;
 
-    @JsonIgnore
+    @JsonIgnore //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion Section 5
     @ManyToMany(mappedBy = "favoriteTrails")
     private Set<User> usersFavorited;
 

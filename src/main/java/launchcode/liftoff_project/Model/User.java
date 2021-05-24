@@ -10,9 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
 import java.util.Set;
 
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id") //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion Resolves infinite recursion error related to Rating class
 @Entity
 public class User extends AbstractEntity {
     @NotNull
@@ -30,11 +27,9 @@ public class User extends AbstractEntity {
 //    @Column(name = "confirmation_token")
 //    private String confirmationToken;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<Rating> ratings;
 
-    @JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "favoriteTrails",
@@ -95,6 +90,12 @@ public class User extends AbstractEntity {
 
     public void addFavoriteTrail(Trail trail) {
         this.favoriteTrails.add(trail);
+        System.out.println(favoriteTrails);
+    }
+
+    public void removeFavoriteTrail(Trail trail){
+        this.favoriteTrails.remove(trail);
+        System.out.println(favoriteTrails);
     }
 
     //    public String getConfirmationToken() {
