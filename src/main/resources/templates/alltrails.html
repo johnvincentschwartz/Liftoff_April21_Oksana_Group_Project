@@ -116,5 +116,6 @@
 </script>
 <script th:if="${searchLocation == null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initDefaultMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
 <script th:if="${searchLocation != null}" src="https://maps.googleapis.com/maps/api/js?v=weekly&callback=initSearchMap&libraries=geometry,places&key=AIzaSyDWAHGPsqnfC0KDzQI74C3ic6hplSoNN-c" async defer></script>
+<footer th:replace="fragments :: footer"></footer>
 </body>
 </html>

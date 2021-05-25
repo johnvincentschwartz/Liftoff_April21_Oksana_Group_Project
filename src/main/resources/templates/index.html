@@ -14,74 +14,75 @@
 <header th:replace="fragments :: header"></header>
 <h1 class="first_head">Featured Trails</h1>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="thumbnail">
             <a target="_blank" th:href="@{/images/germany-1751443.jpg}">
                 <img th:src="@{/images/germany-1751443.jpg}" width="100%">
             </a>
             <div class="caption">
-                <h4 class="trail_name">Florissant Valley Trail</h4>
-                <p class="trail_info">This is a description</p>
+                <h4 class="trail_name"><a th:href="@{/trailOne}">Lost Valley Trail - Long Loop</a></h4>
+                <p class="desc">Short trail that's good for sunset photos!</p>
+                <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <p>(97)</p>
+                <p>(254)</p>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="thumbnail">
             <a target="_blank" th:href="@{/images/mountains-5485366.jpg}">
                 <img th:src="@{/images/mountains-5485366.jpg}" width="100%">
             </a>
             <div class="caption">
-                <h4 class="trail_name">Beautiful Rocky Mountains Trail</h4>
-                <p class="trail_info">This is a description</p>
+                <h4 class="trail_name"><a th:href="@{/trailTwo}">Boschert Greenway Trail</a></h4>
+                <p class="desc">Medium length trail that takes you to new heights!</p>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <p>(152)</p>
+                <span class="fa fa-star"></span>
+                <p>(305)</p>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="thumbnail">
             <a target="_blank" th:href="@{/images/yellowstone-4319675.jpg}">
                 <img th:src="@{/images/yellowstone-4319675.jpg}" width="100%">
             </a>
             <div class="caption">
-                <h4 class="trail_name">New World Trail</h4>
-                <p class="trail_info">This is a description</p>
+                <h4 class="trail_name"><a th:href="@{/trailThree}">Mississippi River Greenway: North Riverfront Trail</a></h4>
+                <p class="desc">Long trail that provides a new world experience!</p>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star"></span>
-                <p>(23)</p>
+                <p>(1254)</p>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="thumbnail">
             <a target="_blank" th:href="@{/images/forest-path-4697056.jpg}">
                 <img th:src="@{/images/forest-path-4697056.jpg}" width="100%">
             </a>
             <div class="caption">
-                <h4 class="trail_name">Amazing Norway Trail</h4>
-                <p class="trail_info">This is a description</p>
+                <h4 class="trail_name"><a th:href="@{/trailFour}">Hawk Ridge Trail</a></h4>
+                <p class="desc">Short easy trail that gives you that mid-age feeling!</p>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star"></span>
-                <p>(43)</p>
+                <p>(277)</p>
             </div>
         </div>
     </div>
 </div>
+<footer th:replace="fragments :: footer"></footer>
 </body>
 </html>
