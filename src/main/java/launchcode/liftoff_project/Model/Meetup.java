@@ -6,10 +6,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Meetup extends AbstractEntity {
@@ -21,10 +24,14 @@ public class Meetup extends AbstractEntity {
     @NotNull(message = "Date & time is required.(mm/dd/yyyy hh:mm)")
     private Date meetupDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @Valid
-    @NotNull
-    private MeetupDetails meetupDetails;
+    @Size(max = 500, message = "The description is too long!")
+    private String meetupDescription;
+
+    @NotBlank(message = "An email is required for this field!")
+    @Email(message = "Invalid email. Please try again or enter another email.")
+    private String meetupContactEmail;
+
+    private String meetupCategory;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
@@ -36,11 +43,15 @@ public class Meetup extends AbstractEntity {
 //    private MeetupCategory meetupCategory;
 
     public Meetup(@NotBlank(message = "Name field cannot be left blank.") @Size(min = 2, max = 50, message = "Meetup name must be between 2 and 50 characters") String meetupName,
-                  @NotNull(message = "Date & time is required.(mm/dd/yyyy hh:mm)") Date meetupDate, Trail trail
+                  @NotNull(message = "Date & time is required.(mm/dd/yyyy hh:mm)") Date meetupDate, @Size(max = 500, message = "The description is too long!") String meetupDescription,
+                  @NotBlank(message = "An email is required for this field!") @Email(message = "Invalid email. Please try again or enter another email.") String meetupContactEmail,
+                          Trail trail
                   /*@NotNull(message = "Please select a category for the meetup.") MeetupCategory meetupCategory*/) {
         super();
         this.meetupName = meetupName;
         this.meetupDate = meetupDate;
+        this.meetupDescription = meetupDescription;
+        this.meetupContactEmail = meetupContactEmail;
         this.trail = trail;
         //this.meetupCategory = meetupCategory;
     }
@@ -55,20 +66,36 @@ public class Meetup extends AbstractEntity {
         this.meetupName = meetupName;
     }
 
-    public MeetupDetails getMeetupDetails() {
-        return meetupDetails;
-    }
-
-    public void setMeetupDetails(MeetupDetails meetupDetails) {
-        this.meetupDetails = meetupDetails;
-    }
-
     public Date getMeetupDate() {
         return meetupDate;
     }
 
     public void setMeetupDate(Date meetupDate) {
         this.meetupDate = meetupDate;
+    }
+
+    public String getMeetupDescription() {
+        return meetupDescription;
+    }
+
+    public void setMeetupDescription(String meetupDescription) {
+        this.meetupDescription = meetupDescription;
+    }
+
+    public String getMeetupContactEmail() {
+        return meetupContactEmail;
+    }
+
+    public void setMeetupContactEmail(String meetupContactEmail) {
+        this.meetupContactEmail = meetupContactEmail;
+    }
+
+    public String getMeetupCategory() {
+        return meetupCategory;
+    }
+
+    public void setMeetupCategory(String meetupCategory) {
+        this.meetupCategory = meetupCategory;
     }
 
     public Trail getTrail() {
@@ -78,6 +105,7 @@ public class Meetup extends AbstractEntity {
     public void setTrail(Trail trail) {
         this.trail = trail;
     }
+
 
     //    public MeetupCategory getMeetupCategory() {
 //        return meetupCategory;

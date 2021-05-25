@@ -24,9 +24,9 @@
     <div>
         <h1 class="details-name" th:text="${meetups.meetupName}"></h1>
         <ul>
-            <li th:text="'Description: ' + ${meetups.meetupDetails.meetupDescription}" class="meetup-description-details"></li>
+            <li th:text="'Description: ' + ${meetups.meetupDescription}" class="meetup-description-details"></li>
             <li th:text="'Date: ' + ${meetups.meetupDate}" class="meetup-date-details"></li>
-            <li th:text="'Contact Email: ' + ${meetups.meetupDetails.meetupContactEmail}" class="meetup-email-details"></li>
+            <li th:text="'Contact Email: ' + ${meetups.meetupContactEmail}" class="meetup-email-details"></li>
             <li th:text="'Location: ' + ${meetups.trail}" class="meetup-location-details"></li>
         </ul>
     <!--tr>
@@ -35,8 +35,13 @@
     </tr-->
 
     </div>
-    <!--div th:each="trail : ${trails}" th:block><h4     th:attr="data-id=${trail.id}"></h4>
-    </div-->
+    <form action="http://maps.google.com/maps" method="get" target="_blank">
+        <label th:for="saddr">Enter Location:</label>
+        <input type="text" name="saddr" />
+        <input type="hidden" name="daddr" value="${trails(i).googleId}" />
+        <input type="submit" value="Get directions"/>
+    </form>
+
     <div id="map-column" class="meetup-trail-map">
             <h3>Trail Location</h3>
             <div id="map"></div>
