@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns: th="http://www.thymeleaf.org/" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link th:href="@{/css/userProfile.css}" rel="stylesheet" />
+</head>
+<head th:replace="fragments :: head">
+<body>
+<header th:replace="fragments :: header"></header>
+<h1 class="first_head">User Profile</h1>
+<table class="table table-stripped">
+    <tr>
+        <th>First Name:</th>
+<!--        i have tried registerFormDTO on firstName and lastName, still nothing-->
+        <td th:text="${theUser.firstName}"></td>
+    </tr>
+    <tr>
+        <th>Last Name:</th>
+        <td th:text="${theUser.lastName}"></td>
+    </tr>
+    <tr>
+        <th>Email:</th>
+        <td th:text="${theUser.email}"></td>
+    </tr>
+</table>
+</body>
+</html>

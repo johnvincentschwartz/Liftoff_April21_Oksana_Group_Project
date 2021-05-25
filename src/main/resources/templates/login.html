@@ -3,7 +3,7 @@
 <head th:replace="fragments :: head"></head>
 <body class="container">
 
-<header>Login</header>
+<header th:replace="fragments :: header"></header>
 
 <form method="post">
     <div class="form-group">
@@ -21,6 +21,12 @@
 
     <input type="submit" class="btn btn-primary" value="Log In" />
 </form>
+    <div class="icheck-primary">
+       <input type="checkbox" id="remember" name="remember-me">
+       <label for="remember">
+        Remember Me
+       </label>
+    </div>
 
 <p>Don't have an account? <a href="/register">Register for one.</a></p>
 <footer th:replace="fragments :: footer"></footer>

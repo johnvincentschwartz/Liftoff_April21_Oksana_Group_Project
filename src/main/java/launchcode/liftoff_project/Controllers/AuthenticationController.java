@@ -1,6 +1,7 @@
 package launchcode.liftoff_project.Controllers;
 
 
+import launchcode.liftoff_project.Model.Service.userService;
 import launchcode.liftoff_project.Model.User;
 import launchcode.liftoff_project.Model.data.UserRepository;
 import launchcode.liftoff_project.Model.dto.LoginFormDTO;
@@ -14,18 +15,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
-public class AuthenticationController {
+public class AuthenticationController extends HttpServlet {
 
     @Autowired
     UserRepository userRepository;
 
-    private static final String userSessionKey = "user";
+    protected static final String userSessionKey = "user";
 
     public User getUserFromSession(HttpSession session) {
         Integer userId = (Integer) session.getAttribute(userSessionKey);
@@ -79,11 +82,11 @@ public class AuthenticationController {
             return "register";
         }
 
-        User newUser = new User(registerFormDTO.getEmail(), registerFormDTO.getPassword());
+        User newUser = new User(registerFormDTO.getFirstName(), registerFormDTO.getLastName(),registerFormDTO.getEmail(), registerFormDTO.getPassword());
         userRepository.save(newUser);
         setUserInSession(request.getSession(), newUser);
 
-        return "redirect:";
+        return "redirect:/login";
     }
 
     @GetMapping("/login")
@@ -94,18 +97,18 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public String processLoginForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO,
+    public String processLoginForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO, HttpSession session,
                                    Errors errors, HttpServletRequest request,
-                                   Model model, RedirectAttributes redirectAttributes) {
+                                   Model model, RedirectAttributes redirectAttributes, @ModelAttribute @Valid RegisterFormDTO registrationFormDTO) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Log In");
             return "login";
         }
 
-        User theUser = userRepository.findByEmail(loginFormDTO.getEmail());
+        User user = userRepository.findByEmail(registrationFormDTO.getEmail());
 
-        if (theUser == null) {
+        if (user == null) {
             errors.rejectValue("email", "user.invalid", "The given email does not exist");
             model.addAttribute("title", "Log In");
             return "login";
@@ -113,15 +116,20 @@ public class AuthenticationController {
 
         String password = loginFormDTO.getPassword();
 
-        if (!theUser.isMatchingPassword(password)) {
+        if (!user.isMatchingPassword(password)) {
             errors.rejectValue("password", "password.invalid", "Invalid password");
             model.addAttribute("title", "Log In");
             return "login";
         }
-        //This adds our theUser to our html to be able to use tell if logged in
-        setUserInSession(request.getSession(), theUser);
-        redirectAttributes.addAttribute("theUser", theUser.getEmail());
-        return "redirect:";
+        //This adds our user to our html to be able to use tell if logged in
+        setUserInSession(request.getSession(), user);
+//        session.setAttribute("email", user.getEmail());
+//        session.setAttribute("firstName", user.getFirstName());
+//        session.setAttribute("lastName", user.getLastName());
+
+//        redirectAttributes.addAttribute("theUser", user.getEmail());
+        return "redirect:/userProfile";
+
     }
 
     @GetMapping("/logout")
