@@ -2,6 +2,7 @@ package launchcode.liftoff_project.Controllers;
 
 //import launchcode.liftoff_project.Model.data.MeetupCategoryRepository;
 import launchcode.liftoff_project.Model.Trail;
+import launchcode.liftoff_project.Model.User;
 import launchcode.liftoff_project.Model.data.MeetupRepository;
 import launchcode.liftoff_project.Model.Meetup;
 //import launchcode.liftoff_project.Model.MeetupCategory;
@@ -12,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +31,20 @@ public class MeetupController {
     private TrailRepository trailRepository;
 
 //    @Autowired
+//    private AuthenticationController authenticationController;
+
+//    @Autowired
 //    private MeetupCategoryRepository meetupCategoryRepository;
 
     @GetMapping
-    public String displayMeetups(Model model) {
+    public String displayMeetups(Model model/*, HttpServletRequest request*/) {
+
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            User theUser = authenticationController.getUserFromSession(session);
+//            model.addAttribute("theUser", theUser);
+//        }
+
         model.addAttribute("title", "Trail Meetups");
         model.addAttribute("meetups", meetupRepository.findAll());
         model.addAttribute("trails", trailRepository.findAll());
@@ -40,9 +53,17 @@ public class MeetupController {
 
 
     @GetMapping("create")
-    public String displayCreateMeetupsForm(Model model) {
+    public String displayCreateMeetupsForm(Model model/*, HttpServletRequest request*/) {
+
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            User theUser = authenticationController.getUserFromSession(session);
+//            model.addAttribute("theUser", theUser);
+//        }
+
         model.addAttribute("title", "Create A New Meetup");
         model.addAttribute("trails", trailRepository.findAll());
+        //model.addAttribute("categoryList", );
         model.addAttribute(new Meetup());
         //model.addAttribute("categories", meetupCategoryRepository.findAll());
         return "meetups/create";

@@ -30,9 +30,9 @@
                     </label>
                         <p class="error" th:errors="${meetup.meetupName}"></p>
                     <label class="form-email">Contact Email:
-                        <input th:field="${meetup.meetupDetails.meetupContactEmail}" class="form-control">
+                        <input th:field="${meetup.meetupContactEmail}" class="form-control">
                     </label>
-                        <p class="error" th:errors="${meetup.meetupDetails.meetupContactEmail}"></p>
+                        <p class="error" th:errors="${meetup.meetupContactEmail}"></p>
                     <!--label class="form-date">Date:
                         <input type="date" class="form-control">
                     </label-->
@@ -41,9 +41,16 @@
                     </label>
                         <p class="error" th:errors="${meetup.meetupDate}"></p>
                     <label class="form-description">Description:
-                            <textarea th:field="${meetup.meetupDetails.meetupDescription}" class="form-control"></textarea>
+                            <textarea th:field="${meetup.meetupDescription}" class="form-control"></textarea>
                         </label>
-                        <p class="error" th:errors="${meetup.meetupDetails.meetupDescription}"></p>
+                        <p class="error" th:errors="${meetup.meetupDescription}"></p>
+                    <label class="form-category" th:for="category">Category:</label>
+                    <select id="meetupCategory" name="meetupCategory">
+                        <option value="nature-walk">Nature Walk</option>
+                        <option value="cycling">Cycling</option>
+                        <option value="family-activity">Family Activity</option>
+                        <option value="athletic">Athletic</option>
+                    </select>
 
                     <label class="form-trail" th:for="trail">Trail:</label>
                         <select name="trailId">
