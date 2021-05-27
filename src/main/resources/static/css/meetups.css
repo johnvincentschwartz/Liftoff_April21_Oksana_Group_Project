@@ -35,6 +35,17 @@
     display: inline-block;
 }
 
+.register-cta {
+    background:#6a956d;
+    color: white;
+    text-decoration: none;
+    padding: .6em 1em;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 5em;
+    display: inline-block;
+}
+
 
 .meetup-details-section > h1 {
     margin: 0;
@@ -80,7 +91,10 @@ font-size: 15px;
     padding:.9em 1em;
     border-radius: 0 0 1em 1em;
 }
-
+.meetup-category{
+    color: #4a684d;
+    font-size: 15px;
+}
 .meetup-email {
     color: #4a684d;
     font-size: 15px;

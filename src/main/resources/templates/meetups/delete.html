@@ -10,9 +10,9 @@
     <div class="container">
         <nav>
             <ul class="meetup-nav">
-                <li><a href="/meetups" class="all-cta">All Meetups</a>
-                    <a href="/meetups/create" class="primary-cta">Create a Meetup</a>
-                    <a href="/meetups/delete" class="secondary-cta">Delete a Meetup</a></li>
+                <li><a th:if="${theUser != null}" href="/meetups" class="all-cta">All Meetups</a>
+                    <a th:if="${theUser != null}" href="/meetups/create" class="primary-cta">Create a Meetup</a>
+                    <a th:if="${theUser != null}" href="/meetups/delete" class="secondary-cta">Delete a Meetup</a></li>
             </ul>
         </nav>
     </div>
