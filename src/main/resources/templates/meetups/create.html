@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html  xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: head">
 </head>
 
@@ -44,12 +44,13 @@
                             <textarea th:field="${meetup.meetupDescription}" class="form-control"></textarea>
                         </label>
                         <p class="error" th:errors="${meetup.meetupDescription}"></p>
+
                     <label class="form-category" th:for="category">Category:</label>
                     <select id="meetupCategory" name="meetupCategory">
-                        <option value="nature-walk">Nature Walk</option>
-                        <option value="cycling">Cycling</option>
-                        <option value="family-activity">Family Activity</option>
-                        <option value="athletic">Athletic</option>
+                        <option value="Nature Walk">Nature Walk</option>
+                        <option value="Cycling">Cycling</option>
+                        <option value="Family Activity">Family Activity</option>
+                        <option value="Athletic">Athletic</option>
                     </select>
 
                     <label class="form-trail" th:for="trail">Trail:</label>

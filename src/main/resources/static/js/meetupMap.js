@@ -6,7 +6,6 @@ function initMap(id) {
     let meetupTrail = meetups.trail.id;
     //console.log(meetupTrail)
     let selectedTrail = trails.find(trail => trail.id === meetupTrail);
-    console.log(trails.id);
     selectedId = id;
     let currentLat = selectedTrail.lat;
     let currentLng = selectedTrail.lng;
