@@ -2,6 +2,7 @@ package launchcode.liftoff_project.Controllers;
 
 //import launchcode.liftoff_project.Model.data.MeetupCategoryRepository;
 import launchcode.liftoff_project.Model.Trail;
+import launchcode.liftoff_project.Model.User;
 import launchcode.liftoff_project.Model.data.MeetupRepository;
 import launchcode.liftoff_project.Model.Meetup;
 //import launchcode.liftoff_project.Model.MeetupCategory;
@@ -12,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +31,21 @@ public class MeetupController {
     @Autowired
     private TrailRepository trailRepository;
 
+    @Autowired
+    private AuthenticationController authenticationController;
+
 //    @Autowired
 //    private MeetupCategoryRepository meetupCategoryRepository;
 
     @GetMapping
-    public String displayMeetups(Model model) {
+    public String displayMeetups(Model model, HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            User theUser = authenticationController.getUserFromSession(session);
+            model.addAttribute("theUser", theUser);
+        }
+
         model.addAttribute("title", "Trail Meetups");
         model.addAttribute("meetups", meetupRepository.findAll());
         model.addAttribute("trails", trailRepository.findAll());
@@ -40,7 +54,14 @@ public class MeetupController {
 
 
     @GetMapping("create")
-    public String displayCreateMeetupsForm(Model model) {
+    public String displayCreateMeetupsForm(Model model, HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            User theUser = authenticationController.getUserFromSession(session);
+            model.addAttribute("theUser", theUser);
+        }
+
         model.addAttribute("title", "Create A New Meetup");
         model.addAttribute("trails", trailRepository.findAll());
         model.addAttribute(new Meetup());
@@ -51,7 +72,14 @@ public class MeetupController {
 
     @PostMapping("create")
     public String processCreateMeetupsForm(@ModelAttribute @Valid Meetup newMeetup,
-                                    Errors errors, Model model, @RequestParam int trailId) {
+                                           Errors errors, Model model, @RequestParam int trailId, HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            User theUser = authenticationController.getUserFromSession(session);
+            model.addAttribute("theUser", theUser);
+        }
+
         if (errors.hasErrors()) {
             model.addAttribute("title", "Create A New Meetup");
             return "create";
@@ -86,16 +114,30 @@ public class MeetupController {
 //    }
 
     @GetMapping("delete")
-    public String displayDeleteMeetupsForm(Model model) {
+    public String displayDeleteMeetupsForm(Model model, HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            User theUser = authenticationController.getUserFromSession(session);
+            model.addAttribute("theUser", theUser);
+        }
+
         model.addAttribute("title", "Delete A Meetup");
         model.addAttribute("meetups", meetupRepository.findAll());
         return "meetups/delete";
     }
 
     @PostMapping("delete")
-    public String processDeleteMeetupsForm(@RequestParam(required = false) int[] meetupIds) {
-        if(meetupIds != null) {
-            for (int id: meetupIds) {
+    public String processDeleteMeetupsForm(@RequestParam(required = false) int[] meetupIds, Model model, HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            User theUser = authenticationController.getUserFromSession(session);
+            model.addAttribute("theUser", theUser);
+        }
+
+        if (meetupIds != null) {
+            for (int id : meetupIds) {
                 meetupRepository.deleteById(id);
             }
         }
@@ -103,7 +145,13 @@ public class MeetupController {
     }
 
     @GetMapping("details")
-    public String displayMeetupDetails(@RequestParam Integer meetupId, Model model) {
+    public String displayMeetupDetails(@RequestParam Integer meetupId, Model model, HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            User theUser = authenticationController.getUserFromSession(session);
+            model.addAttribute("theUser", theUser);
+        }
 
         Optional<Meetup> result = meetupRepository.findById(meetupId);
         if (result.isEmpty()) {
@@ -117,24 +165,4 @@ public class MeetupController {
 
         return "meetups/details";
     }
-
-
-//    @GetMapping
-//    public String displayMeetups(@RequestParam(required = false) Integer categoryId, Model model) {
-//        if(categoryId == null) {
-//            //model.addAttribute("title", "Trail Meetups");
-//            model.addAttribute("meetups", meetupRepository.findAll());
-//        } else {
-//            Optional<MeetupCategory> result = meetupCategoryRepository.findById(categoryId);
-//            if (result.isEmpty()) {
-//                model.addAttribute("title", "Invalid: A Meetup With a Category ID of " + categoryId + " Does Not Exist.");
-//            }else{
-//                MeetupCategory category = result.get();
-//                model.addAttribute("title", "Results For Meetups in Category" + category.getMeetupCategoryName());
-//                model.addAttribute("meetups", category.getMeetups());
-//            }
-//        }
-//        return "meetups/index";
-//    }
-
 }

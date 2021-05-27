@@ -14,29 +14,36 @@
         <nav>
             <ul class="meetup-nav">
                 <li><a href="/meetups" class="all-cta">All Meetups</a>
-                    <a href="/meetups/create" class="primary-cta">Create a Meetup</a>
-                    <a href="/meetups/delete" class="secondary-cta">Delete a Meetup</a></li>
+                    <a th:if="${theUser != null}" href="/meetups/create" class="primary-cta">Create a Meetup</a>
+                    <a th:if="${theUser != null}" href="/meetups/delete" class="secondary-cta">Delete a Meetup</a></li>
             </ul>
         </nav>
     </div>
 </div>
 <section>
-    <div>
-        <h1 class="details-name" th:text="${meetups.meetupName}"></h1>
+    <div th:each="meetup : ${meetups}">
+        <h1 class="details-name" th:text="${meetup.meetupName}"></h1>
         <ul>
-            <li th:text="'Description: ' + ${meetups.meetupDetails.meetupDescription}" class="meetup-description-details"></li>
-            <li th:text="'Date: ' + ${meetups.meetupDate}" class="meetup-date-details"></li>
-            <li th:text="'Contact Email: ' + ${meetups.meetupDetails.meetupContactEmail}" class="meetup-email-details"></li>
-            <li th:text="'Location: ' + ${meetups.trail}" class="meetup-location-details"></li>
+            <li th:text="'Description: ' + ${meetup.meetupDescription}" class="meetup-description-details"></li>
+            <li th:text="'Date: ' + ${meetup.meetupDate}" class="meetup-date-details"></li>
+            <li th:text="'Contact Email: ' + ${meetup.meetupContactEmail}" class="meetup-email-details"></li>
+            <li th:text="'Location: ' + ${meetup.trail}" class="meetup-location-details"></li>
         </ul>
+        <form action="http://maps.google.com/maps" method="get" target="_blank">
+            <label th:for="saddr">Enter Location:</label>
+            <input type="text" name="saddr" />
+            <input type="hidden" name="daddr" th:value="${meetup.trail.googleName}" /> <!-- ASK John about Bee Trail-->
+            <input type="submit" value="Get directions"/>
+        </form>
+
+
     <!--tr>
         <th>Meetup Category</th>
         <td th:text="${meetup.meetupCategory}"></td>
     </tr-->
 
     </div>
-    <!--div th:each="trail : ${trails}" th:block><h4     th:attr="data-id=${trail.id}"></h4>
-    </div-->
+
     <div id="map-column" class="meetup-trail-map">
             <h3>Trail Location</h3>
             <div id="map"></div>
