@@ -39,6 +39,7 @@ body {
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: 750;
     font-size: 16px;
+    text-decoration: none;
 
 }
 .nav_links li a:hover {
@@ -83,17 +84,23 @@ body {
   font-weight: bold;
   color: white;
   position: absolute;
-  top: 30%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 50px;
 }
 
 /* Main info */
+.first_head {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-weight: bold;
+        text-align: left;
+        padding-left: 20px;
+        padding-top: 15px;
+}
+
 div.gallery {
-  margin: 5px;
-  border: 1px solid #ccc;
-  float: left;
+
   width: 180px;
 }
 
@@ -106,28 +113,32 @@ div.gallery {
 }
 
 .img-thumbnail {
+     margin: 7px;
+     border: 1px solid #ccc;
+     float: left;
      width: 85%;
      height: auto;
 }
+
+
+.trail_name {
+    font-family: 'Roboto Condensed', sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 19px;
+    padding-top: 15px;
+}
+
+.desc {
+    font-weight: 550;
+}
+
 /* Star Ratings */
 .checked {
   color: yellow;
 }
 /* End Of Star */
 
-.trail_name {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: bold;
-}
-
-.trail_info {
-    font-weight: 350;
-}
-
-.first_head {
-        font-family: 'Roboto Condensed', sans-serif;
-        font-weight: bold;
-}
 /* Search Table */
 .table {
       border-collapse: collapse;
@@ -178,7 +189,6 @@ form.example button {
   cursor: pointer;
 }
 
-<<<<<<< HEAD
 /* Trail Info Content */
 .trailInfo_image{
   display: block;
@@ -364,4 +374,3 @@ ul{
     width: 100%;
 }
 }
-

@@ -7,18 +7,18 @@
 <body>
 <header th:replace="fragments :: header"></header>
 <div class="header">
-    <img th:src="@{/images/rocks-1837129.jpg}" width="100%" height="400px">
+    <img class="head_image" th:src="@{/images/pexels-photo-371589.jpeg}" width="100%" height="400px">
     <div class="centered">Welcome to Trail Tracker</div>
 </div>
 <h1 class="first_head">Featured Trails</h1>
 <div class="row">
     <div class="col-md-3">
-        <div class="thumbnail">
+        <div class="img-thumbnail">
             <a target="_blank" th:href="@{/images/germany-1751443.jpg}">
                 <img th:src="@{/images/germany-1751443.jpg}" width="100%">
             </a>
             <div class="caption">
-                <h4 class="trail_name"><a th:href="@{/trailOne}">Lost Valley Trail - Long Loop</a></h4>
+                <h4 class="trail_name"><a th:href="@{/trailOne}" style="text-decoration: none;">Lost Valley Trail - Long Loop</a></h4>
                 <p class="desc">Short trail that's good for sunset photos!</p>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
@@ -30,12 +30,12 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="thumbnail">
+        <div class="img-thumbnail">
             <a target="_blank" th:href="@{/images/mountains-5485366.jpg}">
                 <img th:src="@{/images/mountains-5485366.jpg}" width="100%">
             </a>
             <div class="caption">
-                <h4 class="trail_name"><a th:href="@{/trailTwo}">Boschert Greenway Trail</a></h4>
+                <h4 class="trail_name"><a th:href="@{/trailTwo}" style="text-decoration: none" >Boschert Greenway Trail</a></h4>
                 <p class="desc">Medium length trail that takes you to new heights!</p>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
@@ -47,12 +47,12 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="thumbnail">
+        <div class="img-thumbnail">
             <a target="_blank" th:href="@{/images/yellowstone-4319675.jpg}">
                 <img th:src="@{/images/yellowstone-4319675.jpg}" width="100%">
             </a>
             <div class="caption">
-                <h4 class="trail_name"><a th:href="@{/trailThree}">Mississippi River Greenway: North Riverfront Trail</a></h4>
+                <h4 class="trail_name"><a th:href="@{/trailThree}" style="text-decoration: none;">Mississippi River Greenway: North Riverfront Trail</a></h4>
                 <p class="desc">Long trail that provides a new world experience!</p>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
@@ -64,12 +64,12 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="thumbnail">
+        <div class="img-thumbnail">
             <a target="_blank" th:href="@{/images/forest-path-4697056.jpg}">
                 <img th:src="@{/images/forest-path-4697056.jpg}" width="100%">
             </a>
             <div class="caption">
-                <h4 class="trail_name"><a th:href="@{/trailFour}">Hawk Ridge Trail</a></h4>
+                <h4 class="trail_name"><a th:href="@{/trailFour}" style="text-decoration: none;">Hawk Ridge Trail</a></h4>
                 <p class="desc">Short easy trail that gives you that mid-age feeling!</p>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
