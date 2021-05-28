@@ -63,7 +63,7 @@ INSERT INTO trail (name, city, state, length, difficulty, google_id, google_name
 ALTER TABLE trail ADD average_rating DOUBLE(3,2);
 UPDATE trail
 SET average_rating = (
-    SELECT avg(rating.rating)
+    SELECT avg(rating.rating_value)
     FROM rating
     WHERE trail.id = rating.trail_id
     GROUP BY trail.id
