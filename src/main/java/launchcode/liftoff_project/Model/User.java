@@ -8,6 +8,8 @@ import com.sun.istack.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,8 +29,8 @@ public class User extends AbstractEntity {
 //    @Column(name = "confirmation_token")
 //    private String confirmationToken;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Rating> ratings;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rating> ratings = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -76,12 +78,8 @@ public class User extends AbstractEntity {
         return encoder.matches(password, pwHash);
     }
 
-    public Set<Rating> getRatings() {
+    public List<Rating> getRatings() {
         return ratings;
-    }
-
-    public void addRating(Rating rating) {
-        this.ratings.add(rating);
     }
 
     public Set<Trail> getFavoriteTrails() {

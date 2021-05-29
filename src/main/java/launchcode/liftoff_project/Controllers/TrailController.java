@@ -54,6 +54,7 @@ public class TrailController {
         model.addAttribute("trails", trailRepository.findAll(Sort.by(Sort.Direction.DESC, "averageRating")));
 
 
+
         return "alltrails/index";
     }
 

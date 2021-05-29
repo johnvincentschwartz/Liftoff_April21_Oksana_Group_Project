@@ -18,6 +18,18 @@
     <h1>About This Trail</h1>
     <p>Little Creek Nature Area Trail is a 1.7 mile moderately trafficked loop trail located near Florissant, Missouri that features beautiful wild flowers and is good for all skill levels. The trail offers a number of activity options and is accessible year-round. Dogs are also able to use this trail but must be kept on leash.</p>
     <!--Rating-->
+    <form th:if="${theUser != null}" method="POST" th:action="@{/trailOne}" id="rating-form" class="form-group col-sm">
+        <label for="rating">My rating:</label>
+        <div id="rating" class="rating">
+            <th:block th:each="i: ${#numbers.sequence(5,1)}">
+                <input type="checkbox" name="ratingValue" th:value="${i}" th:id="${i}"/>
+                <label th:for="${i}">☆</label>
+            </th:block>
+        </div>
+        <input type="hidden" name="trailId" value="6" />
+        <input type="hidden" name="userId" th:value="${theUser.id}" />
+        <input type="submit"/>
+    </form>
     <span class="heading">User Rating</span>
     <span class="fa fa-star checked"></span>
     <span class="fa fa-star checked"></span>
