@@ -71,8 +71,8 @@
                     <form th:if="${theUser != null}" method="POST" th:action="@{/alltrails/rate}" id="rating-form" style="display: flex; justify-content: space-evenly; line-height: 2rem" class="row-cols-sm form-inline my-2">
                         <div id="rating" class="rating">
                             <th:block th:each="i: ${#numbers.sequence(5,1)}">
-                                <input type="radio" name="ratingValue" th:value="${i}" th:id="${i}" th:checked="${i == trail.getRatingByUser(theUser.id)}"/>
-                                <label th:for="${i}">☆</label>
+                                <input type="radio" name="ratingValue" th:value="${i}" th:id="${trail.name} + ${i}" th:checked="${i == trail.getRatingByUser(theUser.id)}"/>
+                                <label th:for="${trail.name} + ${i}">☆</label>
                             </th:block>
                             <input type="hidden" name="sort" value="averageRating"/>
                             <input type="hidden" name="trailId" th:value="${trail.id}" />
