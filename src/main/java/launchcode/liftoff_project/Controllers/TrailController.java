@@ -1,5 +1,6 @@
 package launchcode.liftoff_project.Controllers;
 
+import launchcode.liftoff_project.Model.Rating;
 import launchcode.liftoff_project.Model.Trail;
 import launchcode.liftoff_project.Model.User;
 import launchcode.liftoff_project.Model.data.RatingRepository;
@@ -103,6 +104,45 @@ public class TrailController {
                     userRepository.save(currentUser);
                 }
             }
+        }
+
+        model.addAttribute("searchLocation", searchLocation);
+        model.addAttribute("sort", sort);
+        model.addAttribute("trails", results);
+
+        return "alltrails/index";
+    }
+
+    @PostMapping("rate")
+    public String rateTrail(Model model, @ModelAttribute @Valid TrailFilterDTO trailFilterDTO,
+                            HttpServletRequest request, @RequestParam String sort, int trailId, int userId, int ratingValue){
+
+        Iterable<Trail> allTrailsSorted = trailRepository.findAll(Sort.by(Sort.Direction.DESC, sort));
+        Collection<Trail> results = filterTrails(trailFilterDTO, allTrailsSorted);
+        String searchLocation = trailFilterDTO.getSearchLocation();
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            User currentUser = authenticationController.getUserFromSession(session);
+            model.addAttribute("theUser", currentUser);
+        }
+
+        Optional<Trail> ratedTrailOpt = trailRepository.findById(trailId);
+        Trail ratedTrail = null;
+        if (ratedTrailOpt.isPresent()){
+            ratedTrail = ratedTrailOpt.get();
+        }
+
+        Optional<User> ratingUserOpt = userRepository.findById(userId);
+        User ratingUser = null;
+        if (ratingUserOpt.isPresent()){
+            ratingUser = ratingUserOpt.get();
+        }
+
+        if (ratedTrail != null && ratingUser != null){
+            Rating newRating = new Rating(ratingUser, ratedTrail, ratingValue);
+            ratingRepository.save(newRating);
+            ratedTrail.addRating(ratingUser, ratingValue);
         }
 
         model.addAttribute("searchLocation", searchLocation);

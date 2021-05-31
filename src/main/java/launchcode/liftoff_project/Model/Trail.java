@@ -255,6 +255,17 @@ public class Trail implements Comparable<Trail>{
         user.getRatings().add(rating);
     }
 
+    public int getRatingByUser(int userId){
+
+        for (Rating rating : this.ratings){
+            if (rating.getUser().getId() == userId){
+                return rating.getRatingValue();
+            }
+        }
+
+        return 0;
+    }
+
     public Double getAverageRating() {
         return averageRating;
     }

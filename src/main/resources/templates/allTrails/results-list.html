@@ -59,7 +59,7 @@
                         type="submit"
                         th:form="'add-favorites' + ${trail.id}"
                         th:if="${theUser != null AND !theUser.getFavoriteTrails().contains(trail)}"
-                        class="btn btn-primary col-sm m-1" style="width: 100%; margin: 1rem">Favorite
+                        class="btn btn-warning col-sm m-1" style="width: 100%; margin: 1rem">Favorite
                     </button>
                     <button
                             type="submit"
@@ -68,7 +68,20 @@
                             class="btn btn-danger col-sm m-1" style="width: 100%; margin: 1rem">Unfavorite
                     </button>
                     <button th:if="${theUser != null}" class="btn btn-primary col-sm m-1">+ Meetup</button>
+                    <form th:if="${theUser != null}" method="POST" th:action="@{/alltrails/rate}" id="rating-form" style="display: flex; justify-content: space-evenly; line-height: 2rem" class="row-cols-sm form-inline my-2">
+                        <div id="rating" class="rating">
+                            <th:block th:each="i: ${#numbers.sequence(5,1)}">
+                                <input type="radio" name="ratingValue" th:value="${i}" th:id="${i}" th:checked="${i == trail.getRatingByUser(theUser.id)}"/>
+                                <label th:for="${i}">☆</label>
+                            </th:block>
+                            <input type="hidden" name="sort" value="averageRating"/>
+                            <input type="hidden" name="trailId" th:value="${trail.id}" />
+                            <input type="hidden" name="userId" th:value="${theUser.id}" />
+                        </div>
+                        <button type="submit" style="height: 2rem" class="btn btn-info">Rate</button>
+                    </form>
                 </div>
+
                 <div class="row">
                     <button class="btn btn-primary col-sm m-1">More Info</button>
                 </div>
