@@ -54,6 +54,7 @@ public class TrailController {
         model.addAttribute("trails", trailRepository.findAll(Sort.by(Sort.Direction.DESC, "averageRating")));
 
 
+
         return "alltrails/index";
     }
 
@@ -117,25 +118,25 @@ public class TrailController {
 
         for (Trail trail : allTrails){
             if (
-                   (dto.getDogFriendly() && !trail.getDogs())
-                || (dto.getKidFriendly() && !trail.getFamily())
-                || (dto.getBikeFriendly() && !trail.getBikes())
-                || (dto.getNearWater() && trail.getWater().toString().equals("none"))
-                || (dto.getNearWoods() && !trail.getWoods())
+                    (dto.getDogFriendly() && !trail.getDogs())
+                            || (dto.getKidFriendly() && !trail.getFamily())
+                            || (dto.getBikeFriendly() && !trail.getBikes())
+                            || (dto.getNearWater() && trail.getWater().toString().equals("none"))
+                            || (dto.getNearWoods() && !trail.getWoods())
             ) {continue;}
 
             if (dto.getMinRating() != null){
                 if (
-                    trail.getAverageRating() == null
-                    || trail.getAverageRating() < dto.getMinRating()
+                        trail.getAverageRating() == null
+                                || trail.getAverageRating() < dto.getMinRating()
                 ){continue;}
             }
 
             if (
-                trail.getLength() > dto.getMinLength()
-                && trail.getLength() < dto.getMaxLength()
-                && dto.getDifficulty().contains(trail.getDifficulty())
-                && dto.getTrailSurface().contains(trail.getType().toString())
+                    trail.getLength() > dto.getMinLength()
+                            && trail.getLength() < dto.getMaxLength()
+                            && dto.getDifficulty().contains(trail.getDifficulty())
+                            && dto.getTrailSurface().contains(trail.getType().toString())
             ) {
                 results.add(trail);
             }

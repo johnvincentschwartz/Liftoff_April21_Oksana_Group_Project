@@ -9,14 +9,12 @@ public class Rating {
     @EmbeddedId
     private RatingKey id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
-    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("trailId")
-    @JoinColumn(name = "trail_id")
     private Trail trail;
 
     private int ratingValue;
@@ -25,13 +23,14 @@ public class Rating {
     @Column(columnDefinition = "LONGTEXT")
     private String review;
 
+    public Rating(){}
+
     public Rating(User user, Trail trail, int ratingValue) {
+        this.id = new RatingKey(user.getId(), trail.getId());
         this.user = user;
         this.trail = trail;
         this.ratingValue = ratingValue;
     }
-
-    public Rating(){}
 
     public RatingKey getId() {
         return id;
