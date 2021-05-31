@@ -70,7 +70,7 @@
                     <button th:if="${theUser != null}" class="btn btn-primary col-sm m-1">+ Meetup</button>
                 </div>
                 <div class="row">
-                    <button class="btn btn-primary col-sm m-1">More Info</button>
+                    <a th:href="@{/trail/{trailid}(trailid=${trail.id})}" th:text="'More info'"></a>
                 </div>
                 <p th:if="${theUser == null}" class="text-center m-2">Sign in to Favorite or plan a meetup</p>
             </li>

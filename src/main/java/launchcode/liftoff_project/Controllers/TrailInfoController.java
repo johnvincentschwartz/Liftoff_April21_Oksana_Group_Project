@@ -10,16 +10,16 @@ import launchcode.liftoff_project.Model.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("trail")
 public class TrailInfoController {
 
     @Autowired
@@ -34,8 +34,8 @@ public class TrailInfoController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("trailOne")
-    public String displayTrailInfoPage(Model model, HttpServletRequest request){
+    @GetMapping("{trailid}")
+    public String displayTrailInfoPage(Model model, HttpServletRequest request, @PathVariable int trailid){
 
         HttpSession session = request.getSession(false);
         if (session != null) {
@@ -43,14 +43,32 @@ public class TrailInfoController {
             model.addAttribute("theUser", theUser);
         }
 
-        model.addAttribute("trailOne", "trailOne");
-        model.addAttribute("trails", trailRepository.findAll());
+        Optional<Trail> trailOpt = trailRepository.findById(trailid);
+        Trail trail = null;
 
-        return "trailOne";
+        if (trailOpt.isPresent()){
+            trail = trailOpt.get();
+
+            System.out.println((getRatingsByValue(trail, 5).size()) / (trail.getRatings().size()));
+
+            model.addAttribute("star1ratings", getRatingsByValue(trail, 1).size());
+            model.addAttribute("star2ratings", getRatingsByValue(trail, 2).size());
+            model.addAttribute("star3ratings", getRatingsByValue(trail, 3).size());
+            model.addAttribute("star4ratings", getRatingsByValue(trail, 4).size());
+            model.addAttribute("star5ratings", getRatingsByValue(trail, 5).size());
+            model.addAttribute("allRatings", ratingRepository.findAll());
+            model.addAttribute("trail", trail);
+            model.addAttribute("trails", trailRepository.findAll());
+
+            return "trail";
+
+        } else {
+            return "No trail at this ID.";
+        }
     }
 
-    @PostMapping("trailOne")
-    public String rateTrail(Model model, @RequestParam int ratingValue, @RequestParam int trailId, @RequestParam int userId){
+    @PostMapping("{trailid}")
+    public String rateTrail(Model model, HttpServletRequest request, @PathVariable int trailid, @RequestParam int ratingValue, @RequestParam int trailId, @RequestParam int userId){
 
         Optional<Trail> ratedTrailOpt = trailRepository.findById(trailId);
         Trail ratedTrail = null;
@@ -68,32 +86,23 @@ public class TrailInfoController {
             Rating newRating = new Rating(ratingUser, ratedTrail, ratingValue);
             ratingRepository.save(newRating);
             ratedTrail.addRating(ratingUser, ratingValue);
-        } else {
-            System.out.println(ratedTrail);
-            System.out.println(ratingUser);
         }
 
-        return "trailOne";
+        return "trail";
     }
 
-    @GetMapping("trailTwo")
-    public String trailInfoTwo(Model model){
+    public List<Rating> getRatingsByValue(Trail trail, int ratingValue){
+        List<Rating> ratingsByValue = new ArrayList<>();
 
-        model.addAttribute("trailTwo", "trailTwo");
-        return "trailTwo";
-    }
+        List<Rating> allRatings = (List<Rating>) ratingRepository.findAll();
 
-    @GetMapping("trailThree")
-    public String trailInfoThree(Model model){
+        for (Rating rating : allRatings){
+            if (rating.getRatingValue() == ratingValue && rating.getTrail() == trail){
+                ratingsByValue.add(rating);
+            }
+        }
 
-        model.addAttribute("trailThree", "trailThree");
-        return "trailThree";
-    }
-
-    @GetMapping("trailFour")
-    public String trailInfoFour(Model model){
-
-        model.addAttribute("trailFour", "trailFour");
-        return "trailFour";
+        return ratingsByValue;
     }
 }
+

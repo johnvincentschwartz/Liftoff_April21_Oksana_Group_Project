@@ -1,6 +1,7 @@
 package launchcode.liftoff_project.Model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -66,6 +67,15 @@ public class Rating {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    @Override
+    public String toString() {
+        return "Rating{" +
+                "user=" + user +
+                ", trail=" + trail +
+                ", ratingValue=" + ratingValue +
+                '}';
     }
 
     @Override
