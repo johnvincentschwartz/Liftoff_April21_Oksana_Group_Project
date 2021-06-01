@@ -16,6 +16,13 @@ public class RatingKey implements Serializable {
     @Column(name = "trail_id")
     int trailId;
 
+    public RatingKey(){}
+
+    public RatingKey(int userId, int trailId) {
+        this.userId = userId;
+        this.trailId = trailId;
+    }
+
     public int getUserId() {
         return userId;
     }

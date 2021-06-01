@@ -1,5 +1,6 @@
 package launchcode.liftoff_project.Controllers;
 
+import launchcode.liftoff_project.Model.Rating;
 import launchcode.liftoff_project.Model.Trail;
 import launchcode.liftoff_project.Model.User;
 import launchcode.liftoff_project.Model.data.RatingRepository;
@@ -52,6 +53,7 @@ public class TrailController {
 
         model.addAttribute("trailFilterDTO", trailFilterDTO);
         model.addAttribute("trails", trailRepository.findAll(Sort.by(Sort.Direction.DESC, "averageRating")));
+
 
 
         return "alltrails/index";
@@ -111,31 +113,70 @@ public class TrailController {
         return "alltrails/index";
     }
 
+    @PostMapping("rate")
+    public String rateTrail(Model model, @ModelAttribute @Valid TrailFilterDTO trailFilterDTO,
+                            HttpServletRequest request, @RequestParam String sort, int trailId, int userId, int ratingValue){
+
+        Iterable<Trail> allTrailsSorted = trailRepository.findAll(Sort.by(Sort.Direction.DESC, sort));
+        Collection<Trail> results = filterTrails(trailFilterDTO, allTrailsSorted);
+        String searchLocation = trailFilterDTO.getSearchLocation();
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            User currentUser = authenticationController.getUserFromSession(session);
+            model.addAttribute("theUser", currentUser);
+        }
+
+        Optional<Trail> ratedTrailOpt = trailRepository.findById(trailId);
+        Trail ratedTrail = null;
+        if (ratedTrailOpt.isPresent()){
+            ratedTrail = ratedTrailOpt.get();
+        }
+
+        Optional<User> ratingUserOpt = userRepository.findById(userId);
+        User ratingUser = null;
+        if (ratingUserOpt.isPresent()){
+            ratingUser = ratingUserOpt.get();
+        }
+
+        if (ratedTrail != null && ratingUser != null){
+            Rating newRating = new Rating(ratingUser, ratedTrail, ratingValue);
+            ratingRepository.save(newRating);
+            ratedTrail.addRating(ratingUser, ratingValue);
+        }
+
+        model.addAttribute("searchLocation", searchLocation);
+        model.addAttribute("sort", sort);
+        model.addAttribute("trails", results);
+
+        return "alltrails/index";
+    }
+
     public static ArrayList<Trail> filterTrails(TrailFilterDTO dto, Iterable<Trail> allTrails){
 
         ArrayList<Trail> results = new ArrayList<>();
 
         for (Trail trail : allTrails){
             if (
-                   (dto.getDogFriendly() && !trail.getDogs())
-                || (dto.getKidFriendly() && !trail.getFamily())
-                || (dto.getBikeFriendly() && !trail.getBikes())
-                || (dto.getNearWater() && trail.getWater().toString().equals("none"))
-                || (dto.getNearWoods() && !trail.getWoods())
+                    (dto.getDogFriendly() && !trail.getDogs())
+                            || (dto.getKidFriendly() && !trail.getFamily())
+                            || (dto.getBikeFriendly() && !trail.getBikes())
+                            || (dto.getNearWater() && trail.getWater().toString().equals("none"))
+                            || (dto.getNearWoods() && !trail.getWoods())
             ) {continue;}
 
             if (dto.getMinRating() != null){
                 if (
-                    trail.getAverageRating() == null
-                    || trail.getAverageRating() < dto.getMinRating()
+                        trail.getAverageRating() == null
+                                || trail.getAverageRating() < dto.getMinRating()
                 ){continue;}
             }
 
             if (
-                trail.getLength() > dto.getMinLength()
-                && trail.getLength() < dto.getMaxLength()
-                && dto.getDifficulty().contains(trail.getDifficulty())
-                && dto.getTrailSurface().contains(trail.getType().toString())
+                    trail.getLength() > dto.getMinLength()
+                            && trail.getLength() < dto.getMaxLength()
+                            && dto.getDifficulty().contains(trail.getDifficulty())
+                            && dto.getTrailSurface().contains(trail.getType().toString())
             ) {
                 results.add(trail);
             }

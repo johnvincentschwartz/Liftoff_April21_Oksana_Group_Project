@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -91,8 +92,8 @@ public class Trail implements Comparable<Trail>{
     private Type type;
 
     @JsonIgnore //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion Section 5
-    @OneToMany(mappedBy = "trail")
-    private List<Rating> ratings;
+    @OneToMany(mappedBy = "trail", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rating> ratings = new ArrayList<>();
 
     @JsonIgnore //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion Section 5
     @ManyToMany(mappedBy = "favoriteTrails")
@@ -246,6 +247,23 @@ public class Trail implements Comparable<Trail>{
 
     public List<Rating> getRatings() {
         return ratings;
+    }
+
+    public void addRating(User user, int ratingValue){
+        Rating rating = new Rating(user, this, ratingValue);
+        ratings.add(rating);
+        user.getRatings().add(rating);
+    }
+
+    public int getRatingByUser(int userId){
+
+        for (Rating rating : this.ratings){
+            if (rating.getUser().getId() == userId){
+                return rating.getRatingValue();
+            }
+        }
+
+        return 0;
     }
 
     public Double getAverageRating() {
