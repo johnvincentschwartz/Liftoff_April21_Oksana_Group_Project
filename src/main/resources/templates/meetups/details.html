@@ -32,8 +32,8 @@
         <form action="http://maps.google.com/maps" method="get" target="_blank">
             <label th:for="saddr">Enter Location:</label>
             <input type="text" name="saddr" />
-            <input type="hidden" name="daddr" th:value="${meetup.trail.googleName}" /> <!-- ASK John about Bee Trail-->
-            <input type="submit" value="Get directions"/>
+            <input type="hidden" name="daddr" th:value="${meetup.trail.googleName}" />
+            <input type="submit" value="Get directions" class="get-directions-cta"/>
         </form>
 
 
