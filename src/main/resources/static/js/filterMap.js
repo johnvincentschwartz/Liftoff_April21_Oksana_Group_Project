@@ -144,7 +144,7 @@ function processResults(trails, map){
     for (let trail of trails){
         const infoWindowContent =
             `<div style="background-color: #091E05; color: white; padding: 1rem; margin: 0; width: auto; height: auto">
-                <h4>${trail.name}</h4>
+                <h4><a href=${'/trail/' + trail.id}>${trail.name}</a></h4>
                 <h5>${trail.length} mi, Level ${trail.difficulty}</h5>
             </div>`
 

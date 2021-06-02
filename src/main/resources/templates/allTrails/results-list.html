@@ -67,7 +67,7 @@
                             th:if="${theUser != null AND theUser.getFavoriteTrails().contains(trail)}"
                             class="btn btn-danger col-sm m-1" style="width: 100%; margin: 1rem">Unfavorite
                     </button>
-                    <button th:if="${theUser != null}" class="btn btn-primary col-sm m-1">+ Meetup</button>
+                    <a th:if="${theUser != null}" href="/meetups/create" class="btn btn-primary col-sm m-1">+ Meetup</a>
                     <form th:if="${theUser != null}" method="POST" th:action="@{/alltrails/rate}" id="rating-form" style="display: flex; justify-content: space-evenly; line-height: 2rem" class="row-cols-sm form-inline my-2">
                         <div id="rating" class="rating">
                             <th:block th:each="i: ${#numbers.sequence(5,1)}">
@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="row">
-                    <button class="btn btn-primary col-sm m-1">More Info</button>
+                    <a th:href="@{/trail/{id}(id = ${trail.id})}" class="btn btn-primary col-sm m-1">More Info</a>
                 </div>
                 <p th:if="${theUser == null}" class="text-center m-2">Sign in to Favorite or plan a meetup</p>
             </li>
