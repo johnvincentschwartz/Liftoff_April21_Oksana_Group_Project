@@ -2,7 +2,6 @@ package launchcode.liftoff_project.Model.dto;
 
 import com.sun.istack.NotNull;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 

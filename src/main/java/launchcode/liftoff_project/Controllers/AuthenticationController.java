@@ -1,7 +1,6 @@
 package launchcode.liftoff_project.Controllers;
 
 
-import launchcode.liftoff_project.Model.Service.userService;
 import launchcode.liftoff_project.Model.User;
 import launchcode.liftoff_project.Model.data.UserRepository;
 import launchcode.liftoff_project.Model.dto.LoginFormDTO;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
-import java.util.UUID;
 
 @Controller
 public class AuthenticationController extends HttpServlet {

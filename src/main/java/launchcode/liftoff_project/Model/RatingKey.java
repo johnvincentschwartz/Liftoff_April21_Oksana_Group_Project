@@ -1,5 +1,3 @@
-//https://www.baeldung.com/jpa-many-to-many section 3
-
 package launchcode.liftoff_project.Model;
 
 import javax.persistence.Column;
