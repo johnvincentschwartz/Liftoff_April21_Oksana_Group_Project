@@ -1,40 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
-
+<body>
 <header th:replace="fragments :: header"></header>
-
-<form method="post">
+<h1>Register</h1>
+<form method="post" class="text-center my-3">
     <div class="form-group">
         <label>First Name
             <input class="form-control" th:field="${registerFormDTO.firstName}" />
         </label>
     </div>
-    <div class="form-group">
+    <div class="form-group my-2">
         <label>Last Name
             <input class="form-control" th:field="${registerFormDTO.lastName}" />
         </label>
     </div>
-    <div class="form-group">
+    <div class="form-group my-2">
         <label>Email
             <input class="form-control" th:field="${registerFormDTO.email}" />
         </label>
         <p class="error" th:errors="${registerFormDTO.email}"></p>
     </div>
-    <div class="form-group">
+    <div class="form-group my-2">
         <label>Password
             <input class="form-control" th:field="${registerFormDTO.password}" type="password" />
         </label>
         <p class="error" th:errors="${registerFormDTO.password}"></p>
     </div>
-    <div class="form-group">
+    <div class="form-group my-2">
         <label>Verify Password
             <input class="form-control" th:field="${registerFormDTO.verifyPassword}" type="password" />
         </label>
     </div>
 
-    <input type="submit" class="btn btn-primary" value="Register" />
+    <input type="submit" class="btn btn-primary my-2" value="Register" />
 </form>
 <footer th:replace="fragments :: footer"></footer>
 </body>

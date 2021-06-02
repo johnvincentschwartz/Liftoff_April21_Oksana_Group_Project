@@ -1,20 +1,25 @@
-#outside-border {
-    border: 3px solid black;
+#master-container {
+    padding: 2em;
+    background: #E1E6E1;
 }
 
 .section-container {
-    border: 3px solid black;
-    padding: 1.5rem
+    padding: 2em;
+    background-color: rgb(171, 196, 173);
+    border-radius: 1.5em;
+    margin: 1em;
 }
 
 #results-list {
     overflow-y: scroll;
     height: 500px;
     background-color: #091E05;
+    border-radius: 1.5em;
 }
 
 .trail-result-block {
     background-color: rgba(255,255,255,0.2);
+    border-radius: 1.5em;
 }
 
 .trail-result-name {
@@ -26,7 +31,8 @@
 }
 
 #map {
-    height:500px
+    height:500px;
+    border-radius: 1.5em;
 }
 
 .form-group{

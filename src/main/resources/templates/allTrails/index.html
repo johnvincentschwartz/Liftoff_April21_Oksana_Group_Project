@@ -8,26 +8,26 @@
 </head>
 <body>
 <header th:replace="fragments :: header"></header>
-<div id="master-container" class="container col-xs py-5">
-    <h1 id="all-trails-heading">All Trails</h1>
-    <div id="outside-border">
-        <div id="filter-row" class="row" th:insert="allTrails/filter-form.html :: filter-form">
-            <!--Trail Filter-->
+<h1>All Trails</h1>
+<div id="master-container">
+    <div id="filter-row" class="row section-container" style="width: auto">
+        <div th:fragment="filter-form" id="filter-column" class="col-sm-12 accordion-item text-center" style="border: none" th:insert="allTrails/filter-form.html :: filter-form">
+        <!--Trail Filter-->
         </div>
-        <div id="results-map-row" class="row">
-            <div id="filter-column" class="col-sm section-container container accordion-item" th:replace="allTrails/results-list.html :: results-list">
-            <!--Filter Results-->
-            </div>
-            <div id="map-column" class="col-sm-8 section-container px-3">
-                <h2 style="display: flex; justify-content: space-between">
-                    <span>Map</span>
-                    <button class="btn btn-primary" th:attr="onclick='checkLocation()'">
-                        <i class="bi bi-pin-map-fill"></i>
-                        Use My Location
-                    </button>
-                </h2>
-                <div id="map"></div>
-            </div>
+    </div>
+    <div id="results-map-row" class="row mx-0" style="width: auto">
+        <div id="filter-column" class="col px-md-5 section-container container accordion-item" th:replace="allTrails/results-list.html :: results-list">
+        <!--Filter Results-->
+        </div>
+        <div id="map-column" class="col px-md-7 section-container">
+            <h2 style="display: flex; justify-content: space-between">
+                <span>Map</span>
+                <button class="btn btn-primary" th:attr="onclick='checkLocation()'">
+                    <i class="bi bi-pin-map-fill"></i>
+                    Use My Location
+                </button>
+            </h2>
+            <div id="map"></div>
         </div>
     </div>
 </div>
