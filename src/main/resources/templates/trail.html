@@ -6,16 +6,14 @@
 </head>
 <body>
 <header th:replace="fragments :: header"></header>
+
+<div class="trailDetails">
+    <h1 th:text="${trail.name}"></h1>
     <div class="trailInfo_image">
         <a target="_blank" th:href="@{/images/germany-1751443.jpg}">
             <img class="photo" th:src="@{/images/germany-1751443.jpg}" width="100%">
         </a>
-        <div>
-            <h3 class="bottom-left">Lost Valley Trail - Long Loop</h3>
-        </div>
     </div>
-<div class="trailDetails">
-    <h1>About This Trail</h1>
     <p>Little Creek Nature Area Trail is a 1.7 mile moderately trafficked loop trail located near Florissant, Missouri that features beautiful wild flowers and is good for all skill levels. The trail offers a number of activity options and is accessible year-round. Dogs are also able to use this trail but must be kept on leash.</p>
     <!--Rating-->
     <span class="heading">User Rating</span>
