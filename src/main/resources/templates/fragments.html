@@ -36,11 +36,11 @@
                         <i class="bi bi-search"></i>
                     </button>
                 </form>
-                <ul th:unless = "${theUser}" class="nav navbar-nav navbar-right">
+                <ul th:if = "${theUser == null}" class="nav navbar-nav navbar-right">
                     <li class="mx-2"><a th:href="@{/login}"><i class="bi bi-box-arrow-in-left"></i>Log In</a></li>
                     <li class="mx-2"><a th:href="@{/register}"><i class="bi bi-person-fill"></i>Register</a></li>
                 </ul>
-                <ul th:if = "${theUser}" class="nav navbar-nav navbar-right">
+                <ul th:if = "${theUser != null}" class="nav navbar-nav navbar-right">
                     <li class="mx-2" ><a th:href="@{/index}" ><i class="bi bi-person-fill"></i><span th:text="${theUser.getFirstName()}">Welcome User</span></a></li>
                     <li class="mx-2"><a th:href="@{/logout}"><i class="bi bi-box-arrow-right"></i>Log Out</a></li>
                 </ul>

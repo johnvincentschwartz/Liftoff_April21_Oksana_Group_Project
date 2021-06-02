@@ -1,6 +1,6 @@
 <div th:fragment="results-list" id="results-column" class="col-sm-4 section-container" xmlns:th="http://www.w3.org/1999/xhtml">
     <h2 th:text="'Results (' + ${trails.size()} + ')'"></h2>
-    <ol id="results-list" class="mb-0 text-white py-3 list-unstyled">
+    <ol id="results-list" class="mb-0 text-white py-3">
         <th:block th:each="trail : ${trails}">
             <li th:class="'trail-result-block p-4 m-4 ' + ${theUser != null AND theUser.getFavoriteTrails().contains(trail) ? 'border border-5 border-warning' : ''}" >
                 <h4

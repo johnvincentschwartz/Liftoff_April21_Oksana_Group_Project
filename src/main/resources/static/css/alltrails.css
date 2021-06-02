@@ -53,6 +53,7 @@ label {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-radius: 1.5em
 }
 
 input[type="number"]{
@@ -154,4 +155,13 @@ input[type="number"]{
 .gm-ui-hover-effect {
     background-color: rgb(171, 196, 173) !important;
     margin: 10px 10px 0 0;
+}
+
+ol {
+    list-style-position: inside;
+    padding-left: 0
+}
+
+label {
+    font-weight: bold
 }

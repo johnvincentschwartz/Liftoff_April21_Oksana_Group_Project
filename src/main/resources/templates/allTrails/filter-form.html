@@ -34,7 +34,7 @@
                 <div id="min-rating" class="rating">
                     <th:block th:each="i: ${#numbers.sequence(5,1)}">
                         <input type="radio" name="minRating" th:value="${i}" th:id="'min'+${i}" th:checked="${trailFilterDTO.minRating == i}"/>
-                        <label th:for="'min'+${i}">☆</label>
+                        <label th:for="'min'+${i}" style="color:white">☆</label>
                     </th:block>
                 </div>
             </div>
