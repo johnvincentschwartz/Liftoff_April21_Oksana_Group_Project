@@ -68,3 +68,4 @@ SET average_rating = (
     WHERE trail.id = rating.trail_id
     GROUP BY trail.id
 );
+
