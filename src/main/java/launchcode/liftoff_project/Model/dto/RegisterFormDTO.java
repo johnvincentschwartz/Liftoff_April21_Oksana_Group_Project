@@ -6,10 +6,10 @@ import javax.validation.constraints.NotBlank;
 
 public class RegisterFormDTO extends LoginFormDTO {
 
-    @NotBlank(message = "First name is required.")
+    @NotNull
     private String firstName;
 
-    @NotBlank(message = "First name is required.")
+    @NotNull
     private String lastName;
 
     private String verifyPassword;

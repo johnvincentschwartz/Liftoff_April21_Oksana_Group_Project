@@ -9,13 +9,11 @@ import javax.validation.constraints.Size;
 public class LoginFormDTO {
 
     @NotNull
-    @NotBlank(message = "Password is required.")
+    @NotBlank
     @Size(min = 5, max = 30, message = "Invalid password. Must be between 5 and 30 characters.")
     private String password;
 
     @NotNull
-    @NotBlank(message = "Email is required")
-    @Email(message = "Valid email required")
     private String email;
 
     public String getPassword() {

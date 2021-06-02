@@ -16,15 +16,12 @@ import java.util.Set;
 @Entity
 public class User extends AbstractEntity {
     @NotNull
-    @NotBlank(message = "First name is required.")
     private String firstName;
 
     @NotNull
-    @NotBlank(message = "First name is required.")
     private String lastName;
 
     @NotNull
-    @NotBlank(message = "First name is required.")
     private String email;
 
     @NotNull
