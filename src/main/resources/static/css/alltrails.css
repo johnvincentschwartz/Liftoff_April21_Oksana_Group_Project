@@ -12,7 +12,7 @@
 
 #results-list {
     overflow-y: scroll;
-    height: 500px;
+    height: 95%;
     background-color: #091E05;
     border-radius: 1.5em;
 }
@@ -31,7 +31,7 @@
 }
 
 #map {
-    height:500px;
+    height: 95%;
     border-radius: 1.5em;
 }
 
